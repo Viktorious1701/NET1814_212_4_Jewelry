@@ -1,0 +1,105 @@
+<Window x:Class="Jewelry.WpfApp.UI.wCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
+        mc:Ignorable="d"
+        Title="Customer" Height="450" Width="1200"
+        Background="#f0f0f0">
+    <Window.Resources>
+        <!-- Define styles for the controls -->
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#005A9E"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="#D4D4D4"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox Header="Customer" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="ID" Grid.Column="0"/>
+                    <TextBox Grid.Column="1" x:Name="CustomerId" Text="{Binding Path=SiCustomer.CustomerId, Mode=TwoWay}"/>
+                    <Label Content="Name" Grid.Column="2"/>
+                    <TextBox Grid.Column="3" x:Name="Name" Text="{Binding Path=SiCustomer.Name, Mode=TwoWay}"/>
+                    <Label Content="Phone" Grid.Column="4"/>
+                    <TextBox Grid.Column="5" x:Name="Phone" Text="{Binding Path=SiCustomer.Phone, Mode=TwoWay}"/>
+                    <Label Content="Address" Grid.Column="6"/>
+                    <TextBox Grid.Column="7" x:Name="Address" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}"/>
+                </Grid>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
+                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" />
+                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
+            </StackPanel>
+            <GroupBox Header="Customer List" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
+                <DataGrid x:Name="grdCustomer" ItemsSource="{Binding SiCustomer}" CanUserAddRows="False" SelectionChanged="LoadGrdCustomer">
+                    <DataGrid.Columns>
+                        <!--<DataGridTextColumn Header="ID" Binding="{Binding Id}" Visibility="Hidden"/>-->
+                        <DataGridTextColumn Header="CustomerID" Binding="{Binding CustomerId}" Visibility="Visible"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*" IsReadOnly="True"/>
+                        <DataGridTemplateColumn Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" 
+                                            Click="ButtonSelect_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" x:Name="Delete" CommandParameter="{Binding}" 
+                                            Click="ButtonDelete_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
