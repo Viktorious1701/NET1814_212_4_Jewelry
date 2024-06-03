@@ -13,5 +13,7 @@ namespace Jewelry.Data.Repository
         public CustomerRepository()
         {
         }
+
+        public CustomerRepository(Net1814_212_4_JewelryContext context) => _context = context;
     }
 }

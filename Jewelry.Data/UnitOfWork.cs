@@ -20,7 +20,7 @@ namespace Jewelry.Data
         public CustomerRepository CustomerRepository 
         { get 
             { 
-                return _customer ??= new Repository.CustomerRepository(); 
+                return _customer ??= new Repository.CustomerRepository(_unitOfWorkContext); 
             } 
         }
 

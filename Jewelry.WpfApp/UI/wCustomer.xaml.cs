@@ -37,16 +37,32 @@ namespace Jewelry.WpfApp.UI
         {
             try
             {
-                var customer = new SiCustomer 
+                var item = await _business.GetById(int.Parse(txtCustomerId.Text));
+
+                if (item.Data == null)
                 {
-                    CustomerId = Convert.ToInt32(CustomerId.Text),
-                    Name = Name.Text,
-                    Phone = Phone.Text,
-                    Address = Address.Text,
-                };
-              
-                var result = await _business.Save(customer);
-                MessageBox.Show(result.Message, "Save");
+                    var customer = new SiCustomer()
+                    {
+                        CustomerId = Convert.ToInt32(txtCustomerId.Text),
+                        Name = txtName.Text,
+                        Phone = txtPhone.Text,
+                        Address = txtAddress.Text
+                    };
+
+                    var result = await _business.Save(customer);
+                    MessageBox.Show(result.Message, "Save");
+                }
+                else
+                {
+                    var customer = item.Data as SiCustomer;
+                    //customer.customerCode = txtcustomerCode.Text;
+                    customer.Name = txtName.Text;
+                    customer.Phone = txtPhone.Text;
+                    customer.Address = txtAddress.Text;
+
+                    var result = await _business.Update(customer);
+                    MessageBox.Show(result.Message, "Save");
+                }
 
                 ClearForm();
                 LoadCustomers();
@@ -55,7 +71,6 @@ namespace Jewelry.WpfApp.UI
             {
                 MessageBox.Show(ex.ToString(), "Error");
             }
-
         }
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
@@ -91,10 +106,10 @@ namespace Jewelry.WpfApp.UI
 
                 if(_selectedCustomer != null)
                 {
-                    CustomerId.Text = _selectedCustomer.CustomerId.ToString();
-                    Name.Text = _selectedCustomer.Name;
-                    Phone.Text = _selectedCustomer.Phone;
-                    Address.Text = _selectedCustomer.Address;
+                    txtCustomerId.Text = _selectedCustomer.CustomerId.ToString();
+                    txtName.Text = _selectedCustomer.Name;
+                    txtPhone.Text = _selectedCustomer.Phone;
+                    txtAddress.Text = _selectedCustomer.Address;
 
                     ButtonUpdate.Visibility = Visibility.Visible;
                     ButtonSave.Visibility = Visibility.Collapsed;
@@ -111,10 +126,10 @@ namespace Jewelry.WpfApp.UI
             {
                 if (_selectedCustomer != null)
                 {
-                    int newCustomerId = int.Parse(CustomerId.Text);
-                    String newCustomerName = Name.Text;
-                    String newPhone = Phone.Text;
-                    String newAddress = Address.Text;
+                    int newCustomerId = int.Parse(txtCustomerId.Text);
+                    String newCustomerName = txtName.Text;
+                    String newPhone = txtPhone.Text;
+                    String newAddress = txtAddress.Text;
 
                     if (_selectedCustomer.CustomerId == newCustomerId)
                     {
@@ -135,7 +150,7 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        private async void grdCustomer_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             try { 
                 var result = grdCustomer.SelectedItem as SiCustomer;
@@ -152,10 +167,10 @@ namespace Jewelry.WpfApp.UI
 
         private void ClearForm()
         {
-            CustomerId.Text = string.Empty;
-            Name.Text = string.Empty;
-            Phone.Text = string.Empty;
-            Address.Text = string.Empty;
+            txtCustomerId.Text = string.Empty;
+            txtName.Text = string.Empty;
+            txtPhone.Text = string.Empty;
+            txtAddress.Text = string.Empty;
             _selectedCustomer = null;
 
             ButtonUpdate.Visibility = Visibility.Collapsed;
