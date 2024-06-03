@@ -74,7 +74,8 @@
                 <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
             </StackPanel>
             <GroupBox Header="Customer List" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
-                <DataGrid x:Name="grdCustomer" ItemsSource="{Binding SiCustomer}" CanUserAddRows="False" SelectionChanged="LoadGrdCustomer">
+                <DataGrid x:Name="grdCustomer" ItemsSource="{Binding SiCustomer}" CanUserAddRows="False" SelectionChanged="LoadGrdCustomer"
+                          MouseDoubleClick="grdCustomer_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn Header="ID" Binding="{Binding Id}" Visibility="Hidden"/>-->
                         <DataGridTextColumn Header="CustomerID" Binding="{Binding CustomerId}" Visibility="Visible"/>

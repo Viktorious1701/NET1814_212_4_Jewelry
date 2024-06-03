@@ -17,7 +17,7 @@ namespace Jewelry.Business
         Task<IBusinessResult> GetById(int id);
         Task<IBusinessResult> Save(SiCustomer customer);
         Task<IBusinessResult> Update(SiCustomer customer);
-        Task<IBusinessResult> DeleteById(String code);
+        Task<IBusinessResult> DeleteById(int code);
 
 
     }
@@ -58,11 +58,6 @@ namespace Jewelry.Business
             {
                 return new BusinessResult(-4, ex.ToString());
             }
-        }
-
-        public Task<IBusinessResult> DeleteById(string code)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IBusinessResult> GetAll()

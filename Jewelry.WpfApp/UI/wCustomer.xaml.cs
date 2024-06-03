@@ -152,16 +152,47 @@ namespace Jewelry.WpfApp.UI
 
         private async void grdCustomer_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            try { 
-                var result = grdCustomer.SelectedItem as SiCustomer;
-                if (result != null)
-                {
-                await _business.DeleteById(result.CustomerId);
-                LoadCustomers();
-                }
-            }catch (Exception ex)
+            Button btn = (Button)sender;
+
+            string txtCustomerId = btn.CommandParameter.ToString();
+
+            //MessageBox.Show(currencyCode);
+
+            if (!string.IsNullOrEmpty(txtCustomerId))
             {
-                MessageBox.Show(ex.ToString(), "Error");
+                if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    var result = await _business.DeleteById(int.Parse(txtCustomerId));
+                    MessageBox.Show($"{result.Message}", "Delete");
+                    LoadCustomers();
+                }
+            }
+        }
+
+        private async void grdCustomer_MouseDouble_Click(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("Double Click on Grid");
+            DataGrid grd = sender as DataGrid;
+            if (grd != null && grd.SelectedItems != null && grd.SelectedItems.Count == 1)
+            {
+                var row = grd.ItemContainerGenerator.ContainerFromItem(grd.SelectedItem) as DataGridRow;
+                if (row != null)
+                {
+                    var item = row.Item as SiCustomer;
+                    if (item != null)
+                    {
+                        var customerResult = await _business.GetById(item.CustomerId);
+
+                        if (customerResult.Status > 0 && customerResult.Data != null)
+                        {
+                            item = customerResult.Data as SiCustomer;
+                            txtCustomerId.Text = Convert.ToString(item.CustomerId);
+                            txtName.Text = item.Name;
+                            txtPhone.Text = item.Phone;
+                            txtAddress.Text = item.Address;
+                        }
+                    }
+                }
             }
         }
 
