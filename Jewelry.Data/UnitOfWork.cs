@@ -13,6 +13,7 @@ namespace Jewelry.Data
         private ProductRepository _product;
         private CategoryRepository _category;
         private OrderItemRepository _orderItem;
+        private CustomerRepository _customer;
         private readonly NET1814_212_4_JewelryContext _unitOfWorkContext;
 
         public UnitOfWork()
@@ -41,7 +42,13 @@ namespace Jewelry.Data
                 return _orderItem ??= (_orderItem = new OrderItemRepository());
             }
         }
-
+        public CustomerRepository CustomerRepository
+        {
+            get
+            {
+                return (_customer ??= new Repository.CustomerRepository());
+            }
+        }
         ////TO-DO CODE HERE/////////////////
 
         #region Set transaction isolation levels
