@@ -10,8 +10,10 @@ namespace Jewelry.Data.Repository
 {
     public class CustomerRepository : GenericRepository<SiCustomer>
     {
+        private readonly UnitOfWork _unitOfWork;
         public CustomerRepository()
         {
+            _unitOfWork ??= new UnitOfWork();
         }
     }
 }
