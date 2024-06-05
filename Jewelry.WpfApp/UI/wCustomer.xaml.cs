@@ -196,6 +196,34 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
+        private async void ButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var button = sender as Button;
+                _selectedCustomer = button?.DataContext as SiCustomer;
+                if(_selectedCustomer != null)
+                {
+                    txtCustomerId.Text = _selectedCustomer.CustomerId.ToString();
+                    txtName.Text = _selectedCustomer.Name;
+                    txtPhone.Text = _selectedCustomer.Phone;
+                    txtAddress.Text = _selectedCustomer.Address;
+
+                    txtCustomerId.IsReadOnly = true;
+                    txtName.IsReadOnly = true;
+                    txtPhone.IsReadOnly = true;
+                    txtAddress.IsReadOnly = true;
+
+                    ButtonUpdate.Visibility = Visibility.Collapsed;
+                    ButtonSave.Visibility = Visibility.Collapsed;
+
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+        }
+
         private void ClearForm()
         {
             txtCustomerId.Text = string.Empty;
@@ -203,6 +231,11 @@ namespace Jewelry.WpfApp.UI
             txtPhone.Text = string.Empty;
             txtAddress.Text = string.Empty;
             _selectedCustomer = null;
+
+            txtCustomerId.IsReadOnly = false;
+            txtName.IsReadOnly = false;
+            txtPhone.IsReadOnly = false;
+            txtAddress.IsReadOnly = false;
 
             ButtonUpdate.Visibility = Visibility.Collapsed;
             ButtonSave.Visibility = Visibility.Visible;

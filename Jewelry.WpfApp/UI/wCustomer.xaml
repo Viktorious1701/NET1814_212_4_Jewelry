@@ -85,7 +85,7 @@
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" 
+                                    <Button Content="Select" x:Name="ButtonSelect" CommandParameter="{Binding}" 
                                             Click="ButtonSelect_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -95,6 +95,14 @@
                                 <DataTemplate>
                                     <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path= CustomerId}" 
                                             Click="grdCustomer_ButtonDelete_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="View" x:Name="ButtonView" CommandParameter="{Binding Path= CustomerId}" 
+                                            Click="ButtonView_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
