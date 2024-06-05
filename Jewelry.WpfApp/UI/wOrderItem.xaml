@@ -47,7 +47,8 @@
             </StackPanel>
 
             <StackPanel Height="210">
-                <DataGrid x:Name="grdOrderItem" AutoGenerateColumns="False" ItemsSource="{Binding OrderItems}" CanUserAddRows="False" Height="200" Margin="10">
+                <DataGrid x:Name="grdOrderItem" AutoGenerateColumns="False" ItemsSource="{Binding OrderItems}" CanUserAddRows="False" Height="200" Margin="10"
+                          MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="OrderItemID" Binding="{Binding Path=OrderItemId}" Width="150" Visibility="Visible"/>
@@ -60,7 +61,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button x:Name="ButtonSelect" Content="Select" Height="30" Width="80"
-                                     Click="ButtonSelect_Click"/>
+                                     Click="ButtonSelect_Click" CommandParameter="{Binding OrderItemId}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -68,7 +69,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button x:Name="ButtonDelete" Content="Delete" Height="30" Width="80"
-                                   Click="ButtonDelete_Click"/>
+                                   Click="ButtonDelete_Click" CommandParameter="{Binding OrderItemId}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
