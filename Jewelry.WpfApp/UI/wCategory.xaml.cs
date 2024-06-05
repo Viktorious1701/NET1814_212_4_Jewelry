@@ -2,7 +2,6 @@
 using Jewelry.Data.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,30 +14,49 @@ namespace Jewelry.WpfApp.UI
     public partial class wCategory : Window
     {
         private readonly ICategoryBusiness _business;
-        private Category _selectedCategory;
 
         public wCategory()
         {
             InitializeComponent();
             _business = new CategoryBusiness();
-            LoadGrdCategories();
+            Loaded += OnWindowLoaded;
         }
 
-        private async void ButtonSave_Click(object sender, RoutedEventArgs e)
+        private async void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            await LoadGrdCategories();
+        }
+
+        private async void grdCategory_ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var category = new Category()
+                var item = await _business.GetById(int.Parse(CategoryId.Text));
+                if (item.Data == null)
                 {
-                    CategoryId = int.Parse(CategoryId.Text),
-                    CategoryName = CategoryName.Text
-                };
+                    var category = new Category()
+                    {
+                        CategoryId = int.Parse(CategoryId.Text),
+                        CategoryName = CategoryName.Text
+                    };
 
-                var result = await _business.Save(category);
-                MessageBox.Show(result.Message, "Save");
+                    var result = await _business.Save(category);
+                    MessageBox.Show(result.Message, "Save");
+                }
+                else
+                {
+                    var category = item.Data as Category;
+                    if (category != null)
+                    {
+                        category.CategoryName = CategoryName.Text;
+                    }
+
+                    var result = await _business.Update(category);
+                    MessageBox.Show(result.Message, "Save");
+                }
 
                 ClearForm();
-                LoadGrdCategories();
+                await LoadGrdCategories();
             }
             catch (Exception ex)
             {
@@ -46,38 +64,7 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        private async void ButtonUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (_selectedCategory != null)
-                {
-                    int newCategoryId = int.Parse(CategoryId.Text);
-                    string newCategoryName = CategoryName.Text;
-
-              
-                        _selectedCategory.CategoryId = newCategoryId;
-                        _selectedCategory.CategoryName = newCategoryName;
-                    
-
-                    var result = await _business.Update(_selectedCategory);
-                    MessageBox.Show(result.Message, "Update");
-
-                    ClearForm();
-                    LoadGrdCategories();
-                }else
-                {
-                   throw new Exception(e.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-        }
-
-
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        private void grdCategory_ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ClearForm();
         }
@@ -96,19 +83,21 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        private async void grdCategory_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var result = grdCategory.SelectedItem as Category;
-                if (result != null && result.SiProducts == null)
+                var button = sender as Button;
+                var categoryId = button?.CommandParameter.ToString();
+
+                if (!string.IsNullOrEmpty(categoryId))
                 {
-                    await _business.DeleteById(result.CategoryId);
-                    LoadGrdCategories();
-                }
-                else
-                {
-                    throw new Exception("Cannot delete the category because it is associated with products.");
+                    if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        var result = await _business.DeleteById(int.Parse(categoryId));
+                        MessageBox.Show(result.Message, "Delete");
+                        await LoadGrdCategories();
+                    }
                 }
             }
             catch (Exception ex)
@@ -117,20 +106,43 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        private void ButtonSelect_Click(object sender, RoutedEventArgs e)
+        private async void grdCategory_MouseDouble_Click(object sender, RoutedEventArgs e)
+        {
+            var grd = sender as DataGrid;
+            if (grd != null && grd.SelectedItem != null && grd.SelectedItems.Count == 1)
+            {
+                var row = grd.ItemContainerGenerator.ContainerFromItem(grd.SelectedItem) as DataGridRow;
+                if (row != null)
+                {
+                    var item = row.Item as Category;
+                    if (item != null)
+                    {
+                        var categoryResult = await _business.GetById(item.CategoryId);
+
+                        if (categoryResult.Status > 0 && categoryResult.Data != null)
+                        {
+                            item = categoryResult.Data as Category;
+                            CategoryId.Text = Convert.ToString(item.CategoryId);
+                            CategoryName.Text = item.CategoryName;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
         {
             try
             {
                 var button = sender as Button;
-                _selectedCategory = button?.DataContext as Category;
+                var item = button?.DataContext as Category;
 
-                if (_selectedCategory != null)
+                if (item != null)
                 {
-                    CategoryId.Text = _selectedCategory.CategoryId.ToString();
-                    CategoryName.Text = _selectedCategory.CategoryName;
+                    CategoryId.Text = Convert.ToString(item.CategoryId);
+                    CategoryName.Text = item.CategoryName;
 
-                    ButtonUpdate.Visibility = Visibility.Visible;
-                    ButtonSave.Visibility = Visibility.Collapsed;
+                    LoadGrdCategories();
                 }
             }
             catch (Exception ex)
@@ -143,10 +155,6 @@ namespace Jewelry.WpfApp.UI
         {
             CategoryId.Text = string.Empty;
             CategoryName.Text = string.Empty;
-            _selectedCategory = null;
-
-            ButtonUpdate.Visibility = Visibility.Collapsed;
-            ButtonSave.Visibility = Visibility.Visible;
         }
     }
 }
