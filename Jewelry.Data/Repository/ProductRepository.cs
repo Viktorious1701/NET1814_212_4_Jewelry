@@ -11,5 +11,7 @@ namespace Jewelry.Data.Repository
     public class ProductRepository : GenericRepository<SiProduct>
     {
         public ProductRepository() { }
+
+        public ProductRepository(NET1814_212_4_JewelryContext context) => _context = context;
     }
 }

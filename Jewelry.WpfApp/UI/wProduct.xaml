@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Product" Height="950" Width="1300">
     <StackPanel Orientation="Vertical">
-        <GroupBox Header="Currency Form" Margin="10">
+        <GroupBox Header="Product Form" Margin="10">
             <Grid Height="200">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -180,14 +180,14 @@
 
         <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80"
-            Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
-            <Button x:Name="ButtonUpdate" Content="Update" Height="30" Width="80" 
-            Command="{Binding UpdateCommand}" Margin="5,0,10,0" Visibility="Collapsed" Click="ButtonUpdate_Click"/>
+            Command="{Binding SaveCommand}" Click="grdProduct_ButtonSave_Click"/>
             <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" 
-            Command="{Binding ResetCommand}" Margin="5,0,10,0" Click="ButtonCancel_Click"/>
+            Command="{Binding ResetCommand}" Margin="5,0,10,0" Click="grdProduct_ButtonCancel_Click"/>
         </StackPanel>
         <StackPanel Height="210">
-            <DataGrid x:Name="grdProduct" AutoGenerateColumns="False" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="200" Margin="10">
+            <DataGrid x:Name="grdProduct"  AutoGenerateColumns="False" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="200" Margin="10"
+                      MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow"
+            >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId, Mode=TwoWay }" Width="100"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="150"/>
@@ -203,7 +203,7 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding}"
+                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}"
                                         Click="ButtonEdit_Click_1" 
                                         Height="25" Width="40" 
                                         HorizontalAlignment="Center"
@@ -214,8 +214,8 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding}"
-                                        Click="ButtonDelete_Click_1"
+                                <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding ProductId}"
+                                        Click="grdProduct_ButtonDelete_Click"
                                         Height="25" Width="40"
                                         HorizontalAlignment="Center"
                                         Margin="5"/>

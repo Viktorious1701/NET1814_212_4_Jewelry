@@ -11,7 +11,6 @@ namespace Jewelry.WpfApp.UI
     /// </summary>
     public partial class wProduct : Window
     {
-        private SiProduct _selectedProduct;
         private readonly IProductBusiness _business;
         public wProduct()
         {
@@ -19,66 +18,27 @@ namespace Jewelry.WpfApp.UI
             _business = new ProductBusiness();
             Loaded += OnWindowLoaded;
         }
-        private async void ButtonUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (_selectedProduct != null)
-                {
-                    int newProductId = int.Parse(ProductId.Text);
-                    string newProductName = Name.Text;
-
-                    int newCategoryId = int.Parse(CategoryId.Text);
-                    string newDescription = Description.Text;
-                    string newBarcode = Barcode.Text;
-                    double newWeight = double.Parse(Weight.Text);
-                    int newCostPrice = int.Parse(CostPrice.Text);
-                    int newGoldPrice = int.Parse(GoldPrice.Text);
-                    int newLaborCost = int.Parse(LaborCost.Text);
-                    int newStoneCost = int.Parse(StoneCost.Text);
-                    double newSellPriceRatio = double.Parse(SellPriceRatio.Text);
-              
-                    _selectedProduct.ProductId = newProductId;
-                    _selectedProduct.Name = newProductName;
-                    _selectedProduct.CategoryId = newCategoryId;
-                    _selectedProduct.Description = newDescription;
-                    _selectedProduct.Barcode = newBarcode;
-                    _selectedProduct.Weight = newWeight;
-                    _selectedProduct.CostPrice = newCostPrice;
-                    _selectedProduct.GoldPrice = newGoldPrice;
-                    _selectedProduct.LaborCost = newLaborCost;
-                    _selectedProduct.StoneCost = newStoneCost;
-                    _selectedProduct.SellPriceRatio = newSellPriceRatio;
-                    var result = await _business.Update(_selectedProduct);
-                    MessageBox.Show(result.Message, "Update");
-
-                   
-                    LoadGrdProducts();
-                }
-                else
-                {
-                    throw new Exception("No product selected for update.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-        }
         private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
         {
             try
             {
                 var button = sender as Button;
-                _selectedProduct = button?.DataContext as SiProduct;
+                var item = button?.DataContext as SiProduct;
 
-                if (_selectedProduct != null)
+                if (item != null)
                 {
-                    ProductId.Text = _selectedProduct.ProductId.ToString();
-                    Name.Text = _selectedProduct.Name;
+                    ProductId.Text = Convert.ToString(item.ProductId);
+                    CategoryId.Text = Convert.ToString(item.CategoryId);
+                    Name.Text = item.Name;
+                    Description.Text = item.Description;
+                    Barcode.Text = item?.Barcode;
+                    Weight.Text = Convert.ToString(item.Weight);
+                    CostPrice.Text = Convert.ToString(item.CostPrice);
+                    GoldPrice.Text = Convert.ToString(item.GoldPrice);
+                    LaborCost.Text = Convert.ToString(item.LaborCost);
+                    StoneCost.Text = Convert.ToString(item.StoneCost);
+                    SellPriceRatio.Text = Convert.ToString(item.SellPriceRatio);
 
-                    ButtonUpdate.Visibility = Visibility.Visible;
-                    ButtonSave.Visibility = Visibility.Collapsed;
                     LoadGrdProducts();
                 }
             }
@@ -87,30 +47,58 @@ namespace Jewelry.WpfApp.UI
                 MessageBox.Show(ex.ToString(), "Error");
             }
         }
-        private async void ButtonSave_Click(object sender, RoutedEventArgs e)
+        private async void grdProduct_ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                
+                var item = await _business.GetById(int.Parse(ProductId.Text));
+                if(item.Data == null) {
 
-                var products = new SiProduct()
+                    var products = new SiProduct()
+                    {
+                        ProductId = int.Parse(ProductId.Text),
+                        Name = Name.Text,
+                        CategoryId = int.Parse(CategoryId.Text),
+                        Description = Description.Text,
+                        Barcode = Barcode.Text,
+                        Weight = double.Parse(Weight.Text),
+                        CostPrice = int.Parse(CostPrice.Text),
+                        GoldPrice = int.Parse(GoldPrice.Text),
+                        LaborCost = int.Parse(LaborCost.Text),
+                        StoneCost = int.Parse(StoneCost.Text),
+                        SellPriceRatio = double.Parse(SellPriceRatio.Text)
+                    };
+
+                    var result = await _business.Save(products);
+                    MessageBox.Show(result.Message, "Save");
+
+                }
+                else
                 {
-                    ProductId = int.Parse(ProductId.Text),
-                    Name = Name.Text,
-                    CategoryId = int.Parse(CategoryId.Text),
-                    Description = Description.Text,
-                    Barcode = Barcode.Text,
-                    Weight = double.Parse(Weight.Text),
-                    CostPrice = int.Parse(CostPrice.Text),
-                    GoldPrice = int.Parse(GoldPrice.Text),
-                    LaborCost = int.Parse(LaborCost.Text),
-                    StoneCost = int.Parse(StoneCost.Text),
-                    SellPriceRatio = double.Parse(SellPriceRatio.Text)
-                };
+                    var product = item.Data as SiProduct;
+                    if(product !=null)
+                    {
+                        product.Name = Name.Text;
+                        product.CategoryId = int.Parse(CategoryId.Text);
+                        product.Description = Description.Text;
+                        product.Barcode = Barcode.Text;
+                        product.Weight = double.Parse(Weight.Text);
+                        product.CostPrice = int.Parse(CostPrice.Text);
+                        product.GoldPrice = int.Parse(GoldPrice.Text);
+                        product.LaborCost = int.Parse(LaborCost.Text);
+                        product.StoneCost = int.Parse(StoneCost.Text);
+                        product.SellPriceRatio = double.Parse(SellPriceRatio.Text);
+                    }
 
-                var result = await _business.Save(products);
-                MessageBox.Show(result.Message, "Save");
+                    Console.WriteLine("save CHANGES");
+                    var result = await _business.Update(product);
+                    MessageBox.Show(result.Message, "Save");
+                }
+               
 
                 ProductId.Text = string.Empty;
+                Name.Text = string.Empty;
                 CategoryId.Text = string.Empty;
                 Description.Text = string.Empty;
                 Barcode.Text = string.Empty;
@@ -121,6 +109,7 @@ namespace Jewelry.WpfApp.UI
                 StoneCost.Text = string.Empty;
                 SellPriceRatio.Text = string.Empty;
 
+                clearForm();
                 LoadGrdProducts();
             }
             catch (Exception ex)
@@ -129,10 +118,10 @@ namespace Jewelry.WpfApp.UI
             }
 
         }
-
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        private void clearForm()
         {
             ProductId.Text = string.Empty;
+            Name.Text = string.Empty;
             CategoryId.Text = string.Empty;
             Description.Text = string.Empty;
             Barcode.Text = string.Empty;
@@ -143,9 +132,9 @@ namespace Jewelry.WpfApp.UI
             StoneCost.Text = string.Empty;
             SellPriceRatio.Text = string.Empty;
         }
-        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        private void grdProduct_ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            clearForm();   
         }
         private async void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
@@ -165,47 +154,54 @@ namespace Jewelry.WpfApp.UI
                 grdProduct.ItemsSource = new List<SiProduct>();
             }
         }
-
-        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        private async void grdProduct_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var button = sender as Button;
-                var product = button?.DataContext as SiProduct;
+            Button btn = (Button)sender;
 
-                if (product != null)
+            string productId = btn.CommandParameter.ToString();
+
+            //MessageBox.Show(productId);
+
+            if (!string.IsNullOrEmpty(productId))
+            {
+                if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    // Assuming you have a TextBox named `productName` in your XAML to edit the product name
-                    product.Name = Name.Text;
-
-                    // Refresh the DataGrid
-                    LoadGrdProducts();
+                    var result = await _business.DeleteById(int.Parse(productId));
+                    MessageBox.Show($"{result.Message}", "Delete");
+                    this.LoadGrdProducts();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
             }
         }
-
-        private async void ButtonDelete_Click_1(object sender, RoutedEventArgs e)
+        private async void grdProduct_MouseDouble_Click (object sender, RoutedEventArgs e)
         {
-            try
+            DataGrid grd = sender as DataGrid;
+            if (grd != null && grd.SelectedItem != null && grd.SelectedItems.Count == 1)
             {
-                var result = grdProduct.SelectedItem as SiProduct;
-                if (result != null)
+                var row = grd.ItemContainerGenerator.ContainerFromItem(grd.SelectedItem) as DataGridRow;
+                if (row != null)
                 {
-                    await _business.DeleteById(result.ProductId);
-                    LoadGrdProducts();
+                    var item = row.Item as SiProduct;
+                    if (item != null)
+                    {
+                        var productResult = await _business.GetById(item.ProductId);
+
+                        if (productResult.Status > 0 && productResult.Data != null)
+                        {
+                            item = productResult.Data as SiProduct;
+                            ProductId.Text = Convert.ToString(item.ProductId);
+                            CategoryId.Text = Convert.ToString(item.CategoryId);
+                            Name.Text = item.Name;
+                            Description.Text = item.Description;
+                            Barcode.Text = item?.Barcode;
+                            Weight.Text = Convert.ToString(item.Weight);
+                            CostPrice.Text = Convert.ToString(item.CostPrice);
+                            GoldPrice.Text = Convert.ToString(item.GoldPrice);
+                            LaborCost.Text = Convert.ToString(item.LaborCost);
+                            StoneCost.Text = Convert.ToString(item.StoneCost);
+                            SellPriceRatio.Text = Convert.ToString(item.SellPriceRatio);
+                        }
+                    }
                 }
-                else
-                {
-                    throw new Exception(e.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
             }
         }
     }
