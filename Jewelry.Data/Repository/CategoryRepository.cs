@@ -11,5 +11,9 @@ namespace Jewelry.Data.Repository
     public class CategoryRepository : GenericRepository<Category>
     {
         public CategoryRepository() { }
+
+        public CategoryRepository(NET1814_212_4_JewelryContext context) => _context = context;
+
+        /// TO-DO CODE HERE////////////////
     }
 }
