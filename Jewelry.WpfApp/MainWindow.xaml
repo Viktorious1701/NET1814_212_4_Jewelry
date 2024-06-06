@@ -21,7 +21,8 @@
 
                 <MenuItem Header="Customer" IsCheckable="False" FontSize="12" Click="Open_wCustomer_Click">
                 </MenuItem>
-
+                <MenuItem Header="Company" IsCheckable="False" FontSize="12" Click="Open_wCompany_Click">
+                </MenuItem>
             </MenuItem>
         </Menu>
     </Grid>
