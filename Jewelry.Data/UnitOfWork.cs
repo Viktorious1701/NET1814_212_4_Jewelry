@@ -49,6 +49,13 @@ namespace Jewelry.Data
                 return (_customer ??= new Repository.CustomerRepository());
             }
         }
+         public CompanyRepository CompanyRepository
+         {
+             get
+             {
+                 return _company ??= new Repository.CompanyRepository();
+             }
+         }
         ////TO-DO CODE HERE/////////////////
 
         #region Set transaction isolation levels
