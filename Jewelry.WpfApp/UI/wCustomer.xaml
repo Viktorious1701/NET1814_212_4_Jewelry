@@ -59,22 +59,23 @@
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="ID" Grid.Column="0"/>
-                    <TextBox Grid.Column="1" x:Name="CustomerId" Text="{Binding Path=SiCustomer.CustomerId, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="1" x:Name="txtCustomerId" Text="{Binding Path=SiCustomer.CustomerId, Mode=TwoWay}"/>
                     <Label Content="Name" Grid.Column="2"/>
-                    <TextBox Grid.Column="3" x:Name="Name" Text="{Binding Path=SiCustomer.Name, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="3" x:Name="txtName" Text="{Binding Path=SiCustomer.Name, Mode=TwoWay}"/>
                     <Label Content="Phone" Grid.Column="4"/>
-                    <TextBox Grid.Column="5" x:Name="Phone" Text="{Binding Path=SiCustomer.Phone, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="5" x:Name="txtPhone" Text="{Binding Path=SiCustomer.Phone, Mode=TwoWay}"/>
                     <Label Content="Address" Grid.Column="6"/>
-                    <TextBox Grid.Column="7" x:Name="Address" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}"/>
+                    <TextBox Grid.Column="7" x:Name="txtAddress" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
+                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click" CommandParameter="CustomerId"/>
                 <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" />
                 <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
             </StackPanel>
             <GroupBox Header="Customer List" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
-                <DataGrid x:Name="grdCustomer" ItemsSource="{Binding SiCustomer}" CanUserAddRows="False" SelectionChanged="LoadGrdCustomer">
+                <DataGrid x:Name="grdCustomer" ItemsSource="{Binding SiCustomer}" CanUserAddRows="False" SelectionChanged="LoadGrdCustomer"
+                          MouseDoubleClick="grdCustomer_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn Header="ID" Binding="{Binding Id}" Visibility="Hidden"/>-->
                         <DataGridTextColumn Header="CustomerID" Binding="{Binding CustomerId}" Visibility="Visible"/>
@@ -84,7 +85,7 @@
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" 
+                                    <Button Content="Select" x:Name="ButtonSelect" CommandParameter="{Binding}" 
                                             Click="ButtonSelect_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -92,8 +93,16 @@
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Delete" x:Name="Delete" CommandParameter="{Binding}" 
-                                            Click="ButtonDelete_Click"/>
+                                    <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path= CustomerId}" 
+                                            Click="grdCustomer_ButtonDelete_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="View" x:Name="ButtonView" CommandParameter="{Binding Path= CustomerId}" 
+                                            Click="ButtonView_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
