@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
         Title="Order Item" Height="500" Width="1200"
@@ -42,6 +43,15 @@
         </Style>
     </Window.Resources>
     <Grid>
+        <!--<Grid.Background>
+            <VisualBrush>
+                <VisualBrush.Visual>
+                    <Image gif:ImageBehavior.AnimatedSource="d-point.gif"
+                   gif:ImageBehavior.AutoStart="True"
+                   gif:ImageBehavior.RepeatBehavior="Forever"/>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Grid.Background>-->
         <StackPanel Orientation="Vertical">
             <GroupBox Header="Order Item Form" BorderBrush="#D4D4D4" BorderThickness="1">
                 <Grid>
