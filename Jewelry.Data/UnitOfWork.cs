@@ -14,6 +14,7 @@ namespace Jewelry.Data
         private CategoryRepository _category;
         private OrderItemRepository _orderItem;
         private CustomerRepository _customer;
+        private CompanyRepository _company;
         private readonly Net1814_212_4_JewelryContext _unitOfWorkContext;
 
         public UnitOfWork()

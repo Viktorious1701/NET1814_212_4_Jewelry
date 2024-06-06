@@ -1,4 +1,4 @@
-<Window x:Class="Jewelry.WpfApp.UI.wCompany"
+﻿<Window x:Class="Jewelry.WpfApp.UI.wCompany"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -74,12 +74,12 @@
             <GroupBox Header="Company List" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
                 <DataGrid x:Name="grdCompany" ItemsSource="{Binding SiCompany}" CanUserAddRows="False" SelectionChanged="LoadGrdCompany"
                           MouseDoubleClick="grdCompany_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
-                    
+
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn Header="ID" Binding="{Binding Id}" Visibility="Hidden"/>-->
                         <DataGridTextColumn Header="CompanyID" Binding="{Binding CompanyId}" Visibility="Visible"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" Width="*" IsReadOnly="True"/>
-                        
+
                         <DataGridTextColumn Header="Address" Binding="{Binding CompanyAddress}" Width="*" IsReadOnly="True"/>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
