@@ -40,36 +40,31 @@ namespace Jewelry.WpfApp.UI
         {
             try
             {
+                OrderItem orderItem = new OrderItem()
+                {
+                    OrderItemId = Convert.ToInt32(OrderItemID.Text),
+                    OrderId = Convert.ToInt32(OrderID.Text),
+                    ProductId = Convert.ToInt32(ProductID.Text),
+                    Quantity = Convert.ToInt32(Quantity.Text),
+                    Price = Convert.ToInt32(Price.Text),
+                    Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text)
+                };
                 var item = await _business.GetById(int.Parse(OrderItemID.Text));
                 if (item.Data == null)
                 {
-                    OrderItem orderItem = new OrderItem()
-                    {
-                        OrderItemId = Convert.ToInt32(OrderItemID.Text),
-                        OrderId = Convert.ToInt32(OrderID.Text),
-                        ProductId = Convert.ToInt32(ProductID.Text),
-                        Quantity = Convert.ToInt32(Quantity.Text),
-                        Price = Convert.ToInt32(Price.Text),
-                        Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text)
-                    };
-                    var existingOrderItem = await _business.GetById(orderItem.OrderItemId);
 
-                    if (existingOrderItem.Data as OrderItem == null)
-                    {
-                        var result = await _business.Save(orderItem);
-                        MessageBox.Show(result.Message, "Save");
-
-                        ClearForm();
-                        GetOrderItemsAsync();
-
-                    }
-                    else
-                    {
-                        Console.WriteLine("save CHANGES");
-                        var result = await _business.Update(orderItem);
-                        MessageBox.Show(result.Message, "Save");
-                        return;
-                    }
+                    var result = await _business.Save(orderItem);
+                    MessageBox.Show(result.Message, "Save");
+                    ClearForm();
+                    GetOrderItemsAsync();
+                }
+                else
+                {
+                    Console.WriteLine("save CHANGES");
+                    var result = await _business.Update(orderItem);
+                    MessageBox.Show(result.Message, "Save");
+                    return;
+                
                 }
             }
             catch (Exception ex)
@@ -136,7 +131,7 @@ namespace Jewelry.WpfApp.UI
                             OrderItemID.Text = Convert.ToString(item.OrderItemId);
                             OrderID.Text = Convert.ToString(item.OrderId);
                             ProductID.Text = Convert.ToString(item.ProductId);
-                            Quantity.Text = Convert.ToString(item.ProductId);
+                            Quantity.Text = Convert.ToString(item.Quantity);
                             Price.Text = Convert.ToString(item.ProductId);
                           
                         }
