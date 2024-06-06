@@ -12,6 +12,6 @@ namespace Jewelry.Data.Repository
     {
         public ProductRepository() { }
 
-        public ProductRepository(NET1814_212_4_JewelryContext context) => _context = context;
+        public ProductRepository(Net1814_212_4_JewelryContext context) => _context = context;
     }
 }

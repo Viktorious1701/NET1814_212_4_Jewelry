@@ -14,11 +14,11 @@ namespace Jewelry.Data
         private CategoryRepository _category;
         private OrderItemRepository _orderItem;
         private CustomerRepository _customer;
-        private readonly NET1814_212_4_JewelryContext _unitOfWorkContext;
+        private readonly Net1814_212_4_JewelryContext _unitOfWorkContext;
 
         public UnitOfWork()
         {
-            _unitOfWorkContext ??= new NET1814_212_4_JewelryContext();
+            _unitOfWorkContext ??= new Net1814_212_4_JewelryContext();
         }
         public ProductRepository ProductRepository
         {
