@@ -5,61 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Category" Height="450" Width="800">
+        Title="Category" Height="500" Width="800" Background="#f0f0f0">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="80"/>
+        </Style>
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <GroupBox Header="Category Form" Margin="10">
+        <GroupBox Header="Category Form" Margin="10" FontSize="14" FontWeight="Bold" Padding="10" Background="White" BorderBrush="#007ACC">
             <Grid Height="150">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Category Id"
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="0"/>
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Center" 
+                       Grid.Column="0" Grid.Row="0" Margin="5"/>
                 <TextBox Grid.Row="0" 
                          Grid.Column="1" 
                          x:Name="CategoryId" 
                          Height="25" 
                          Text="{Binding Path=CategoryId, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
+                         Margin="5" 
                          Width="180" 
-                         HorizontalAlignment="Center" />
+                         HorizontalAlignment="Left" />
 
                 <Label Content="Category Name" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="2" 
-                       Grid.Row="0"/>
+                       HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" 
+                       Grid.Column="2" Margin="5,0,0,0" Grid.ColumnSpan="2" Width="112"/>
                 <TextBox Grid.Row="0" 
                          Grid.Column="3" 
                          x:Name="CategoryName" 
                          Height="25" 
                          Text="{Binding Path=CategoryName, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
+                         Margin="0,23,0,27" 
                          Width="180" 
                          HorizontalAlignment="Center"/>
             </Grid>
         </GroupBox>
 
-        <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80"
-                Command="{Binding SaveCommand}" Click="grdCategory_ButtonSave_Click"/>
-            <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" 
-                Command="{Binding ResetCommand}" Margin="5,0,10,0" Click="grdCategory_ButtonCancel_Click"/>
+        <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="grdCategory_ButtonSave_Click"/>
+            <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="grdCategory_ButtonCancel_Click"/>
         </StackPanel>
 
-        <StackPanel Height="210">
-            <DataGrid x:Name="grdCategory" AutoGenerateColumns="False" ItemsSource="{Binding CategoryList}" CanUserAddRows="False" Height="200" Margin="10"
-                      MouseDoubleClick="grdCategory_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+        <StackPanel Height="250" Margin="10">
+            <DataGrid x:Name="grdCategory" AutoGenerateColumns="False" ItemsSource="{Binding CategoryList}" CanUserAddRows="False" Height="200" 
+                      SelectionMode="Single" SelectionUnit="FullRow" Background="White" BorderBrush="#007ACC" RowBackground="#E6E6E6" AlternatingRowBackground="White">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId, Mode=TwoWay }" Width="100"/>
                     <DataGridTextColumn Header="Category Name" Binding="{Binding Path=CategoryName}" Width="200"/>
@@ -68,9 +76,7 @@
                             <DataTemplate>
                                 <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding CategoryId}"
                                         Click="ButtonEdit_Click_1" 
-                                        Height="25" Width="40" 
-                                        HorizontalAlignment="Center"
-                                        Margin="5"/>
+                                        Width="60"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -79,9 +85,7 @@
                             <DataTemplate>
                                 <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CategoryId}"
                                         Click="grdCategory_ButtonDelete_Click"
-                                        Height="25" Width="40"
-                                        HorizontalAlignment="Center"
-                                        Margin="5"/>
+                                        Width="60" Background="#FF6347"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

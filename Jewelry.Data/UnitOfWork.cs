@@ -47,7 +47,7 @@ namespace Jewelry.Data
         {
             get
             {
-                return (_customer ??= new Repository.CustomerRepository());
+                return _customer ??= new Repository.CustomerRepository();
             }
         }
          public CompanyRepository CompanyRepository
