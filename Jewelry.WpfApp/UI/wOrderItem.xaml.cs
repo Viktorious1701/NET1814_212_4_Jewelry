@@ -13,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace Jewelry.WpfApp.UI
@@ -27,47 +28,49 @@ namespace Jewelry.WpfApp.UI
         {
             InitializeComponent();
             _business = new OrderItemBusiness();
-            GetOrderItemsAsync();
+            Loaded += OnWindowLoaded;
         }
 
+        private async void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            await GetOrderItemsAsync();
+        }
 
         private async void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                OrderItem orderItem = new OrderItem()
+                var item = await _business.GetById(int.Parse(OrderItemID.Text));
+                if (item.Data == null)
                 {
-                    OrderItemId = Convert.ToInt32(OrderItemID.Text),
-                    OrderId = Convert.ToInt32(OrderID.Text),
-                    ProductId = Convert.ToInt32(ProductID.Text),
-                    Quantity = Convert.ToInt32(Quantity.Text),
-                    Price = Convert.ToInt32(Price.Text),
-                    Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text)
-                };
-                var existingOrderItem = await _business.GetById(orderItem.OrderItemId);
+                    OrderItem orderItem = new OrderItem()
+                    {
+                        OrderItemId = Convert.ToInt32(OrderItemID.Text),
+                        OrderId = Convert.ToInt32(OrderID.Text),
+                        ProductId = Convert.ToInt32(ProductID.Text),
+                        Quantity = Convert.ToInt32(Quantity.Text),
+                        Price = Convert.ToInt32(Price.Text),
+                        Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text)
+                    };
+                    var existingOrderItem = await _business.GetById(orderItem.OrderItemId);
 
-                if (existingOrderItem.Data as OrderItem == null)
-                {
-                    var result = await _business.Save(orderItem);
-                    MessageBox.Show(result.Message, "Save");
+                    if (existingOrderItem.Data as OrderItem == null)
+                    {
+                        var result = await _business.Save(orderItem);
+                        MessageBox.Show(result.Message, "Save");
 
-                    OrderItemID.Text = string.Empty;
-                    OrderID.Text = string.Empty;
-                    ProductID.Text = string.Empty;
-                    Quantity.Text = string.Empty;
-                    Price.Text = string.Empty;
-                    GetOrderItemsAsync();
+                        ClearForm();
+                        GetOrderItemsAsync();
 
+                    }
+                    else
+                    {
+                        Console.WriteLine("save CHANGES");
+                        var result = await _business.Update(orderItem);
+                        MessageBox.Show(result.Message, "Save");
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("OrderItemID already exists", "Warning");
-                    await _business.Update(orderItem);
-
-                    return;
-                }
-
-
             }
             catch (Exception ex)
             {
@@ -78,13 +81,17 @@ namespace Jewelry.WpfApp.UI
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
+            ClearForm();
+        }
+        private void ClearForm()
+        {
             OrderItemID.Text = string.Empty;
             OrderID.Text = string.Empty;
             ProductID.Text = string.Empty;
             Quantity.Text = string.Empty;
             Price.Text = string.Empty;
         }
-        private async void GetOrderItemsAsync()
+        private async Task GetOrderItemsAsync()
         {
             var result = await _business.GetAll();
 
@@ -110,19 +117,51 @@ namespace Jewelry.WpfApp.UI
                 Price.Text = orderItem.Price.ToString();
             }
         }
+        private async void grdProduct_MouseDouble_Click(object sender, RoutedEventArgs e)
+        {
+            DataGrid grd = sender as DataGrid;
+            if (grd != null && grd.SelectedItem != null && grd.SelectedItems.Count == 1)
+            {
+                var row = grd.ItemContainerGenerator.ContainerFromItem(grd.SelectedItem) as DataGridRow;
+                if (row != null)
+                {
+                    var item = row.Item as OrderItem;
+                    if (item != null)
+                    {
+                        var productResult = await _business.GetById(item.OrderItemId);
+
+                        if (productResult.Status > 0 && productResult.Data != null)
+                        {
+                            item = productResult.Data as OrderItem;
+                            OrderItemID.Text = Convert.ToString(item.OrderItemId);
+                            OrderID.Text = Convert.ToString(item.OrderId);
+                            ProductID.Text = Convert.ToString(item.ProductId);
+                            Quantity.Text = Convert.ToString(item.ProductId);
+                            Price.Text = Convert.ToString(item.ProductId);
+                          
+                        }
+                    }
+                }
+            }
+        }
 
         private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            OrderItem orderItem = grdOrderItem.SelectedItem as OrderItem;
-            if (orderItem == null)
-            {
-                MessageBox.Show("OrderItemID not found", "Warning");
-                return;
-            }
+            Button btn = (Button)sender;
 
-            var result = await _business.DeleteById(orderItem.OrderItemId);
-            MessageBox.Show(result.Message, "Delete");
-            GetOrderItemsAsync();
+            string orderItemId = btn.CommandParameter.ToString();
+
+            //MessageBox.Show(productId);
+
+            if (!string.IsNullOrEmpty(orderItemId))
+            {
+                if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    var result = await _business.DeleteById(int.Parse(orderItemId));
+                    MessageBox.Show($"{result.Message}", "Delete");
+                    this.GetOrderItemsAsync();
+                }
+            }
         }
 
         private async void ButtonUpdate_Click(object sender, RoutedEventArgs e)

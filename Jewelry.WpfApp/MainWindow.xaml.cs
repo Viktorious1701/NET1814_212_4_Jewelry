@@ -51,6 +51,7 @@ namespace Jewelry.WpfApp
             p.Owner = this;
             p.Show();
         }
+
     }
 
 }
