@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Company" Height="450" Width="1200"
+        Title="Company" Height="500" Width="1200"
         Background="#f0f0f0">
     <Window.Resources>
         <!-- Define styles for the controls -->
@@ -43,57 +43,53 @@
     </Window.Resources>
     <Grid>
         <StackPanel Orientation="Vertical">
-            <GroupBox Header="Company" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
+            <GroupBox Header="Company" BorderBrush="#D4D4D4" BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <Label Content="ID" Grid.Column="0"/>
                     <TextBox Grid.Column="1" x:Name="CompanyId" Text="{Binding Path=SiCompany.CompanyId, Mode=TwoWay}"/>
                     <Label Content="Name" Grid.Column="2"/>
                     <TextBox Grid.Column="3" x:Name="CompanyName" Text="{Binding Path=SiCompany.CompanyName, Mode=TwoWay}"/>
-                    <Label Content="Address" Grid.Column="5"/>
-                    <TextBox Grid.Column="7" x:Name="CompanyAddress" Text="{Binding Path=SiCompany.CompanyAddress, Mode=TwoWay}"/>
+                    <Label Content="Address" Grid.Column="4"/>
+                    <TextBox Grid.Column="5" x:Name="CompanyAddress" Text="{Binding Path=SiCompany.CompanyAddress, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
                 <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
-                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" />
+                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed"/>
             </StackPanel>
-            <GroupBox Header="Company List" Margin="10" Padding="10" BorderBrush="#D4D4D4" BorderThickness="1">
+            <GroupBox Header="Company List" BorderBrush="#D4D4D4" BorderThickness="1">
                 <DataGrid x:Name="grdCompany" ItemsSource="{Binding SiCompany}" CanUserAddRows="False" SelectionChanged="LoadGrdCompany"
                           MouseDoubleClick="grdCompany_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
-
                     <DataGrid.Columns>
                         <!--<DataGridTextColumn Header="ID" Binding="{Binding Id}" Visibility="Hidden"/>-->
-                        <DataGridTextColumn Header="CompanyID" Binding="{Binding CompanyId}" Visibility="Visible"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" Width="*" IsReadOnly="True"/>
-
-                        <DataGridTextColumn Header="Address" Binding="{Binding CompanyAddress}" Width="*" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="CompanyID" Binding="{Binding CompanyId}" Width="100"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" Width="*"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding CompanyAddress}" Width="*"/>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" 
-                                            Click="ButtonSelect_Click"/>
+                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" Click="ButtonSelect_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding Path= CompanyId}" 
-                                            Click="grdCompany_ButtonDelete_Click"/>
+                                    <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CompanyId}" Click="grdCompany_ButtonDelete_Click" Background="#FF6347"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

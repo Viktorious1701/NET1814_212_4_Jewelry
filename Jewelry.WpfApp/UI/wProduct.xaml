@@ -5,191 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Product" Height="950" Width="1300">
+        Title="Product" Height="950" Width="1300"
+        Background="#f0f0f0">
+    <Window.Resources>
+        <!-- Define styles for the controls -->
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#005A9E"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="#D4D4D4"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+        </Style>
+    </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <GroupBox Header="Product Form" Margin="10">
-            <Grid Height="200">
+        <GroupBox Header="Product Form" BorderBrush="#D4D4D4" BorderThickness="1">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Labels and TextBoxes with updated names -->
-                <Label Content="Product Id"
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="0"/>
-                <TextBox Grid.Row="0" 
-                         Grid.Column="1" 
-                         x:Name="ProductId" 
-                         Height="25" 
-                         Text="{Binding Path=ProductId, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Product Id" Grid.Column="0" Grid.Row="0"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="ProductId" Text="{Binding Path=ProductId, Mode=TwoWay}"/>
 
-                <Label Content="Name" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="2" 
-                       Grid.Row="0" />
-                <TextBox Grid.Row="0" 
-                         Grid.Column="3" 
-                         x:Name="Name" Height="25" 
-                         Text="{Binding Path=Name, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
-                <Label Content="Category Id" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="4" 
-                       Grid.Row="0"/>
-                <TextBox Grid.Row="0" 
-                         Grid.Column="5" 
-                         x:Name="CategoryId" 
-                         Height="25" 
-                         Text="{Binding Path=CategoryId, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Name" Grid.Column="2" Grid.Row="0"/>
+                <TextBox Grid.Row="0" Grid.Column="3" x:Name="Name" Text="{Binding Path=Name, Mode=TwoWay}"/>
 
-                <Label Content="Description" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="0" 
-                       Grid.Row="1" 
-                       Height="50" />
-                <TextBox Grid.Row="1" 
-                         Grid.Column="1" 
-                         x:Name="Description" 
-                         Height="25" 
-                         Text="{Binding Path=Description, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Category Id" Grid.Column="4" Grid.Row="0"/>
+                <TextBox Grid.Row="0" Grid.Column="5" x:Name="CategoryId" Text="{Binding Path=CategoryId, Mode=TwoWay}"/>
 
-                <Label Content="Barcode" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="2" 
-                       Grid.Row="1"/>
-                <TextBox Grid.Row="1" 
-                         Grid.Column="3" 
-                         x:Name="Barcode" 
-                         Height="25" 
-                         Text="{Binding Path=Barcode, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Description" Grid.Column="0" Grid.Row="1"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="Description" Text="{Binding Path=Description, Mode=TwoWay}"/>
 
-                <Label Content="Weight" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="4" 
-                       Grid.Row="1" />
-                <TextBox Grid.Row="1" 
-                         Grid.Column="5" 
-                         x:Name="Weight" 
-                         Height="25" 
-                         Text="{Binding Path=Weight, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Barcode" Grid.Column="2" Grid.Row="1"/>
+                <TextBox Grid.Row="1" Grid.Column="3" x:Name="Barcode" Text="{Binding Path=Barcode, Mode=TwoWay}"/>
 
-                <Label Content="Cost Price" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="0" 
-                       Grid.Row="2"/>
-                <TextBox Grid.Row="2" 
-                         Grid.Column="1" 
-                         x:Name="CostPrice" 
-                         Height="25" 
-                         Text="{Binding Path=CostPrice, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Weight" Grid.Column="4" Grid.Row="1"/>
+                <TextBox Grid.Row="1" Grid.Column="5" x:Name="Weight" Text="{Binding Path=Weight, Mode=TwoWay}"/>
 
-                <Label Content="Gold Price" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="2" 
-                       Grid.Row="2"/>
-                <TextBox Grid.Row="2" 
-                         Grid.Column="3" 
-                         x:Name="GoldPrice" 
-                         Height="25" 
-                         Text="{Binding Path=GoldPrice, Mode=TwoWay}" 
-                         Margin="5,13,0,12" Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Cost Price" Grid.Column="0" Grid.Row="2"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="CostPrice" Text="{Binding Path=CostPrice, Mode=TwoWay}"/>
 
-                <Label Content="Labor Cost" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="4" 
-                       Grid.Row="2"/>
-                <TextBox Grid.Row="2" 
-                         Grid.Column="5" 
-                         x:Name="LaborCost" 
-                         Height="25" 
-                         Text="{Binding Path=LaborCost, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Gold Price" Grid.Column="2" Grid.Row="2"/>
+                <TextBox Grid.Row="2" Grid.Column="3" x:Name="GoldPrice" Text="{Binding Path=GoldPrice, Mode=TwoWay}"/>
 
-                <Label Content="Stone Cost" 
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center" 
-                       Grid.Column="0" 
-                       Grid.Row="3" />
-                <TextBox Grid.Row="3" 
-                         Grid.Column="1" 
-                         x:Name="StoneCost"
-                         Height="25" 
-                         Text="{Binding Path=StoneCost, Mode=TwoWay}" 
-                         Margin="5,13,0,12" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Labor Cost" Grid.Column="4" Grid.Row="2"/>
+                <TextBox Grid.Row="2" Grid.Column="5" x:Name="LaborCost" Text="{Binding Path=LaborCost, Mode=TwoWay}"/>
 
-                <Label Content="Sell Price Ratio"
-                       HorizontalAlignment="Center" 
-                       VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="3"/>
-                <TextBox Grid.Row="3" 
-                         Grid.Column="3" 
-                         x:Name="SellPriceRatio"
-                         Height="25"
-                         Text="{Binding Path=SellPriceRatio, Mode=TwoWay}" 
-                         Margin="5,13,0,12"
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Stone Cost" Grid.Column="0" Grid.Row="3"/>
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="StoneCost" Text="{Binding Path=StoneCost, Mode=TwoWay}"/>
+
+                <Label Content="Sell Price Ratio" Grid.Column="2" Grid.Row="3"/>
+                <TextBox Grid.Row="3" Grid.Column="3" x:Name="SellPriceRatio" Text="{Binding Path=SellPriceRatio, Mode=TwoWay}"/>
             </Grid>
         </GroupBox>
 
-        <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80"
-            Command="{Binding SaveCommand}" Click="grdProduct_ButtonSave_Click"/>
-            <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" 
-            Command="{Binding ResetCommand}" Margin="5,0,10,0" Click="grdProduct_ButtonCancel_Click"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="grdProduct_ButtonSave_Click"/>
+            <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="grdProduct_ButtonCancel_Click"/>
         </StackPanel>
-        <StackPanel Height="210">
-            <DataGrid x:Name="grdProduct"  AutoGenerateColumns="False" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="200" Margin="10"
-                      MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow"
-            >
+
+        <GroupBox Header="Product List" BorderBrush="#D4D4D4" BorderThickness="1">
+            <DataGrid x:Name="grdProduct" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="600" Margin="10"
+                      MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId, Mode=TwoWay }" Width="100"/>
+                    <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId}" Width="100"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="150"/>
                     <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId}" Width="100"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="200"/>
@@ -203,27 +120,19 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}"
-                                        Click="ButtonEdit_Click_1" 
-                                        Height="25" Width="40" 
-                                        HorizontalAlignment="Center"
-                                        Margin="5"/>
+                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}" Click="ButtonEdit_Click_1" Height="25" Width="40"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding ProductId}"
-                                        Click="grdProduct_ButtonDelete_Click"
-                                        Height="25" Width="40"
-                                        HorizontalAlignment="Center"
-                                        Margin="5"/>
+                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding ProductId}" Click="grdProduct_ButtonDelete_Click" Height="25" Width="40" Background="#FF6347"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </StackPanel>
+        </GroupBox>
     </StackPanel>
 </Window>
