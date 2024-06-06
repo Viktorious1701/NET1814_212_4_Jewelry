@@ -1,5 +1,6 @@
 using Jewelry.Data.Base;
 using Jewelry.Data.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Jewelry.Data.Repository
 {
-    public class CustomerRepository : GenericRepository<SiCustomer>
+    public class CompanyRepository : GenericRepository<SiCompany>
     {
-        private readonly UnitOfWork _unitOfWork;
-        public CustomerRepository()
+        public CompanyRepository()
         {
-            _unitOfWork ??= new UnitOfWork();
         }
+        public CompanyRepository(NET1814_212_4_JewelryContext context) => _context = context;
     }
 }
