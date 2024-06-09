@@ -12,7 +12,7 @@ namespace Jewelry.Data.Repository
     {
         public CategoryRepository() { }
 
-        public CategoryRepository(Net1814_212_4_JewelryContext context) => _context = context;
+        public CategoryRepository(NET1814_212_4_JewelryContext context) => _context = context;
 
         /// TO-DO CODE HERE////////////////
     }

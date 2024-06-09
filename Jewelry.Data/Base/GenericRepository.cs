@@ -10,17 +10,17 @@ namespace Jewelry.Data.Base
 {
     public class GenericRepository<T> where T : class
     {
-        protected Net1814_212_4_JewelryContext _context;
+        protected NET1814_212_4_JewelryContext _context;
        
 
         public GenericRepository()
         {
-            _context ??= new Net1814_212_4_JewelryContext();
+            _context ??= new NET1814_212_4_JewelryContext();
            
         }
         #region Separating asign entity and save operators
 
-        public GenericRepository(Net1814_212_4_JewelryContext context)
+        public GenericRepository(NET1814_212_4_JewelryContext context)
         {
             _context = context;
         }
