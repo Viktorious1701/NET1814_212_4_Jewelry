@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Product" Height="950" Width="1300"
-        Background="#f0f0f0">
+        Title="Product" Height="950" Width="1500"
+        Background="#1e1e1e">
     <Window.Resources>
         <!-- Define styles for the controls -->
         <Style TargetType="Label">
@@ -15,18 +15,20 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="#FFD700"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="25"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Background" Value="#2e2e2e"/>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="#007ACC"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="#005A9E"/>
         </Style>
@@ -34,15 +36,21 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Background" Value="#1e1e1e"/>
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="BorderBrush" Value="#D4D4D4"/>
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Background" Value="#1e1e1e"/>
             <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="RowBackground" Value="#2e2e2e"/>
+            <Setter Property="AlternatingRowBackground" Value="#3e3e3e"/>
         </Style>
     </Window.Resources>
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Background="#1e1e1e">
         <GroupBox Header="Product Form" BorderBrush="#D4D4D4" BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -98,8 +106,8 @@
         </GroupBox>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="grdProduct_ButtonSave_Click"/>
-            <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="grdProduct_ButtonCancel_Click"/>
+            <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="grdProduct_ButtonSave_Click" Background="#32CD32"/>
+            <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="grdProduct_ButtonCancel_Click" Background="#808080"/>
         </StackPanel>
 
         <GroupBox Header="Product List" BorderBrush="#D4D4D4" BorderThickness="1">
@@ -120,14 +128,14 @@
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}" Click="ButtonEdit_Click_1" Height="25" Width="40"/>
+                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}" Click="ButtonEdit_Click_1" Height="25" Width="70" Background="#32CD32"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding ProductId}" Click="grdProduct_ButtonDelete_Click" Height="25" Width="40" Background="#FF6347"/>
+                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding ProductId}" Click="grdProduct_ButtonDelete_Click" Height="25" Width="70" Background="#FF6347"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

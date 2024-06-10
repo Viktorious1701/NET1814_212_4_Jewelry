@@ -15,5 +15,7 @@ public partial class SiCustomer
 
     public string Address { get; set; }
 
+    public DateOnly? DateOfBirth { get; set; }
+
     public virtual ICollection<SiOrder> SiOrders { get; set; } = new List<SiOrder>();
 }
