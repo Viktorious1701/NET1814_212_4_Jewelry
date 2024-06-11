@@ -5,22 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Order" Height="450" Width="940">
+        Title="Order" Height="450" Width="940" Background="Black">
     <Window.Resources>
         <Style TargetType="Label">
-            <Setter Property="Foreground" Value="DarkBlue"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="Gold"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="LightBlue"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
         <Style TargetType="GroupBox">
-            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="#222222"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="AlternatingRowBackground" Value="#333333"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -28,9 +64,9 @@
             <GroupBox Header="Order Form" Margin="10">
                 <Grid Height="120">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
@@ -41,60 +77,58 @@
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="OrderId" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="OrderId" Height="25" Text="{Binding Path=SiOrder.OrderId, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="CustomerId" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="0"/>
-                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="CustomerId" Height="25" Text="{Binding Path=SiOrder.CustomerId, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="PromotionId" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4" Grid.Row="0"/>
-                    <TextBox Grid.Row="0" Grid.Column="5" x:Name="PromotionId" Height="25" Text="{Binding Path=SiOrder.PromotionId, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="OrderDate" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="OrderDate" Height="25" Text="{Binding Path=SiOrder.OrderDate, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="TotalAmount" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="1"/>
-                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="TotalAmount" Height="25" Text="{Binding Path=SiOrder.TotalAmount, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="Discount" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4" Grid.Row="1"/>
-                    <TextBox Grid.Row="1" Grid.Column="5" x:Name="Discount" Height="25" Text="{Binding Path=SiOrder.Discount, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="PaymentMethod" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="PaymentMethod" Height="25" Text="{Binding Path=SiOrder.PaymentMethod, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="PaymentStatus" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Height="25" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
-                    <Label Content="ShipmentStatus" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Height="25" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="OrderId" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="OrderId" Text="{Binding Path=SiOrder.OrderId, Mode=TwoWay}"/>
+                    <Label Content="CustomerId" Grid.Column="2" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="CustomerId" Text="{Binding Path=SiOrder.CustomerId, Mode=TwoWay}"/>
+                    <Label Content="PromotionId" Grid.Column="4" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="5" x:Name="PromotionId" Text="{Binding Path=SiOrder.PromotionId, Mode=TwoWay}"/>
+                    <Label Content="OrderDate" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="OrderDate" Text="{Binding Path=SiOrder.OrderDate, Mode=TwoWay}"/>
+                    <Label Content="TotalAmount" Grid.Column="2" Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="TotalAmount" Text="{Binding Path=SiOrder.TotalAmount, Mode=TwoWay}"/>
+                    <Label Content="Discount" Grid.Column="4" Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="5" x:Name="Discount" Text="{Binding Path=SiOrder.Discount, Mode=TwoWay}"/>
+                    <Label Content="PaymentMethod" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="PaymentMethod" Text="{Binding Path=SiOrder.PaymentMethod, Mode=TwoWay}"/>
+                    <Label Content="PaymentStatus" Grid.Column="2" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"/>
+                    <Label Content="ShipmentStatus" Grid.Column="4" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
-            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80"
-                Command="{Binding SaveCommand}" Click="ButtonSave_Click" />
-                <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" 
-                Command="{Binding ResetCommand}" Margin="5,0,10,0" Click="ButtonCancel_Click" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
+                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
             </StackPanel>
-            <StackPanel Height="210">
-                <DataGrid x:Name="grdCurrency" AutoGenerateColumns="False" ItemsSource="{Binding SiOrder}" CanUserAddRows="False" Height="200" Margin="10">
+            <StackPanel Margin="10">
+                <DataGrid x:Name="grdCurrency" AutoGenerateColumns="False" ItemsSource="{Binding SiOrder}" CanUserAddRows="False" SelectionMode="Single" SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="OrderId" Binding="{Binding Path=OrderId}" Width="50" Visibility="Visible"/>
                         <DataGridTextColumn Header="CustomerId" Binding="{Binding Path=CustomerId}" Width="80" Visibility="Visible"/>
-                        <DataGridTextColumn Header="PromotionId" Binding="{Binding Path=PromotionId}" Width="80"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="OrderDate" Binding="{Binding Path=OrderDate}" Width="80"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PromotionId" Binding="{Binding Path=PromotionId}" Width="80" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="OrderDate" Binding="{Binding Path=OrderDate}" Width="80" IsReadOnly="True"/>
                         <DataGridTextColumn Header="TotalAmount" Binding="{Binding Path=TotalAmount}" Width="90" Visibility="Visible"/>
-                        <DataGridTextColumn Header="Discount" Binding="{Binding Path=Discount}" Width="80"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Discount" Binding="{Binding Path=Discount}" Width="80" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100" IsReadOnly="True"/>
                         <DataGridTemplateColumn Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
                                     <Button Content="Select" x:Name="ButtonUpdate" Click="ButtonEdit_Click_1"/>
                                 </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="50">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                                    <Button Content="X" x:Name="ButtonDelete" Click="ButtonDelete_Click"/>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="X" x:Name="ButtonDelete" Click="ButtonDelete_Click" Background="Red" Foreground="Black"/>
                                 </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </StackPanel>
         </StackPanel>
     </Grid>

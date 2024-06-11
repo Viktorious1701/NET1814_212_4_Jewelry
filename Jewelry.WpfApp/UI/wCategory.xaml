@@ -5,21 +5,62 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Category" Height="500" Width="800" Background="#f0f0f0">
+        Title="Category" Height="500" Width="800" Background="Black">
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Background" Value="#007ACC"/>
-            <Setter Property="Foreground" Value="White"/>
+        <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="Gold"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+        </Style>
+        <Style TargetType="Button">
             <Setter Property="Height" Value="35"/>
             <Setter Property="Width" Value="80"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="#222222"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="AlternatingRowBackground" Value="#333333"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <GroupBox Header="Category Form" Margin="10" FontSize="14" FontWeight="Bold" Padding="10" Background="White" BorderBrush="#007ACC">
+        <GroupBox Header="Category Form" Margin="10" FontSize="14" FontWeight="Bold" Padding="10">
             <Grid Height="150">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -32,31 +73,11 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Category Id"
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Center" 
-                       Grid.Column="0" Grid.Row="0" Margin="5"/>
-                <TextBox Grid.Row="0" 
-                         Grid.Column="1" 
-                         x:Name="CategoryId" 
-                         Height="25" 
-                         Text="{Binding Path=CategoryId, Mode=TwoWay}" 
-                         Margin="5" 
-                         Width="180" 
-                         HorizontalAlignment="Left" />
+                <Label Content="Category Id" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="CategoryId" Text="{Binding Path=CategoryId, Mode=TwoWay}" Margin="5" Width="180" HorizontalAlignment="Left" />
 
-                <Label Content="Category Name" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Center" 
-                       Grid.Column="2" Margin="5,0,0,0" Grid.ColumnSpan="2" Width="112"/>
-                <TextBox Grid.Row="0" 
-                         Grid.Column="3" 
-                         x:Name="CategoryName" 
-                         Height="25" 
-                         Text="{Binding Path=CategoryName, Mode=TwoWay}" 
-                         Margin="0,23,0,27" 
-                         Width="180" 
-                         HorizontalAlignment="Center"/>
+                <Label Content="Category Name" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Margin="5,0,0,0" Grid.ColumnSpan="2" Width="112"/>
+                <TextBox Grid.Row="0" Grid.Column="3" x:Name="CategoryName" Text="{Binding Path=CategoryName, Mode=TwoWay}" Margin="0,23,0,27" Width="180" HorizontalAlignment="Center"/>
             </Grid>
         </GroupBox>
 
@@ -67,7 +88,7 @@
 
         <StackPanel Height="250" Margin="10">
             <DataGrid x:Name="grdCategory" AutoGenerateColumns="False" ItemsSource="{Binding CategoryList}" CanUserAddRows="False" Height="200" 
-                      SelectionMode="Single" SelectionUnit="FullRow" Background="White" BorderBrush="#007ACC" RowBackground="#E6E6E6" AlternatingRowBackground="White">
+                      SelectionMode="Single" SelectionUnit="FullRow">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId, Mode=TwoWay }" Width="100"/>
                     <DataGridTextColumn Header="Category Name" Binding="{Binding Path=CategoryName}" Width="200"/>
@@ -75,8 +96,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding CategoryId}"
-                                        Click="ButtonEdit_Click_1" 
-                                        Width="60"/>
+                                        Click="ButtonEdit_Click_1" Width="60"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -84,8 +104,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CategoryId}"
-                                        Click="grdCategory_ButtonDelete_Click"
-                                        Width="60" Background="#FF6347"/>
+                                        Click="grdCategory_ButtonDelete_Click" Width="60" Background="Red" Foreground="Black"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

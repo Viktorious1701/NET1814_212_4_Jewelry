@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
         Title="Company" Height="500" Width="1200"
-        Background="#f0f0f0">
+        Background="Black">
     <Window.Resources>
         <!-- Define styles for the controls -->
         <Style TargetType="Label">
@@ -14,38 +14,56 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="5"/>
+            <Setter Property="Foreground" Value="Gold"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="25"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="#007ACC"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#005A9E"/>
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
         <Style TargetType="GroupBox">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
-            <Setter Property="Foreground" Value="Purple"/>
-            <!-- Add this line to change the color of the GroupBox headers -->
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="#222222"/>
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="10"/>
-            <Setter Property="BorderBrush" Value="#D4D4D4"/>
-            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="AlternatingRowBackground" Value="#333333"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="Gold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
     </Window.Resources>
     <Grid>
         <StackPanel Orientation="Vertical">
-            <GroupBox Header="Company" BorderBrush="#D4D4D4" BorderThickness="1">
+            <GroupBox Header="Company" BorderBrush="Gold" BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -60,38 +78,37 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="ID" Grid.Column="0" Foreground="Blue"/>
+                    <Label Content="ID" Grid.Column="0"/>
                     <TextBox Grid.Column="1" x:Name="CompanyId" Text="{Binding Path=SiCompany.CompanyId, Mode=TwoWay}"/>
-                    <Label Content="Name" Grid.Column="2" Foreground="Blue"/>
+                    <Label Content="Name" Grid.Column="2"/>
                     <TextBox Grid.Column="3" x:Name="CompanyName" Text="{Binding Path=SiCompany.CompanyName, Mode=TwoWay}"/>
-                    <Label Content="Address" Grid.Column="4" Foreground="Blue"/>
+                    <Label Content="Address" Grid.Column="4"/>
                     <TextBox Grid.Column="5" x:Name="CompanyAddress" Text="{Binding Path=SiCompany.CompanyAddress, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click" Background="Green"/>
-                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="Orange"/>
-                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed"/>
+                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click" Background="Green" Foreground="Black"/>
+                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="Orange" Foreground="Black"/>
+                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" Background="Blue" Foreground="Black"/>
             </StackPanel>
-            <GroupBox Header="Company List" BorderBrush="#D4D4D4" BorderThickness="1">
+            <GroupBox Header="Company List" BorderBrush="Gold" BorderThickness="1">
                 <DataGrid x:Name="grdCompany" ItemsSource="{Binding SiCompany}" CanUserAddRows="False" SelectionChanged="LoadGrdCompany"
                           MouseDoubleClick="grdCompany_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                     <DataGrid.Columns>
-                        <!--<DataGridTextColumn Header="ID" Binding="{Binding Id}" Visibility="Hidden"/>-->
                         <DataGridTextColumn Header="CompanyID" Binding="{Binding CompanyId}" Width="100"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" Width="*"/>
                         <DataGridTextColumn Header="Address" Binding="{Binding CompanyAddress}" Width="*"/>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" Click="ButtonSelect_Click"/>
+                                    <Button Content="Select" x:Name="Select" CommandParameter="{Binding}" Click="ButtonSelect_Click" Background="Gold" Foreground="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CompanyId}" Click="grdCompany_ButtonDelete_Click" Background="#FF6347"/>
+                                    <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CompanyId}" Click="grdCompany_ButtonDelete_Click" Background="Red" Foreground="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

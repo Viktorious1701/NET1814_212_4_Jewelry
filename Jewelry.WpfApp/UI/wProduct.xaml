@@ -15,13 +15,13 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Foreground" Value="Gold"/>
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="25"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="Background" Value="#2e2e2e"/>
         </Style>
         <Style TargetType="Button">
@@ -36,14 +36,14 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
-            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="Background" Value="#1e1e1e"/>
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="BorderBrush" Value="#D4D4D4"/>
-            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="Background" Value="#1e1e1e"/>
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="RowBackground" Value="#2e2e2e"/>
