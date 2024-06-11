@@ -1,0 +1,101 @@
+﻿<Window x:Class="Jewelry.WpfApp.UI.wOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
+        mc:Ignorable="d"
+        Title="Order" Height="450" Width="940">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox Header="Order Form" Margin="10">
+                <Grid Height="120">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="OrderId" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="OrderId" Height="25" Text="{Binding Path=SiOrder.OrderId, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="CustomerId" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="CustomerId" Height="25" Text="{Binding Path=SiOrder.CustomerId, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="PromotionId" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="5" x:Name="PromotionId" Height="25" Text="{Binding Path=SiOrder.PromotionId, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="OrderDate" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="OrderDate" Height="25" Text="{Binding Path=SiOrder.OrderDate, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="TotalAmount" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="TotalAmount" Height="25" Text="{Binding Path=SiOrder.TotalAmount, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="Discount" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4" Grid.Row="1"/>
+                    <TextBox Grid.Row="1" Grid.Column="5" x:Name="Discount" Height="25" Text="{Binding Path=SiOrder.Discount, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="PaymentMethod" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="PaymentMethod" Height="25" Text="{Binding Path=SiOrder.PaymentMethod, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="PaymentStatus" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Height="25" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                    <Label Content="ShipmentStatus" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Column="4" Grid.Row="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Height="25" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"  Margin="5"  Width="180" HorizontalAlignment="Left"/>
+                </Grid>
+            </GroupBox>
+            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="ButtonSave" Content="Save" Height="30" Width="80"
+                Command="{Binding SaveCommand}" Click="ButtonSave_Click" />
+                <Button x:Name="ButtonCancel" Content="Cancel" Height="30" Width="80" 
+                Command="{Binding ResetCommand}" Margin="5,0,10,0" Click="ButtonCancel_Click" />
+            </StackPanel>
+            <StackPanel Height="210">
+                <DataGrid x:Name="grdCurrency" AutoGenerateColumns="False" ItemsSource="{Binding SiOrder}" CanUserAddRows="False" Height="200" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="OrderId" Binding="{Binding Path=OrderId}" Width="50" Visibility="Visible"/>
+                        <DataGridTextColumn Header="CustomerId" Binding="{Binding Path=CustomerId}" Width="80" Visibility="Visible"/>
+                        <DataGridTextColumn Header="PromotionId" Binding="{Binding Path=PromotionId}" Width="80"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="OrderDate" Binding="{Binding Path=OrderDate}" Width="80"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="TotalAmount" Binding="{Binding Path=TotalAmount}" Width="90" Visibility="Visible"/>
+                        <DataGridTextColumn Header="Discount" Binding="{Binding Path=Discount}" Width="80"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100"  IsReadOnly="True"/>
+                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                    <Button Content="Select" x:Name="ButtonUpdate" Click="ButtonEdit_Click_1"/>
+                                </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                    <Button Content="X" x:Name="ButtonDelete" Click="ButtonDelete_Click"/>
+                                </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
