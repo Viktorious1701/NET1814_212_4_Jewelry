@@ -18,9 +18,9 @@ namespace Jewelry.Business
     public class OrderBusiness : IOrderBusiness
     {
         private readonly UnitOfWork _unitOfWork;
-        private readonly NET1814_212_4_JewelryContext _context;
+        private readonly Net1814_212_4_JewelryContext _context;
 
-        public OrderBusiness(UnitOfWork unitOfWork, NET1814_212_4_JewelryContext context)
+        public OrderBusiness(UnitOfWork unitOfWork, Net1814_212_4_JewelryContext context)
         {
             _unitOfWork = unitOfWork;
             _context = context;

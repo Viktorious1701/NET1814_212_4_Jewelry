@@ -6,9 +6,9 @@ namespace Jewelry.Data.Repository
 {
     public class OrderRepository : GenericRepository<SiOrder>
     {
-        private readonly NET1814_212_4_JewelryContext _context;
+        private readonly Net1814_212_4_JewelryContext _context;
 
-        public OrderRepository(NET1814_212_4_JewelryContext context) : base(context)
+        public OrderRepository(Net1814_212_4_JewelryContext context) : base(context)
         {
             _context = context;
         }

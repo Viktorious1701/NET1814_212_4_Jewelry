@@ -22,6 +22,10 @@ namespace Jewelry.Data
         {
             _unitOfWorkContext ??= new Net1814_212_4_JewelryContext();
         }
+        public UnitOfWork(Net1814_212_4_JewelryContext unitOfWorkContext)
+        {
+            _unitOfWorkContext = unitOfWorkContext;
+        }
         public ProductRepository ProductRepository
         {
             get
@@ -29,7 +33,13 @@ namespace Jewelry.Data
                 return _product??= new Repository.ProductRepository(_unitOfWorkContext);
             }
         }
-
+        public OrderRepository OrderRepository
+        {
+            get
+            {
+                return _order = new Repository.OrderRepository(_unitOfWorkContext); 
+            }
+        }
         public CategoryRepository CategoryRepository
         {
             get
@@ -58,13 +68,7 @@ namespace Jewelry.Data
                  return _company ??= new Repository.CompanyRepository();
              }
          }
-                 public OrderRepository OrderRepository
-        {
-            get
-            {
-                return _order ??= new OrderRepository(_unitOfWorkContext);
-            }
-        }
+         
         ////TO-DO CODE HERE/////////////////
 
         #region Set transaction isolation levels

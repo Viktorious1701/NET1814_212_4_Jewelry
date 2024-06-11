@@ -21,7 +21,7 @@ namespace Jewelry.WpfApp.UI
         public wOrder()
         {
             InitializeComponent();
-            var context = new NET1814_212_4_JewelryContext();
+            var context = new Net1814_212_4_JewelryContext();
             var unitOfWork = new UnitOfWork(context);
             _order = new OrderBusiness(unitOfWork, context);
             this.LoadOrders();
