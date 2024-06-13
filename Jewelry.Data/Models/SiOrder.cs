@@ -25,6 +25,8 @@ public partial class SiOrder
 
     public string ShipmentStatus { get; set; }
 
+    public string Description { get; set; }
+
     public virtual SiCustomer Customer { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

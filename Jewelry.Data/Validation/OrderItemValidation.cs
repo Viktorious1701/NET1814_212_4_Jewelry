@@ -10,7 +10,7 @@ namespace Jewelry.Data.Validation
 {
     public class OrderItemValidation
     {
-        private readonly NET1814_212_4_JewelryContext _context;
+        private readonly Net1814_212_4_JewelryContext _context;
         public bool ValidateOrderItem(OrderItem orderItem)
         {
             if(orderItem == null)

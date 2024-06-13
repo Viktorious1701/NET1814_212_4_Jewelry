@@ -13,5 +13,19 @@ public partial class SiCompany
 
     public string CompanyAddress { get; set; }
 
+    public string EmailAddress { get; set; }
+
+    public string Hotline { get; set; }
+
+    public string ZipCode { get; set; }
+
+    public int? NoOfYearsInBusiness { get; set; }
+
+    public string Policy { get; set; }
+
+    public int? EmployeeNum { get; set; }
+
+    public string ContactPerson { get; set; }
+
     public virtual ICollection<Promotion> Promotions { get; set; } = new List<Promotion>();
 }
