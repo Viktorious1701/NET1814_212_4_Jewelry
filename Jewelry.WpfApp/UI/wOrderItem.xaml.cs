@@ -77,6 +77,8 @@ namespace Jewelry.WpfApp.UI
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ClearForm();
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\finger-snap.wav");
+            player.Play();
         }
         private void ClearForm()
         {
@@ -111,6 +113,11 @@ namespace Jewelry.WpfApp.UI
                 Quantity.Text = orderItem.Quantity.ToString();
                 Price.Text = orderItem.Price.ToString();
             }
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\bomb.wav");
+            player.Play();
+
+
+
         }
         private async void grdProduct_MouseDouble_Click(object sender, RoutedEventArgs e)
         {
@@ -150,11 +157,16 @@ namespace Jewelry.WpfApp.UI
 
             if (!string.IsNullOrEmpty(orderItemId))
             {
+                System.Media.SoundPlayer player1 = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\riel.wav");
+                player1.Play();
                 if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\nuke-bomb.wav");
+                    player.Play();
                     var result = await _business.DeleteById(int.Parse(orderItemId));
                     MessageBox.Show($"{result.Message}", "Delete");
                     this.GetOrderItemsAsync();
+
                 }
             }
         }

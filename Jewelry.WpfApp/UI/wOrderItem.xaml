@@ -43,15 +43,15 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <!--<Grid.Background>
+        <Grid.Background>
             <VisualBrush>
                 <VisualBrush.Visual>
-                    <Image gif:ImageBehavior.AnimatedSource="d-point.gif"
+                    <Image gif:ImageBehavior.AnimatedSource="Images/kitty-cat.gif"
                    gif:ImageBehavior.AutoStart="True"
                    gif:ImageBehavior.RepeatBehavior="Forever"/>
                 </VisualBrush.Visual>
             </VisualBrush>
-        </Grid.Background>-->
+        </Grid.Background>
         <StackPanel Orientation="Vertical">
             <GroupBox Header="Order Item Form" BorderBrush="#D4D4D4" BorderThickness="1">
                 <Grid>

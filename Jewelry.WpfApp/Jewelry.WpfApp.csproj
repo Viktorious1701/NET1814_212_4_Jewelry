@@ -9,9 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="UI\Images\d-point.gif" />
+    <None Remove="UI\Images\kitty-cat.gif" />
+    <None Remove="UI\Sounds\bomb.mp3" />
+    <None Remove="UI\Sounds\bomb.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
@@ -22,7 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\images\" />
+    <Resource Include="UI\Images\d-point.gif" />
+    <Resource Include="UI\Images\kitty-cat.gif" />
+    <Resource Include="UI\Sounds\bomb.mp3" />
+    <Resource Include="UI\Sounds\bomb.wav" />
   </ItemGroup>
 
 </Project>
