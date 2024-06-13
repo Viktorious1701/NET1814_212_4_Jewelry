@@ -19,6 +19,14 @@ public partial class OrderItem
 
     public int? Subtotal { get; set; }
 
+    public double? Discount { get; set; }
+
+    public double? Total { get; set; }
+
+    public string Status { get; set; }
+
+    public int? CustomerId { get; set; }
+
     public virtual SiOrder Order { get; set; }
 
     public virtual SiProduct Product { get; set; }
