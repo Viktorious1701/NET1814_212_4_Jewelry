@@ -1,14 +1,13 @@
-﻿
-using Jewelry.Business;
+﻿using Jewelry.Business;
 using Jewelry.Data.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Jewelry.WpfApp.UI
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
     public partial class wProduct : Window
     {
         private readonly IProductBusiness _business;
@@ -18,133 +17,16 @@ namespace Jewelry.WpfApp.UI
             _business = new ProductBusiness();
             Loaded += OnWindowLoaded;
         }
-        private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var button = sender as Button;
-                var item = button?.DataContext as SiProduct;
 
-                if (item != null)
-                {
-                    ProductId.Text = Convert.ToString(item.ProductId);
-                    CategoryId.Text = Convert.ToString(item.CategoryId);
-                    Name.Text = item.Name;
-                    Description.Text = item.Description;
-                    Barcode.Text = item?.Barcode;
-                    Weight.Text = Convert.ToString(item.Weight);
-                    CostPrice.Text = Convert.ToString(item.CostPrice);
-                    GoldPrice.Text = Convert.ToString(item.GoldPrice);
-                    LaborCost.Text = Convert.ToString(item.LaborCost);
-                    StoneCost.Text = Convert.ToString(item.StoneCost);
-                    SellPriceRatio.Text = Convert.ToString(item.SellPriceRatio);
-
-                    LoadGrdProducts();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-        }
-        private async void grdProduct_ButtonSave_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                
-                var item = await _business.GetById(int.Parse(ProductId.Text));
-                if(item.Data == null) {
-
-                    var products = new SiProduct()
-                    {
-                        ProductId = int.Parse(ProductId.Text),
-                        Name = Name.Text,
-                        CategoryId = int.Parse(CategoryId.Text),
-                        Description = Description.Text,
-                        Barcode = Barcode.Text,
-                        Weight = double.Parse(Weight.Text),
-                        CostPrice = int.Parse(CostPrice.Text),
-                        GoldPrice = int.Parse(GoldPrice.Text),
-                        LaborCost = int.Parse(LaborCost.Text),
-                        StoneCost = int.Parse(StoneCost.Text),
-                        SellPriceRatio = double.Parse(SellPriceRatio.Text)
-                    };
-
-                    var result = await _business.Save(products);
-                    MessageBox.Show(result.Message, "Save");
-
-                }
-                else
-                {
-                    var product = item.Data as SiProduct;
-                    if(product !=null)
-                    {
-                        product.Name = Name.Text;
-                        product.CategoryId = int.Parse(CategoryId.Text);
-                        product.Description = Description.Text;
-                        product.Barcode = Barcode.Text;
-                        product.Weight = double.Parse(Weight.Text);
-                        product.CostPrice = int.Parse(CostPrice.Text);
-                        product.GoldPrice = int.Parse(GoldPrice.Text);
-                        product.LaborCost = int.Parse(LaborCost.Text);
-                        product.StoneCost = int.Parse(StoneCost.Text);
-                        product.SellPriceRatio = double.Parse(SellPriceRatio.Text);
-                    }
-
-                    Console.WriteLine("save CHANGES");
-                    var result = await _business.Update(product);
-                    MessageBox.Show(result.Message, "Save");
-                }
-               
-
-                ProductId.Text = string.Empty;
-                Name.Text = string.Empty;
-                CategoryId.Text = string.Empty;
-                Description.Text = string.Empty;
-                Barcode.Text = string.Empty;
-                Weight.Text = string.Empty;
-                CostPrice.Text = string.Empty;
-                GoldPrice.Text = string.Empty;
-                LaborCost.Text = string.Empty;
-                StoneCost.Text = string.Empty;
-                SellPriceRatio.Text = string.Empty;
-
-                clearForm();
-                LoadGrdProducts();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-
-        }
-        private void clearForm()
-        {
-            ProductId.Text = string.Empty;
-            Name.Text = string.Empty;
-            CategoryId.Text = string.Empty;
-            Description.Text = string.Empty;
-            Barcode.Text = string.Empty;
-            Weight.Text = string.Empty;
-            CostPrice.Text = string.Empty;
-            GoldPrice.Text = string.Empty;
-            LaborCost.Text = string.Empty;
-            StoneCost.Text = string.Empty;
-            SellPriceRatio.Text = string.Empty;
-        }
-        private void grdProduct_ButtonCancel_Click(object sender, RoutedEventArgs e)
-        {
-            clearForm();   
-        }
         private async void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             await LoadGrdProducts();
+            LoadColumns();
         }
 
         private async Task LoadGrdProducts()
         {
             var result = await _business.GetAll();
-
             if (result.Status > 0 && result.Data != null)
             {
                 grdProduct.ItemsSource = result.Data as List<SiProduct>;
@@ -154,54 +36,104 @@ namespace Jewelry.WpfApp.UI
                 grdProduct.ItemsSource = new List<SiProduct>();
             }
         }
+
+
+        private void LoadColumns()
+        {
+            // Adding column names to the ComboBox
+            var columns = new List<string>
+            {
+                "ProductId",
+                "Name",
+                "CategoryId",
+                "Description",
+                "Barcode",
+                "Weight",
+                "CostPrice",
+                "GoldPrice",
+                "LaborCost",
+                "StoneCost",
+                "SellPriceRatio"
+            };
+            ColumnComboBox.ItemsSource = columns;
+        }
+
+        private async void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedColumn = ColumnComboBox.SelectedItem as string;
+            var searchText = SearchTextBox.Text;
+
+            var result = await _business.GetAll(); // Assume this gets all products
+            if (result.Status > 0 && result.Data != null)
+            {
+                var filteredData = result.Data as List<SiProduct>;
+
+                if (!string.IsNullOrEmpty(selectedColumn) && !string.IsNullOrEmpty(searchText))
+                {
+                    filteredData = filteredData.Where(p =>
+                    {
+                        var property = p.GetType().GetProperty(selectedColumn);
+                        if (property != null)
+                        {
+                            var value = property.GetValue(p, null)?.ToString();
+                            return value != null && value.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+                        }
+                        return false;
+                    }).ToList();
+                }
+
+                grdProduct.ItemsSource = filteredData;
+            }
+            else
+            {
+                grdProduct.ItemsSource = new List<SiProduct>();
+            }
+        }
+
+
+        private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            var addProductWindow = new AddProduct();
+            addProductWindow.ShowDialog();
+            LoadGrdProducts(); // Refresh the product list after adding/updating a product
+        }
+
+        private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                var productId = (int)button.CommandParameter;
+                var addProductWindow = new AddProduct(productId);
+                addProductWindow.ShowDialog();
+                LoadGrdProducts(); // Refresh the product list after adding/updating a product
+            }
+        }
+
         private async void grdProduct_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = (Button)sender;
-
-            string productId = btn.CommandParameter.ToString();
-
-            //MessageBox.Show(productId);
-
-            if (!string.IsNullOrEmpty(productId))
+            if (sender is Button button)
             {
-                if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                var productId = (int)button.CommandParameter;
+                var result = await _business.DeleteById(productId);
+                if (result.Status > 0)
                 {
-                    var result = await _business.DeleteById(int.Parse(productId));
-                    MessageBox.Show($"{result.Message}", "Delete");
-                    this.LoadGrdProducts();
+                    LoadGrdProducts(); // Refresh the product list after deletion
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete the product.");
                 }
             }
         }
-        private async void grdProduct_MouseDouble_Click (object sender, RoutedEventArgs e)
-        {
-            DataGrid grd = sender as DataGrid;
-            if (grd != null && grd.SelectedItem != null && grd.SelectedItems.Count == 1)
-            {
-                var row = grd.ItemContainerGenerator.ContainerFromItem(grd.SelectedItem) as DataGridRow;
-                if (row != null)
-                {
-                    var item = row.Item as SiProduct;
-                    if (item != null)
-                    {
-                        var productResult = await _business.GetById(item.ProductId);
 
-                        if (productResult.Status > 0 && productResult.Data != null)
-                        {
-                            item = productResult.Data as SiProduct;
-                            ProductId.Text = Convert.ToString(item.ProductId);
-                            CategoryId.Text = Convert.ToString(item.CategoryId);
-                            Name.Text = item.Name;
-                            Description.Text = item.Description;
-                            Barcode.Text = item?.Barcode;
-                            Weight.Text = Convert.ToString(item.Weight);
-                            CostPrice.Text = Convert.ToString(item.CostPrice);
-                            GoldPrice.Text = Convert.ToString(item.GoldPrice);
-                            LaborCost.Text = Convert.ToString(item.LaborCost);
-                            StoneCost.Text = Convert.ToString(item.StoneCost);
-                            SellPriceRatio.Text = Convert.ToString(item.SellPriceRatio);
-                        }
-                    }
-                }
+        private void grdProduct_MouseDouble_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var selectedProduct = grdProduct.SelectedItem as SiProduct;
+            if (selectedProduct != null)
+            {
+                var addProduct = new AddProduct();
+                addProduct.ShowDialog();
+                LoadGrdProducts(); // Refresh the product list after adding/updating a product
             }
         }
     }
