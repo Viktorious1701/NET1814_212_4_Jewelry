@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using System.Xml.Linq;
 
@@ -64,6 +65,10 @@ namespace Jewelry.WpfApp.UI
 
                     var result = await _order.Save(order);
                     MessageBox.Show(result.Message, "Save");
+                    if (result.Status > 0) // Assuming a positive status indicates success
+                    {
+                        LoadOrders(); // Refresh the data grid
+                    }
                 }
                 else
                 {
@@ -82,6 +87,10 @@ namespace Jewelry.WpfApp.UI
 
                         var result = await _order.Update(siOrder);
                         MessageBox.Show(result.Message, "Save");
+                        if (result.Status > 0) // Assuming a positive status indicates success
+                        {
+                            LoadOrders(); // Refresh the data grid
+                        }
                     }
                 }
 
@@ -188,6 +197,22 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        
+        private void grdCurrency_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var order = ((FrameworkElement)e.OriginalSource).DataContext as SiOrder; // Replace OrderType with your actual order class
+            if (order != null)
+            {
+                // Populate the form fields with the order details for editing
+                OrderId.Text = order.OrderId.ToString();
+                CustomerId.Text = order.CustomerId?.ToString() ?? "";
+                PromotionId.Text = order.PromotionId?.ToString() ?? "";
+                OrderDate.Text = order.OrderDate.ToString();
+                TotalAmount.Text = order.TotalAmount.ToString();
+                Discount.Text = order.Discount.ToString();
+                PaymentMethod.Text = order.PaymentMethod;
+                PaymentStatus.Text = order.PaymentStatus;
+                ShipmentStatus.Text = order.ShipmentStatus;
+            }
+        }
     }
 }

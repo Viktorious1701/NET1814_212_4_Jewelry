@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Order" Height="450" Width="940" Background="Black">
+        Title="Order" Height="550" Width="1140" Background="Black">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -113,14 +113,14 @@
                         <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100" IsReadOnly="True"/>
-                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn Width="150">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="Select" x:Name="ButtonUpdate" Click="ButtonEdit_Click_1"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn Width="150">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="X" x:Name="ButtonDelete" Click="ButtonDelete_Click" Background="Red" Foreground="Black"/>
