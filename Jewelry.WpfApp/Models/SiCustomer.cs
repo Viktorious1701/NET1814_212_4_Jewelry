@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SE183584ConsoleEFApp.Models;
+namespace Jewelry.WpfApp.Models;
 
 public partial class SiCustomer
 {
@@ -13,7 +13,21 @@ public partial class SiCustomer
 
     public string Phone { get; set; }
 
+    public string AlterContact { get; set; }
+
     public string Address { get; set; }
+
+    public bool? Gender { get; set; }
+
+    public DateTime? DateOfBirth { get; set; }
+
+    public string Country { get; set; }
+
+    public string Job { get; set; }
+
+    public string Email { get; set; }
+
+    public string ZipCode { get; set; }
 
     public virtual ICollection<SiOrder> SiOrders { get; set; } = new List<SiOrder>();
 }

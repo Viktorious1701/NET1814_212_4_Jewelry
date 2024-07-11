@@ -62,10 +62,12 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <GroupBox Header="Company" BorderBrush="Gold" BorderThickness="1">
+        <StackPanel Orientation="Vertical" Margin="-10,-10,10,10">
+            <GroupBox Header="Company" BorderBrush="Gold" BorderThickness="1" Height="263">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -78,26 +80,50 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="ID" Grid.Column="0"/>
-                    <TextBox Grid.Column="1" x:Name="CompanyId" Text="{Binding Path=SiCompany.CompanyId, Mode=TwoWay}"/>
-                    <Label Content="Name" Grid.Column="2"/>
-                    <TextBox Grid.Column="3" x:Name="CompanyName" Text="{Binding Path=SiCompany.CompanyName, Mode=TwoWay}"/>
-                    <Label Content="Address" Grid.Column="4"/>
-                    <TextBox Grid.Column="5" x:Name="CompanyAddress" Text="{Binding Path=SiCompany.CompanyAddress, Mode=TwoWay}"/>
+                    <Label Content="ID" Grid.Column="0" Height="29" Margin="15,8,35,0" RenderTransformOrigin="0.598,0.557" VerticalAlignment="Top"/>
+                    <TextBox x:Name="CompanyId" Text="{Binding Path=SiCompany.CompanyId, Mode=TwoWay}" Margin="95,14,126,10" Grid.ColumnSpan="2"/>
+                    <Label Content="Name" Grid.Column="1" Grid.ColumnSpan="2" Margin="110,12,60,0" VerticalAlignment="Top" Height="30"/>
+                    <TextBox Grid.Column="2" x:Name="CompanyName" Text="{Binding Path=SiCompany.CompanyName, Mode=TwoWay}" Margin="10,10,100,14"  Grid.ColumnSpan="2"/>
+                    <Label Content="Address" Grid.Column="4" Margin="0,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="80" Height="29"/>
+                    <TextBox Grid.Column="5" x:Name="CompanyAddress" Text="{Binding Path=SiCompany.CompanyAddress, Mode=TwoWay}" Margin="10,12,133,12" Grid.ColumnSpan="3"/>
+                    <Label Content="Email" Grid.Row="1" Grid.Column="0" Margin="15,10,5,0" VerticalAlignment="Top"/>
+                    <TextBox Grid.Row="1" x:Name="EmailAddress" Text="{Binding Path=SiCompany.EmailAddress, Mode=TwoWay}" Margin="95,16,54,16" Grid.ColumnSpan="2"/>
+                    <Label Content="Hotline" Grid.Row="1" Grid.Column="2" Margin="0,10,20,0" VerticalAlignment="Top"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="Hotline" Text="{Binding Path=SiCompany.Hotline, Mode=TwoWay}" Margin="0,17,60,17"/>
+                    <Label Content="Zip Code" Grid.Row="1" Grid.Column="4" Margin="0,10,20,0" VerticalAlignment="Top"/>
+                    <TextBox Grid.Row="1" Grid.Column="5" x:Name="ZipCode" Text="{Binding Path=SiCompany.ZipCode, Mode=TwoWay}" Margin="10,17,100,17" />
+                    <Label Content="NoOfYearsInBusiness" Grid.Row="1" Grid.Column="5" Margin="170,10,50,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Row="1" Grid.Column="6" x:Name="NoOfYearsInBusiness" Text="{Binding Path=SiCompany.NoOfYearsInBusiness, Mode=TwoWay}" Margin="77,17,133,17" Grid.ColumnSpan="2"/>
+
+                    <!-- New Fields -->
+                    <Label Content="Policy" Grid.Row="2" Grid.Column="0" Margin="10,10,15,6" VerticalAlignment="Stretch"/>
+                    <TextBox Grid.Row="2" x:Name="Policy" Text="{Binding Path=SiCompany.Policy, Mode=TwoWay}" Margin="95,15,37,5" Grid.ColumnSpan="3"/>
+                    <Label Content="EmployeeNum" Grid.Row="2" Grid.Column="3" Margin="18,12,60,4" VerticalAlignment="Stretch"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" x:Name="EmployeeNum" Text="{Binding Path=SiCompany.EmployeeNum, Mode=TwoWay}" Margin="180,14,20,6" Grid.ColumnSpan="2"/>
+                    <Label Content="ContactPerson" Grid.Row="2" Grid.Column="5" Margin="55,0,39,0" Height="27"/>
+                    <TextBox Grid.Row="2" Grid.Column="6" x:Name="ContactPerson" Text="{Binding Path=SiCompany.ContactPerson, Mode=TwoWay}" Margin="10,14,133,6" Grid.ColumnSpan="2"/>
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click" Background="Green" Foreground="Black"/>
-                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="Orange" Foreground="Black"/>
-                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" Background="Blue" Foreground="Black"/>
+                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click" Background="#32CD32"/>
+                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="#808080" />
+                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" />
+                <Button x:Name="ButtonSearch" Content="Search" Command="{Binding SearchCommand}" Click="ButtonSearch_Click" Background="#32CD32"/>
             </StackPanel>
             <GroupBox Header="Company List" BorderBrush="Gold" BorderThickness="1">
-                <DataGrid x:Name="grdCompany" ItemsSource="{Binding SiCompany}" CanUserAddRows="False" SelectionChanged="LoadGrdCompany"
-                          MouseDoubleClick="grdCompany_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+                <DataGrid x:Name="grdCompany" AutoGenerateColumns="False" ItemsSource="{Binding SiCompany}" CanUserAddRows="False" SelectionMode="Single" SelectionUnit="FullRow"
+          MouseDoubleClick="grdCompany_MouseDouble_Click">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="CompanyID" Binding="{Binding CompanyId}" Width="100"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" Width="*"/>
-                        <DataGridTextColumn Header="Address" Binding="{Binding CompanyAddress}" Width="*"/>
+                        <DataGridTextColumn Header="CompanyID" Binding="{Binding CompanyId}" Width="80"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding CompanyName}" Width="150"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding CompanyAddress}" Width="150"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding EmailAddress}" Width="150"/>
+                        <DataGridTextColumn Header="Hotline" Binding="{Binding Hotline}" Width="100"/>
+                        <DataGridTextColumn Header="ZipCode" Binding="{Binding ZipCode}" Width="80"/>
+                        <DataGridTextColumn Header="YearsInBusiness" Binding="{Binding NoOfYearsInBusiness}" Width="120"/>
+                        <DataGridTextColumn Header="Policy" Binding="{Binding Policy}" Width="100"/>
+                        <DataGridTextColumn Header="EmployeeNum" Binding="{Binding EmployeeNum}" Width="100"/>
+                        <DataGridTextColumn Header="ContactPerson" Binding="{Binding ContactPerson}" Width="120"/>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -109,6 +135,13 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CompanyId}" Click="grdCompany_ButtonDelete_Click" Background="Red" Foreground="Black"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="View" x:Name="ButtonView" CommandParameter="{Binding CompanyId}" Click="ButtonView_Click" Height="25" Width="70" Background="Gold"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

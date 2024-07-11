@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SE183584ConsoleEFApp.Models;
+namespace Jewelry.WpfApp.Models;
 
 public partial class Promotion
 {
