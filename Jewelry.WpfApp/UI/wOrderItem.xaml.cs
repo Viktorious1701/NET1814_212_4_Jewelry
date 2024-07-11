@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -63,7 +64,10 @@ namespace Jewelry.WpfApp.UI
                     ClearForm();
                     GetOrderItemsAsync();
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\tactical-nuke.wav");
-                    player.Play();
+                    if (player != null)
+                    {
+                        player.Play();
+                    }
                 }
                 else
                 {
@@ -129,7 +133,11 @@ namespace Jewelry.WpfApp.UI
                 Discount.Text = orderItem.Discount.ToString();
             }
             System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\i-am-the-chosen-one.wav");
-            player.Play();
+            if(player!=null)
+            {
+                player.Play();
+            }
+            
 
 
 
@@ -173,11 +181,17 @@ namespace Jewelry.WpfApp.UI
             if (!string.IsNullOrEmpty(orderItemId))
             {
                 System.Media.SoundPlayer player1 = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\riel.wav");
-                player1.Play();
+                if (player1 != null)
+                {
+                    player1.Play();
+                }
                 if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\nuke-bomb.wav");
-                    player.Play();
+                    if (player != null)
+                    {
+                        player.Play();
+                    }
                     var result = await _business.DeleteById(int.Parse(orderItemId));
                     MessageBox.Show($"{result.Message}", "Delete");
                     this.GetOrderItemsAsync();
