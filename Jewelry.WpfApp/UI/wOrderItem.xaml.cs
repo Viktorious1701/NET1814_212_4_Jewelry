@@ -62,7 +62,7 @@ namespace Jewelry.WpfApp.UI
                     var result = await _business.Save(orderItem);
                     MessageBox.Show(result.Message, "Save");
                     ClearForm();
-                    GetOrderItemsAsync();
+                    await GetOrderItemsAsync();
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\tactical-nuke.wav");
                     if (player != null)
                     {
@@ -163,7 +163,12 @@ namespace Jewelry.WpfApp.UI
                             ProductID.Text = Convert.ToString(item.ProductId);
                             Quantity.Text = Convert.ToString(item.Quantity);
                             Price.Text = Convert.ToString(item.ProductId);
-                          
+                            SubTotal.Text = Convert.ToString(item.Subtotal);
+                            Discount.Text = Convert.ToString(item.Discount);
+                            Total.Text = Convert.ToString(item.Total);
+                            Status.Text = item.Status;
+                            CustomerID.Text = Convert.ToString(item.CustomerId);
+
                         }
                     }
                 }
@@ -194,7 +199,7 @@ namespace Jewelry.WpfApp.UI
                     }
                     var result = await _business.DeleteById(int.Parse(orderItemId));
                     MessageBox.Show($"{result.Message}", "Delete");
-                    this.GetOrderItemsAsync();
+                    await this.GetOrderItemsAsync();
 
                 }
             }
@@ -216,6 +221,10 @@ namespace Jewelry.WpfApp.UI
                     existingOrderItem.Quantity = Convert.ToInt32(Quantity.Text);
                     existingOrderItem.Price = Convert.ToInt32(Price.Text);
                     existingOrderItem.Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text);
+                    existingOrderItem.Discount = Convert.ToDouble(Discount.Text);
+                    existingOrderItem.Total = Convert.ToDouble(SubTotal.Text) * (1-Convert.ToDouble(Discount.Text));
+                    existingOrderItem.Status = Status.Text;
+                    existingOrderItem.CustomerId = Convert.ToInt32(CustomerID.Text);
 
                     // Save the updated OrderItem
                     var updateResult = await _business.Update(existingOrderItem);
@@ -224,7 +233,7 @@ namespace Jewelry.WpfApp.UI
                     MessageBox.Show(updateResult.Message, "Update");
 
                     // Refresh the grid to show updated data
-                    GetOrderItemsAsync();
+                    await GetOrderItemsAsync();
                 }
                 else
                 {
