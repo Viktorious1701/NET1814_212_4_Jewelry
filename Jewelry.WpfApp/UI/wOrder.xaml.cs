@@ -115,14 +115,27 @@ namespace Jewelry.WpfApp.UI
 
         }
 
-        private async void LoadOrders()
+        private async void LoadOrders(string searchInput = null)
         {
             try
             {
                 var result = await _order.GetAll();
                 if (result.Status > 0 && result.Data != null)
                 {
-                    grdCurrency.ItemsSource = (System.Collections.IEnumerable)result.Data;
+                    var orders = result.Data as IEnumerable<SiOrder>;
+                    if (!string.IsNullOrEmpty(searchInput))
+                    {
+                        // Splitting the input into column name and search term
+                        var parts = searchInput.Split(new[] { ' ' }, 2);
+                        if (parts.Length == 2)
+                        {
+                            var columnName = parts[0];
+                            var searchTerm = parts[1];
+
+                            orders = orders.Where(o => DoesColumnContain(o, columnName, searchTerm, StringComparison.OrdinalIgnoreCase));
+                        }
+                    }
+                    grdCurrency.ItemsSource = orders;
                 }
                 else
                 {
@@ -133,6 +146,39 @@ namespace Jewelry.WpfApp.UI
             {
                 MessageBox.Show(ex.ToString(), "Error");
             }
+        }
+
+        private bool DoesColumnContain(SiOrder order, string columnName, string searchTerm, StringComparison comparison)
+        {
+            switch (columnName)
+            {
+                case "CustomerId":
+                    return order.CustomerId.ToString().Contains(searchTerm, comparison);
+                case "PromotionId":
+                    return order.PromotionId?.ToString().Contains(searchTerm, comparison) ?? false;
+                case "OrderDate":
+                    return order.OrderDate.ToString().Contains(searchTerm, comparison);
+                case "TotalAmount":
+                    return order.TotalAmount.ToString().Contains(searchTerm, comparison);
+                case "Discount":
+                    return order.Discount?.ToString().Contains(searchTerm, comparison) ?? false;
+                case "PaymentMethod":
+                    return order.PaymentMethod?.Contains(searchTerm, comparison) ?? false;
+                case "PaymentStatus":
+                    return order.PaymentStatus?.Contains(searchTerm, comparison) ?? false;
+                case "ShipmentStatus":
+                    return order.ShipmentStatus?.Contains(searchTerm, comparison) ?? false;
+                default:
+                    return false;
+            }
+        }
+
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            // Get the search term from the TextBox
+            var searchTerm = Search.Text;
+            // Call LoadOrders with the search term
+            LoadOrders(searchTerm);
         }
 
         private async void ButtonDelete_Click(object sender, RoutedEventArgs e)
