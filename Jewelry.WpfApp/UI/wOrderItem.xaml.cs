@@ -47,7 +47,12 @@ namespace Jewelry.WpfApp.UI
                     ProductId = Convert.ToInt32(ProductID.Text),
                     Quantity = Convert.ToInt32(Quantity.Text),
                     Price = Convert.ToInt32(Price.Text),
-                    Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text)
+                    Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text),
+                    Total = Convert.ToDouble(Total.Text),
+                    Discount = Convert.ToDouble(SubTotal.Text) * Convert.ToDouble(Discount.Text),
+                    Status = Status.Text,
+                    CustomerId = Convert.ToInt32(CustomerID.Text)
+
                 };
                 var item = await _business.GetById(int.Parse(OrderItemID.Text));
                 if (item.Data == null)
@@ -57,12 +62,12 @@ namespace Jewelry.WpfApp.UI
                     MessageBox.Show(result.Message, "Save");
                     ClearForm();
                     GetOrderItemsAsync();
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\tactical-nuke.wav");
+                    player.Play();
                 }
                 else
                 {
-                    Console.WriteLine("save CHANGES");
-                    var result = await _business.Update(orderItem);
-                    MessageBox.Show(result.Message, "Save");
+                    ButtonUpdate_Click(sender, e);
                     return;
                 
                 }
@@ -77,6 +82,8 @@ namespace Jewelry.WpfApp.UI
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ClearForm();
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\finger-snap.wav");
+            player.Play();
         }
         private void ClearForm()
         {
@@ -85,6 +92,11 @@ namespace Jewelry.WpfApp.UI
             ProductID.Text = string.Empty;
             Quantity.Text = string.Empty;
             Price.Text = string.Empty;
+            SubTotal.Text = string.Empty;
+            Total.Text = string.Empty;
+            Discount.Text = string.Empty;
+            Status.Text = string.Empty;
+            CustomerID.Text = string.Empty;
         }
         private async Task GetOrderItemsAsync()
         {
@@ -110,7 +122,17 @@ namespace Jewelry.WpfApp.UI
                 ProductID.Text = orderItem.ProductId.ToString();
                 Quantity.Text = orderItem.Quantity.ToString();
                 Price.Text = orderItem.Price.ToString();
+                SubTotal.Text = orderItem.Subtotal.ToString();
+                CustomerID.Text = orderItem.CustomerId.ToString();
+                Status.Text = orderItem.Status;
+                Total.Text = orderItem.Total.ToString();
+                Discount.Text = orderItem.Discount.ToString();
             }
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\i-am-the-chosen-one.wav");
+            player.Play();
+
+
+
         }
         private async void grdProduct_MouseDouble_Click(object sender, RoutedEventArgs e)
         {
@@ -150,11 +172,16 @@ namespace Jewelry.WpfApp.UI
 
             if (!string.IsNullOrEmpty(orderItemId))
             {
+                System.Media.SoundPlayer player1 = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\riel.wav");
+                player1.Play();
                 if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\nuke-bomb.wav");
+                    player.Play();
                     var result = await _business.DeleteById(int.Parse(orderItemId));
                     MessageBox.Show($"{result.Message}", "Delete");
                     this.GetOrderItemsAsync();
+
                 }
             }
         }

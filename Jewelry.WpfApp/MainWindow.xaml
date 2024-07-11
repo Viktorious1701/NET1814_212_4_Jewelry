@@ -9,6 +9,7 @@
                 <Button Content="Product" Background="#DAA520" Foreground="Black" Click="Open_jProduct_Click" Margin="5"/>
                 <Button Content="Category" Background="#DAA520" Foreground="Black" Click="Open_jCategory_Click" Margin="5"/>
                 <Button Content="Order Item" Background="#DAA520" Foreground="Black" Click="Open_wOrderItem_Click" Margin="5"/>
+                <Button Content="Order" Background="#DAA520" Foreground="Black" Click="Open_wOrder_Click" Margin="5"/>
                 <Button Content="Customer" Background="#DAA520" Foreground="Black" Click="Open_wCustomer_Click" Margin="5"/>
                 <Button Content="Company" Background="#DAA520" Foreground="Black" Click="Open_wCompany_Click" Margin="5"/>
             </StackPanel>

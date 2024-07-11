@@ -46,7 +46,15 @@ namespace Jewelry.WpfApp.UI
                         CustomerId = Convert.ToInt32(txtCustomerId.Text),
                         Name = txtName.Text,
                         Phone = txtPhone.Text,
-                        Address = txtAddress.Text
+                        Address = txtAddress.Text,
+                        Gender = chkGender.IsChecked,
+                        DateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null,
+                        Email = txtEmail.Text,
+                        Job = txtJob.Text,
+                        AlterContact = txtAltContact.Text,
+                        Country = txtCountry.Text,
+                        ZipCode = txtZipCode.Text,
+
                     };
 
                     var result = await _business.Save(customer);
@@ -59,6 +67,13 @@ namespace Jewelry.WpfApp.UI
                     customer.Name = txtName.Text;
                     customer.Phone = txtPhone.Text;
                     customer.Address = txtAddress.Text;
+                    customer.Gender = chkGender.IsChecked;
+                    customer.DateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null;
+                    customer.Email = txtEmail.Text;
+                    customer.Job = txtJob.Text;
+                    customer.AlterContact = txtAltContact.Text;
+                    customer.Country = txtCountry.Text;
+                    customer.ZipCode = txtZipCode.Text;
 
                     var result = await _business.Update(customer);
                     MessageBox.Show(result.Message, "Save");
@@ -76,6 +91,17 @@ namespace Jewelry.WpfApp.UI
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ClearForm();
+
+            if (_selectedCustomer != null)
+            {
+                ButtonUpdate.Visibility = Visibility.Visible;
+                ButtonSave.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ButtonUpdate.Visibility = Visibility.Collapsed;
+                ButtonSave.Visibility = Visibility.Visible;
+            }
         }
 
         private async Task LoadCustomers()
@@ -110,6 +136,13 @@ namespace Jewelry.WpfApp.UI
                     txtName.Text = _selectedCustomer.Name;
                     txtPhone.Text = _selectedCustomer.Phone;
                     txtAddress.Text = _selectedCustomer.Address;
+                    chkGender.IsChecked = _selectedCustomer.Gender;
+                    txtDateOfBirth.Text = _selectedCustomer.DateOfBirth?.ToString("yyyy-MM-dd");
+                    txtCountry.Text = _selectedCustomer.Country;
+                    txtAltContact.Text = _selectedCustomer.AlterContact;
+                    txtEmail.Text = _selectedCustomer.Email;
+                    txtZipCode.Text = _selectedCustomer.ZipCode;
+                    txtJob.Text = _selectedCustomer.Job;
 
                     ButtonUpdate.Visibility = Visibility.Visible;
                     ButtonSave.Visibility = Visibility.Collapsed;
@@ -127,21 +160,36 @@ namespace Jewelry.WpfApp.UI
                 if (_selectedCustomer != null)
                 {
                     int newCustomerId = int.Parse(txtCustomerId.Text);
-                    String newCustomerName = txtName.Text;
-                    String newPhone = txtPhone.Text;
-                    String newAddress = txtAddress.Text;
+                    string newCustomerName = txtName.Text;
+                    string newPhone = txtPhone.Text;
+                    string newAddress = txtAddress.Text;
+                    bool? newGender = chkGender.IsChecked;
+                    DateTime? newDateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null;
+                    string newCountry = txtCountry.Text;
+                    string newJob = txtJob.Text;
+                    string newAltContact = txtAltContact.Text;
+                    string newEmail = txtEmail.Text;
+                    string newZipCode = txtZipCode.Text;
 
                     if (_selectedCustomer.CustomerId == newCustomerId)
                     {
                         _selectedCustomer.Name = newCustomerName;
                         _selectedCustomer.Phone = newPhone;
                         _selectedCustomer.Address = newAddress;
+                        _selectedCustomer.Gender = newGender;
+                        _selectedCustomer.DateOfBirth = newDateOfBirth;
+                        _selectedCustomer.Country = newCountry;
+                        _selectedCustomer.Job = newJob;
+                        _selectedCustomer.AlterContact = newAltContact;
+                        _selectedCustomer.Email = newEmail;
+                        _selectedCustomer.ZipCode = newZipCode;
                     }
 
                     var result = await _business.Update(_selectedCustomer);
                     MessageBox.Show(result.Message, "Update");
 
                     ClearForm();
+                    LoadCustomers();
                 }
             }
             catch (Exception ex)
@@ -190,6 +238,13 @@ namespace Jewelry.WpfApp.UI
                             txtName.Text = item.Name;
                             txtPhone.Text = item.Phone;
                             txtAddress.Text = item.Address;
+                            chkGender.IsChecked = item.Gender;
+                            txtDateOfBirth.Text = item.DateOfBirth?.ToString("yyyy-MM-dd");
+                            txtCountry.Text = item.Country;
+                            txtAltContact.Text = item.AlterContact;
+                            txtEmail.Text = item.Email;
+                            txtJob.Text = item.Job;
+                            txtZipCode.Text = item.ZipCode;
                         }
                     }
                 }
@@ -208,11 +263,27 @@ namespace Jewelry.WpfApp.UI
                     txtName.Text = _selectedCustomer.Name;
                     txtPhone.Text = _selectedCustomer.Phone;
                     txtAddress.Text = _selectedCustomer.Address;
+                    chkGender.IsChecked = _selectedCustomer.Gender;
+                    txtDateOfBirth.SelectedDate = _selectedCustomer.DateOfBirth; // Fixed binding
+                    txtCountry.Text= _selectedCustomer.Country;
+                    txtAltContact.Text= _selectedCustomer.AlterContact;
+                    txtEmail.Text= _selectedCustomer.Email;
+                    txtJob.Text= _selectedCustomer.Job;
+                    txtZipCode.Text= _selectedCustomer.ZipCode;
+
 
                     txtCustomerId.IsReadOnly = true;
                     txtName.IsReadOnly = true;
                     txtPhone.IsReadOnly = true;
                     txtAddress.IsReadOnly = true;
+                    chkGender.IsEnabled = false;
+                    txtDateOfBirth.IsEnabled  = false;
+                    txtCountry.IsReadOnly = true;
+                    txtAltContact.IsReadOnly = true;
+                    txtEmail.IsReadOnly = true;
+                    txtJob.IsReadOnly = true;
+                    txtZipCode.IsReadOnly = true;
+
 
                     ButtonUpdate.Visibility = Visibility.Collapsed;
                     ButtonSave.Visibility = Visibility.Collapsed;
@@ -224,21 +295,132 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
+        private async void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = await _business.GetAll();
+                var list = result.Data as IEnumerable<SiCustomer>;
+
+                if(list == null || !list.Any())
+                {
+                    MessageBox.Show("No Data Found.");
+                    return;
+                }
+                var filterList = list.Where(customer =>
+                {
+                    bool isMatch = true;
+                    if(!string.IsNullOrWhiteSpace(txtCustomerId.Text))
+                    {
+                        isMatch &= customer.CustomerId == int.Parse(txtCustomerId.Text);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtName.Text))
+                    {
+                        isMatch &= customer.Name.Contains(txtName.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtPhone.Text))
+                    {
+                        isMatch &= customer.Phone.Contains(txtPhone.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtEmail.Text))
+                    {
+                        isMatch &= customer.Email.Contains(txtEmail.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtAddress.Text))
+                    {
+                        isMatch &= customer.Address.Contains(txtAddress.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtCountry.Text))
+                    {
+                        isMatch &= customer.Country.Contains(txtCountry.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtJob.Text))
+                    {
+                        isMatch &= customer.Job.Contains(txtJob.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if (string.IsNullOrWhiteSpace(txtDateOfBirth.Text))
+                    {
+                        DateTime dateOfBirth;
+                        if (DateTime.TryParse(txtDateOfBirth.Text, out dateOfBirth))
+                        {
+                            isMatch &= customer.DateOfBirth.HasValue && customer.DateOfBirth.Value.Date == dateOfBirth.Date;
+                        }
+                    }
+                    if(chkGender.IsChecked == true)
+                    {
+                        isMatch &= customer.Gender == true;
+                    }
+                    if(chkGender.IsChecked != true)
+                    {
+                        isMatch &= customer.Gender == false;
+                    }
+                    if(string.IsNullOrWhiteSpace(txtAltContact.Text))
+                    {
+                        isMatch &= customer.AlterContact.Contains(txtAltContact.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    if(string.IsNullOrWhiteSpace(txtZipCode.Text))
+                    {
+                        isMatch &= customer.ZipCode.Contains(txtZipCode.Text, StringComparison.OrdinalIgnoreCase);
+                    }
+                    return isMatch;
+                }).ToList();
+                if (!filterList.Any())
+                {
+                    MessageBox.Show("No Data Found");
+                    return;
+                }
+                DisplaySearchResults(filterList);
+                ClearForm();
+
+                ButtonUpdate.Visibility = Visibility.Collapsed;
+                ButtonSave.Visibility = Visibility.Collapsed;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+        }
+
+        private void DisplaySearchResults(IEnumerable<SiCustomer> customers)
+        {
+            // Set the ItemsSource to null first to allow modification
+            grdCustomer.ItemsSource = null;
+
+            // Set the ItemsSource to the filtered list
+            grdCustomer.ItemsSource = customers;
+        }
+
         private void ClearForm()
         {
             txtCustomerId.Text = string.Empty;
             txtName.Text = string.Empty;
             txtPhone.Text = string.Empty;
             txtAddress.Text = string.Empty;
+            chkGender.IsEnabled = false;
+            txtDateOfBirth.SelectedDate = null;
+            txtCountry.Text = string.Empty;
+            txtAltContact.Text =string.Empty;
+            txtEmail.Text = string.Empty;
+            txtJob.Text = string.Empty;
+            txtZipCode.Text = string.Empty;
             _selectedCustomer = null;
 
             txtCustomerId.IsReadOnly = false;
             txtName.IsReadOnly = false;
             txtPhone.IsReadOnly = false;
             txtAddress.IsReadOnly = false;
+            chkGender.IsEnabled = true;
+            txtDateOfBirth.IsEnabled = true;
+            txtCountry.IsReadOnly = false;
+            txtEmail.IsReadOnly = false;
+            txtJob.IsReadOnly = false;
+            txtZipCode.IsReadOnly = false;
+            txtEmail.IsReadOnly=false;
 
             ButtonUpdate.Visibility = Visibility.Collapsed;
             ButtonSave.Visibility = Visibility.Visible;
         }
+
     }
 }
