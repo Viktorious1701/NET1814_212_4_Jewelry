@@ -62,8 +62,9 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <GroupBox Header="Order Form" Margin="10">
-                <Grid Height="120">
+                <Grid Height="150">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -95,9 +96,13 @@
                     <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"/>
                     <Label Content="ShipmentStatus" Grid.Column="4" Grid.Row="2"/>
                     <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"/>
+                    <Label Content="Search" Grid.Column="0" Grid.Row="3"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="Search" />
+
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button x:Name="ButtonSearch" Content="Search" Command="{Binding SaveCommand}" Click="ButtonSearch_Click"/>
                 <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
                 <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
             </StackPanel>
