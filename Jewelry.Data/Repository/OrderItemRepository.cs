@@ -11,5 +11,6 @@ namespace Jewelry.Data.Repository
     public class OrderItemRepository : GenericRepository<OrderItem>
     {
         public OrderItemRepository() { }
-    }
+       
+}
 }

@@ -106,7 +106,7 @@
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click" Background="#32CD32"/>
-                <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed" Background="#007ACC"/>
+                <Button x:Name="ButtonSearch" Content="Seach" Command="{Binding SearchCommand}" Click="ButtonSearch_Click" Background="#007ACC"/>
                 <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="#808080"/>
             </StackPanel>
             <GroupBox Header="Order Item List" BorderBrush="#FFD700" BorderThickness="1">

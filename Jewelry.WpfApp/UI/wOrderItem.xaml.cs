@@ -247,6 +247,43 @@ namespace Jewelry.WpfApp.UI
                 MessageBox.Show(ex.ToString(), "Error");
             }
         }
+        private async void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Create a new OrderItem object to hold the search criteria
+                OrderItem searchCriteria = new OrderItem
+                {
+                    OrderItemId = !string.IsNullOrEmpty(OrderItemID.Text) ? Convert.ToInt32(OrderItemID.Text) : 0,
+                    OrderId = !string.IsNullOrEmpty(OrderID.Text) ? Convert.ToInt32(OrderID.Text) : 0,
+                    ProductId = !string.IsNullOrEmpty(ProductID.Text) ? Convert.ToInt32(ProductID.Text) : 0,
+                    Quantity = !string.IsNullOrEmpty(Quantity.Text) ? Convert.ToInt32(Quantity.Text) : 0,
+                    Price = !string.IsNullOrEmpty(Price.Text) ? Convert.ToInt32(Price.Text) : 0,
+                    Status = Status.Text,
+                    CustomerId = !string.IsNullOrEmpty(CustomerID.Text) ? Convert.ToInt32(CustomerID.Text) : 0
+                };
 
+                // Assuming you have a method in your business layer to search for OrderItems
+                var result = await _business.SearchOrderItems(searchCriteria);
+
+                if (result.Status > 0 && result.Data != null)
+                {
+                    grdOrderItem.ItemsSource = result.Data as List<OrderItem>;
+                    //MessageBox.Show($"Found {(result.Data as List<OrderItem>).Count} matching order item(s).", "Search Results", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    grdOrderItem.ItemsSource = new List<OrderItem>();
+                    MessageBox.Show("No matching order items found.", "Search Results", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                // Play a sound effect for search
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+        }
     }
 }
