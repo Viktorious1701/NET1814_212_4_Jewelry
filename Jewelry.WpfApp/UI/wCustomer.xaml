@@ -24,6 +24,8 @@
             <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="Background" Value="#333333"/>
             <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5,2,5,2"/>
         </Style>
         <Style TargetType="Button">
             <Setter Property="Height" Value="30"/>
@@ -33,6 +35,9 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Gold"/>
             <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5,2,5,2"/>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
         <Style TargetType="GroupBox">
             <Setter Property="FontSize" Value="16"/>
@@ -41,6 +46,7 @@
             <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="Background" Value="#222222"/>
             <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="14"/>
@@ -51,24 +57,29 @@
             <Setter Property="RowBackground" Value="#333333"/>
             <Setter Property="AlternatingRowBackground" Value="#444444"/>
             <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="Gold"/>
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
         <Style TargetType="DataGridRow">
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Foreground" Value="Gold"/>
             <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
     </Window.Resources>
     <StackPanel Orientation="Vertical" Background="Black">
-        <GroupBox Header="Customer" BorderBrush="Gold" BorderThickness="1">
-            <Grid>
+        <GroupBox Header="Customer" BorderBrush="Gold" BorderThickness="1" Height="232">
+            <Grid Height="164">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" MinHeight="39"/>
+                    <RowDefinition Height="Auto" MinHeight="64"/>
+                    <RowDefinition Height="Auto" MinHeight="55"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -79,19 +90,59 @@
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="ID" Grid.Column="0"/>
-                <TextBox Grid.Column="1" x:Name="txtCustomerId" Text="{Binding Path=SiCustomer.CustomerId, Mode=TwoWay}"/>
-                <Label Content="Name" Grid.Column="2"/>
-                <TextBox Grid.Column="3" x:Name="txtName" Text="{Binding Path=SiCustomer.Name, Mode=TwoWay}"/>
-                <Label Content="Phone" Grid.Column="4"/>
-                <TextBox Grid.Column="5" x:Name="txtPhone" Text="{Binding Path=SiCustomer.Phone, Mode=TwoWay}"/>
-                <Label Content="Address" Grid.Column="6"/>
-                <TextBox Grid.Column="7" x:Name="txtAddress" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}"/>
+                <Label Content="ID" Grid.Column="0" HorizontalAlignment="Left" Height="29" Margin="70,0,0,0" Width="25"/>
+                <TextBox Grid.Column="1" x:Name="txtCustomerId" Text="{Binding Path=SiCustomer.CustomerId, Mode=TwoWay}" Margin="5,7,5,7"/>
+
+                <Label Content="Name" Grid.Column="2" HorizontalAlignment="Left" Height="29" Margin="46,0,0,0" Width="49"/>
+                <TextBox Grid.Column="3" x:Name="txtName" Text="{Binding Path=SiCustomer.Name, Mode=TwoWay}" Margin="5,7,5,7"/>
+
+                <Label Content="Phone" Grid.Column="4" HorizontalAlignment="Left" Height="29" Margin="43,0,0,0" Width="52"/>
+                <TextBox Grid.Column="5" x:Name="txtPhone" Text="{Binding Path=SiCustomer.Phone, Mode=TwoWay}" Margin="5,7,5,7"/>
+
+                <Label Content="Address" Grid.Column="6" Margin="32,0,0,0" Grid.Row="1" HorizontalAlignment="Left" Height="30" Width="63"/>
+                <TextBox Grid.Column="7" x:Name="txtAddress" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}" Margin="5,7,5,7"/>
+
+                <Label Content="Gender" Grid.Column="0" Grid.Row="1" Margin="37,0,0,0" HorizontalAlignment="Left" Height="28" Width="58"/>
+                <CheckBox Grid.Column="1" Grid.Row="1" x:Name="chkGender" IsChecked="{Binding Path=SiCustomer.Gender, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="5,10,95,45" Grid.RowSpan="2"/>
+
+                <!-- Decorated Birthdate Section -->
+                <Label Content="Birthdate" Grid.Column="2" Margin="0,21,0,39" Grid.Row="1" VerticalAlignment="Stretch" Width="72" Grid.RowSpan="2"/>
+                <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Background="#444444" Padding="10" CornerRadius="5" BorderBrush="Gold" BorderThickness="1" Margin="5,0,5,45">
+                    <DatePicker x:Name="txtDateOfBirth" SelectedDate="{Binding Path=SiCustomer.DateOfBirth, Mode=TwoWay}" HorizontalAlignment="Left" Width="190" Background="#333333" Foreground="Gold" BorderBrush="Gold" Margin="-1,12,0,12"/>
+                </Border>
+
+                <Label Content="Country" Grid.Column="4" Margin="37,21,0,0" Grid.Row="1" HorizontalAlignment="Left" Height="30" Width="63" VerticalAlignment="Top"/>
+                <TextBox Grid.Column="7" x:Name="txtCountry" Text="{Binding Path=SiCustomer.Country, Mode=TwoWay}" Margin="5,20,5,19" Grid.Row="1"/>
+
+                <Label Content="Job" Grid.Column="6" HorizontalAlignment="Left" Height="29" Margin="62,0,0,0" Width="33"/>
+                <TextBox Grid.Column="5" x:Name="txtJob" Text="{Binding Path=SiCustomer.Job, Mode=TwoWay}" Margin="5,21,0,18" Grid.Row="1"/>
+
+                <Label Content="Email" Grid.Column="0" HorizontalAlignment="Left" Margin="49,27,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="46"/>
+                <TextBox Grid.Column="1" x:Name="txtEmail" Text="{Binding Path=SiCustomer.Email, Mode=TwoWay}"  Margin="5,27,5,3" Grid.Row="2"/>
+
+                <Label Content="ZipCode" Grid.Column="2" Margin="0,27,7,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.02,-0.361" Height="28" Width="65"/>
+                <TextBox Grid.Column="3" x:Name="txtZipCode" Text="{Binding Path=SiCustomer.ZipCode, Mode=TwoWay}" Margin="5,30,5,0" Grid.Row="2"/>
+
+                <Label Content="Alt.Contact" Grid.Column="4" Margin="0,27,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="84"/>
+                <TextBox Grid.Column="5" x:Name="txtAltContact" Text="{Binding Path=SiCustomer.AlterContact, Mode=TwoWay}" Margin="10,30,0,0" Grid.Row="2"/>
             </Grid>
         </GroupBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
+            <Button x:Name="ButtonSearch" Content="Search" Command="{Binding SearchCommand}" Click="ButtonSearch_Click"/>
             <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed"/>
             <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="Gray"/>
         </StackPanel>
@@ -103,25 +154,37 @@
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                     <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*"/>
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
-                    <DataGridTemplateColumn
-                        Width="Auto">
+                    <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="*"/>
+                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
+                    <DataGridTextColumn Header="Job" Binding="{Binding job}" Width="*"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                    <DataGridTextColumn Header="ZipCode" Binding="{Binding ZipCode}" Width="*"/>
+                    <DataGridTextColumn Header="Alternate Contact" Binding="{Binding AlterContact}" Width="*"/>
+                    <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Select" x:Name="ButtonSelect" CommandParameter="{Binding}" Click="ButtonSelect_Click" Height="25" Width="70" Background="Gold"/>
+                                <Button Content="Select" x:Name="ButtonSelect" CommandParameter="{Binding}" Click="ButtonSelect_Click" Height="25" Width="70" Background="Gold" BorderBrush="Gold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--<DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Search" x:Name="ButtonSearch" CommandParameter="{Binding}" Click="ButtonSearch_Click" Height="25" Width="70" Background="Gold" BorderBrush="Gold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+                    <DataGridTemplateColumn Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CustomerId}" Click="grdCustomer_ButtonDelete_Click" Height="25" Width="70" Background="#FF6347" BorderBrush="#FF6347"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="X" x:Name="ButtonDelete" CommandParameter="{Binding CustomerId}" Click="grdCustomer_ButtonDelete_Click" Height="25" Width="70" Background="#FF6347"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="View" x:Name="ButtonView" CommandParameter="{Binding CustomerId}" Click="ButtonView_Click" Height="25" Width="70" Background="Gold"/>
+                                <Button Content="View" x:Name="ButtonView" CommandParameter="{Binding CustomerId}" Click="ButtonView_Click" Height="25" Width="70" Background="Gold" BorderBrush="Gold"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
