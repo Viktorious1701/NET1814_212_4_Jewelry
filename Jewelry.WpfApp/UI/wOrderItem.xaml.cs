@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -61,9 +62,12 @@ namespace Jewelry.WpfApp.UI
                     var result = await _business.Save(orderItem);
                     MessageBox.Show(result.Message, "Save");
                     ClearForm();
-                    GetOrderItemsAsync();
+                    await GetOrderItemsAsync();
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\tactical-nuke.wav");
-                    player.Play();
+                    if (player != null)
+                    {
+                        player.Play();
+                    }
                 }
                 else
                 {
@@ -129,7 +133,11 @@ namespace Jewelry.WpfApp.UI
                 Discount.Text = orderItem.Discount.ToString();
             }
             System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\i-am-the-chosen-one.wav");
-            player.Play();
+            if(player!=null)
+            {
+                player.Play();
+            }
+            
 
 
 
@@ -155,7 +163,12 @@ namespace Jewelry.WpfApp.UI
                             ProductID.Text = Convert.ToString(item.ProductId);
                             Quantity.Text = Convert.ToString(item.Quantity);
                             Price.Text = Convert.ToString(item.ProductId);
-                          
+                            SubTotal.Text = Convert.ToString(item.Subtotal);
+                            Discount.Text = Convert.ToString(item.Discount);
+                            Total.Text = Convert.ToString(item.Total);
+                            Status.Text = item.Status;
+                            CustomerID.Text = Convert.ToString(item.CustomerId);
+
                         }
                     }
                 }
@@ -173,14 +186,20 @@ namespace Jewelry.WpfApp.UI
             if (!string.IsNullOrEmpty(orderItemId))
             {
                 System.Media.SoundPlayer player1 = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\riel.wav");
-                player1.Play();
+                if (player1 != null)
+                {
+                    player1.Play();
+                }
                 if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\nuke-bomb.wav");
-                    player.Play();
+                    if (player != null)
+                    {
+                        player.Play();
+                    }
                     var result = await _business.DeleteById(int.Parse(orderItemId));
                     MessageBox.Show($"{result.Message}", "Delete");
-                    this.GetOrderItemsAsync();
+                    await this.GetOrderItemsAsync();
 
                 }
             }
@@ -202,6 +221,10 @@ namespace Jewelry.WpfApp.UI
                     existingOrderItem.Quantity = Convert.ToInt32(Quantity.Text);
                     existingOrderItem.Price = Convert.ToInt32(Price.Text);
                     existingOrderItem.Subtotal = Convert.ToInt32(Quantity.Text) * Convert.ToInt32(Price.Text);
+                    existingOrderItem.Discount = Convert.ToDouble(Discount.Text);
+                    existingOrderItem.Total = Convert.ToDouble(SubTotal.Text) * (1-Convert.ToDouble(Discount.Text));
+                    existingOrderItem.Status = Status.Text;
+                    existingOrderItem.CustomerId = Convert.ToInt32(CustomerID.Text);
 
                     // Save the updated OrderItem
                     var updateResult = await _business.Update(existingOrderItem);
@@ -210,7 +233,7 @@ namespace Jewelry.WpfApp.UI
                     MessageBox.Show(updateResult.Message, "Update");
 
                     // Refresh the grid to show updated data
-                    GetOrderItemsAsync();
+                    await GetOrderItemsAsync();
                 }
                 else
                 {
@@ -224,6 +247,43 @@ namespace Jewelry.WpfApp.UI
                 MessageBox.Show(ex.ToString(), "Error");
             }
         }
+        private async void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Create a new OrderItem object to hold the search criteria
+                OrderItem searchCriteria = new OrderItem
+                {
+                    OrderItemId = !string.IsNullOrEmpty(OrderItemID.Text) ? Convert.ToInt32(OrderItemID.Text) : 0,
+                    OrderId = !string.IsNullOrEmpty(OrderID.Text) ? Convert.ToInt32(OrderID.Text) : 0,
+                    ProductId = !string.IsNullOrEmpty(ProductID.Text) ? Convert.ToInt32(ProductID.Text) : 0,
+                    Quantity = !string.IsNullOrEmpty(Quantity.Text) ? Convert.ToInt32(Quantity.Text) : 0,
+                    Price = !string.IsNullOrEmpty(Price.Text) ? Convert.ToInt32(Price.Text) : 0,
+                    Status = Status.Text,
+                    CustomerId = !string.IsNullOrEmpty(CustomerID.Text) ? Convert.ToInt32(CustomerID.Text) : 0
+                };
 
+                // Assuming you have a method in your business layer to search for OrderItems
+                var result = await _business.SearchOrderItems(searchCriteria);
+
+                if (result.Status > 0 && result.Data != null)
+                {
+                    grdOrderItem.ItemsSource = result.Data as List<OrderItem>;
+                    //MessageBox.Show($"Found {(result.Data as List<OrderItem>).Count} matching order item(s).", "Search Results", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    grdOrderItem.ItemsSource = new List<OrderItem>();
+                    MessageBox.Show("No matching order items found.", "Search Results", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                // Play a sound effect for search
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+        }
     }
 }

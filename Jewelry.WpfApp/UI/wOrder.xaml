@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Order" Height="450" Width="940" Background="Black">
+        Title="Order" Height="550" Width="1140" Background="Black">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -62,8 +62,9 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <GroupBox Header="Order Form" Margin="10">
-                <Grid Height="120">
+                <Grid Height="150">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -95,9 +96,13 @@
                     <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"/>
                     <Label Content="ShipmentStatus" Grid.Column="4" Grid.Row="2"/>
                     <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"/>
+                    <Label Content="Search" Grid.Column="0" Grid.Row="3"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="Search" />
+
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button x:Name="ButtonSearch" Content="Search" Command="{Binding SaveCommand}" Click="ButtonSearch_Click"/>
                 <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
                 <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
             </StackPanel>
@@ -113,14 +118,14 @@
                         <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100" IsReadOnly="True"/>
-                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn Width="150">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="Select" x:Name="ButtonUpdate" Click="ButtonEdit_Click_1"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="50">
+                        <DataGridTemplateColumn Width="150">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="X" x:Name="ButtonDelete" Click="ButtonDelete_Click" Background="Red" Foreground="Black"/>

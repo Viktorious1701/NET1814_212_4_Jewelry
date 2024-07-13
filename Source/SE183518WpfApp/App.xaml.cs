@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace SE183584WpfApp
+namespace SE183518WpfApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

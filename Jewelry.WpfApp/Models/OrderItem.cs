@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SE183584ConsoleEFApp.Models;
+namespace Jewelry.WpfApp.Models;
 
 public partial class OrderItem
 {
@@ -18,6 +18,14 @@ public partial class OrderItem
     public int? Price { get; set; }
 
     public int? Subtotal { get; set; }
+
+    public double? Discount { get; set; }
+
+    public double? Total { get; set; }
+
+    public string Status { get; set; }
+
+    public int? CustomerId { get; set; }
 
     public virtual SiOrder Order { get; set; }
 

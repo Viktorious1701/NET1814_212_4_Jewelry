@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SE183584ConsoleEFApp.Models;
+namespace Jewelry.WpfApp.Models;
 
 public partial class SiOrder
 {
@@ -24,6 +24,8 @@ public partial class SiOrder
     public string PaymentStatus { get; set; }
 
     public string ShipmentStatus { get; set; }
+
+    public string Description { get; set; }
 
     public virtual SiCustomer Customer { get; set; }
 

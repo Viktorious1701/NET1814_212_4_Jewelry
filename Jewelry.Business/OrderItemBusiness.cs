@@ -2,6 +2,7 @@
 using Jewelry.Common;
 using Jewelry.Data;
 using Jewelry.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,5 +153,39 @@ namespace Jewelry.Business
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.ToString());
             }
         }
+        public async Task<IBusinessResult> SearchOrderItems(OrderItem searchCriteria)
+        {
+            try
+            {
+                var allOrderItems = await _unitOfWork.OrderItemRepository.GetAllAsync();
+
+                var filteredOrderItems = allOrderItems.Where(oi =>
+                    (searchCriteria.OrderItemId == 0 || oi.OrderItemId == searchCriteria.OrderItemId) &&
+                    (searchCriteria.OrderId == 0 || oi.OrderId == searchCriteria.OrderId) &&
+                    (searchCriteria.ProductId == 0 || oi.ProductId == searchCriteria.ProductId) &&
+                    (searchCriteria.Quantity == 0 || oi.Quantity == searchCriteria.Quantity) &&
+                    (searchCriteria.Price == 0 || oi.Price == searchCriteria.Price) &&
+                    (string.IsNullOrEmpty(searchCriteria.Status) || oi.Status.Contains(searchCriteria.Status)) &&
+                    (searchCriteria.CustomerId == 0 || oi.CustomerId == searchCriteria.CustomerId)
+                ).ToList();
+
+                return new BusinessResult
+                {
+                    Status = 1,
+                    Message = "Order items retrieved successfully",
+                    Data = filteredOrderItems
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult
+                {
+                    Status = 0,
+                    Message = $"Error searching order items: {ex.Message}",
+                    Data = null
+                };
+            }
+        }
     }
-    }
+}
+    

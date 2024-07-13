@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace SE183584ConsoleEFApp.Models;
+namespace Jewelry.WpfApp.Models;
 
-public partial class Net1814_212_4_JewelryContext : DbContext
+public partial class NET1814_212_4_JewelryContext : DbContext
 {
-    public Net1814_212_4_JewelryContext(DbContextOptions<Net1814_212_4_JewelryContext> options)
+    public NET1814_212_4_JewelryContext(DbContextOptions<NET1814_212_4_JewelryContext> options)
         : base(options)
     {
     }
@@ -27,11 +27,6 @@ public partial class Net1814_212_4_JewelryContext : DbContext
 
     public virtual DbSet<SiProduct> SiProducts { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer("data source=LAPTOP-J355F12L\\SQLEXPRESS;initial catalog=Net1814_212_4_Jewelry;user id=sa;password=123456;Integrated Security=True;TrustServerCertificate=True");
-        base.OnConfiguring(optionsBuilder);
-    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
@@ -51,8 +46,10 @@ public partial class Net1814_212_4_JewelryContext : DbContext
             entity.Property(e => e.OrderItemId)
                 .ValueGeneratedNever()
                 .HasColumnName("OrderItemID");
+            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
+            entity.Property(e => e.Status).HasMaxLength(50);
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
@@ -101,6 +98,11 @@ public partial class Net1814_212_4_JewelryContext : DbContext
             entity.Property(e => e.CompanyName)
                 .IsRequired()
                 .HasMaxLength(255);
+            entity.Property(e => e.ContactPerson).HasMaxLength(50);
+            entity.Property(e => e.EmailAddress).HasMaxLength(100);
+            entity.Property(e => e.Hotline).HasMaxLength(20);
+            entity.Property(e => e.Policy).HasMaxLength(100);
+            entity.Property(e => e.ZipCode).HasMaxLength(20);
         });
 
         modelBuilder.Entity<SiCustomer>(entity =>
@@ -113,8 +115,18 @@ public partial class Net1814_212_4_JewelryContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("CustomerID");
             entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.AlterContact).HasMaxLength(20);
+            entity.Property(e => e.Country).HasMaxLength(100);
+            entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
+            entity.Property(e => e.Job)
+                .HasMaxLength(100)
+                .HasColumnName("job");
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Phone).HasMaxLength(20);
+            entity.Property(e => e.ZipCode).HasMaxLength(20);
         });
 
         modelBuilder.Entity<SiOrder>(entity =>
@@ -127,6 +139,7 @@ public partial class Net1814_212_4_JewelryContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("OrderID");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
+            entity.Property(e => e.Description).HasMaxLength(100);
             entity.Property(e => e.PaymentMethod).HasMaxLength(50);
             entity.Property(e => e.PaymentStatus).HasMaxLength(50);
             entity.Property(e => e.PromotionId).HasColumnName("PromotionID");
