@@ -136,8 +136,7 @@ namespace Jewelry.WpfApp.UI
             {
                 var orderId = (int)button.CommandParameter;
                 var addOrderWindow = new AddOrder(orderId);
-                addOrderWindow.Closed += async (s, args) => await RefreshOrderData(); // Refresh data when the window is closed
-                addOrderWindow.Show();
+                addOrderWindow.ShowDialog();
             }
         }
 
@@ -147,9 +146,14 @@ namespace Jewelry.WpfApp.UI
             if (selectedOrder != null)
             {
                 var addOrder = new AddOrder(selectedOrder.OrderId);
-                addOrder.Closed += async (s, args) => await RefreshOrderData(); // Refresh data when the window is closed
                 addOrder.ShowDialog();
             }
+        }
+
+        private void Open_AddOrder_Click(object sender, RoutedEventArgs e)
+        {
+            var addOrder = new AddOrder(); 
+            addOrder.ShowDialog();
         }
     }
 }

@@ -64,6 +64,12 @@
     </Window.Resources>
     <Grid>
         <StackPanel Orientation="Vertical" Background="#1e1e1e">
+            <Menu Height="30" Name="menu1" Margin="0,0,0,0" VerticalAlignment="Top" BorderThickness="2" FontSize="16" FontWeight="Bold" Background="#1e1e1e">
+                <MenuItem Header="Order" IsCheckable="False" FontSize="16" Background="White">
+                    <MenuItem Header="Add Order" IsCheckable="False" FontSize="12" Click="Open_AddOrder_Click" >
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
             <GroupBox Header="Order Search" BorderBrush="#D4D4D4" BorderThickness="1">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -84,15 +90,15 @@
                 <DataGrid x:Name="grdCurrency" AutoGenerateColumns="False" ItemsSource="{Binding SiOrder}" CanUserAddRows="False" Height="600" Margin="10"
                   MouseDoubleClick="grdOrder_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="OrderId" Binding="{Binding Path=OrderId}" Width="50" Visibility="Visible"/>
-                        <DataGridTextColumn Header="CustomerId" Binding="{Binding Path=CustomerId}" Width="80" Visibility="Visible"/>
-                        <DataGridTextColumn Header="PromotionId" Binding="{Binding Path=PromotionId}" Width="80" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="OrderId" Binding="{Binding Path=OrderId}" Width="60" Visibility="Visible"/>
+                        <DataGridTextColumn Header="CustomerId" Binding="{Binding Path=CustomerId}" Width="90" Visibility="Visible"/>
+                        <DataGridTextColumn Header="PromotionId" Binding="{Binding Path=PromotionId}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="OrderDate" Binding="{Binding Path=OrderDate}" Width="80" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="TotalAmount" Binding="{Binding Path=TotalAmount}" Width="90" Visibility="Visible"/>
+                        <DataGridTextColumn Header="TotalAmount" Binding="{Binding Path=TotalAmount}" Width="100" Visibility="Visible"/>
                         <DataGridTextColumn Header="Discount" Binding="{Binding Path=Discount}" Width="80" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="120" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="120" IsReadOnly="True"/>
                         <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
