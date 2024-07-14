@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Order" Height="550" Width="1140" Background="Black">
+        Title="Order Search" Height="950" Width="1500">
     <Window.Resources>
+        <!--Define styles for the controls-->
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Foreground" Value="Gold"/>
         </Style>
@@ -18,34 +20,40 @@
             <Setter Property="Height" Value="25"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="#333333"/>
             <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="Background" Value="#2e2e2e"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Background" Value="#2e2e2e"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Height" Value="35"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="Gold"/>
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderBrush" Value="#005A9E"/>
         </Style>
         <Style TargetType="GroupBox">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="10"/>
             <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="BorderBrush" Value="Gold"/>
-            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Background" Value="#1e1e1e"/>
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Margin" Value="10"/>
-            <Setter Property="BorderBrush" Value="Gold"/>
-            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#D4D4D4"/>
             <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="AlternatingRowBackground" Value="#333333"/>
+            <Setter Property="Background" Value="#1e1e1e"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="RowBackground" Value="#2e2e2e"/>
+            <Setter Property="AlternatingRowBackground" Value="#3e3e3e"/>
         </Style>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="Gold"/>
@@ -53,61 +61,28 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderBrush" Value="Gold"/>
         </Style>
-        <Style TargetType="DataGridRow">
-            <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="BorderBrush" Value="Gold"/>
-        </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <GroupBox Header="Order Form" Margin="10">
-                <Grid Height="150">
+        <StackPanel Orientation="Vertical" Background="#1e1e1e">
+            <GroupBox Header="Order Search" BorderBrush="#D4D4D4" BorderThickness="1">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="OrderId" Grid.Column="0" Grid.Row="0"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="OrderId" Text="{Binding Path=SiOrder.OrderId, Mode=TwoWay}"/>
-                    <Label Content="CustomerId" Grid.Column="2" Grid.Row="0"/>
-                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="CustomerId" Text="{Binding Path=SiOrder.CustomerId, Mode=TwoWay}"/>
-                    <Label Content="PromotionId" Grid.Column="4" Grid.Row="0"/>
-                    <TextBox Grid.Row="0" Grid.Column="5" x:Name="PromotionId" Text="{Binding Path=SiOrder.PromotionId, Mode=TwoWay}"/>
-                    <Label Content="OrderDate" Grid.Column="0" Grid.Row="1"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="OrderDate" Text="{Binding Path=SiOrder.OrderDate, Mode=TwoWay}"/>
-                    <Label Content="TotalAmount" Grid.Column="2" Grid.Row="1"/>
-                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="TotalAmount" Text="{Binding Path=SiOrder.TotalAmount, Mode=TwoWay}"/>
-                    <Label Content="Discount" Grid.Column="4" Grid.Row="1"/>
-                    <TextBox Grid.Row="1" Grid.Column="5" x:Name="Discount" Text="{Binding Path=SiOrder.Discount, Mode=TwoWay}"/>
-                    <Label Content="PaymentMethod" Grid.Column="0" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="PaymentMethod" Text="{Binding Path=SiOrder.PaymentMethod, Mode=TwoWay}"/>
-                    <Label Content="PaymentStatus" Grid.Column="2" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"/>
-                    <Label Content="ShipmentStatus" Grid.Column="4" Grid.Row="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"/>
-                    <Label Content="Search" Grid.Column="0" Grid.Row="3"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="Search" />
-
+                    <ComboBox x:Name="ColumnComboBox" Width="200" Margin="10" Grid.Column="0" />
+                    <TextBox x:Name="SearchTextBox" Width="200"   Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,12,0,12" />
+                    <Button Content="Search" Click="ButtonSearch_Click" Width="100" Margin="19,10,-19,10" Grid.Column="2" />
                 </Grid>
             </GroupBox>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <Button x:Name="ButtonSearch" Content="Search" Command="{Binding SaveCommand}" Click="ButtonSearch_Click"/>
-                <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
-                <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click"/>
-            </StackPanel>
-            <StackPanel Margin="10">
-                <DataGrid x:Name="grdCurrency" AutoGenerateColumns="False" ItemsSource="{Binding SiOrder}" CanUserAddRows="False" SelectionMode="Single" SelectionUnit="FullRow">
+
+            <GroupBox Header="Order List" BorderBrush="#D4D4D4" BorderThickness="1">
+                <DataGrid x:Name="grdCurrency" AutoGenerateColumns="False" ItemsSource="{Binding SiOrder}" CanUserAddRows="False" Height="600" Margin="10"
+                  MouseDoubleClick="grdOrder_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="OrderId" Binding="{Binding Path=OrderId}" Width="50" Visibility="Visible"/>
                         <DataGridTextColumn Header="CustomerId" Binding="{Binding Path=CustomerId}" Width="80" Visibility="Visible"/>
@@ -118,23 +93,23 @@
                         <DataGridTextColumn Header="PaymentMethod" Binding="{Binding Path=PaymentMethod}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="PaymentStatus" Binding="{Binding Path=PaymentStatus}" Width="100" IsReadOnly="True"/>
                         <DataGridTextColumn Header="ShipmentStatus" Binding="{Binding Path=ShipmentStatus}" Width="100" IsReadOnly="True"/>
-                        <DataGridTemplateColumn Width="150">
+                        <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Select" x:Name="ButtonUpdate" Click="ButtonEdit_Click_1"/>
+                                    <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding OrderId}" Click="ButtonEdit_Click_1" Height="25" Width="70" Background="#32CD32"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="150">
+                        <DataGridTemplateColumn Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="X" x:Name="ButtonDelete" Click="ButtonDelete_Click" Background="Red" Foreground="Black"/>
+                                    <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding OrderId}" Click="ButtonDelete_Click" Height="25" Width="70" Background="#FF6347"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+            </GroupBox>
         </StackPanel>
     </Grid>
 </Window>

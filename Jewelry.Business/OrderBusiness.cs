@@ -9,10 +9,10 @@ namespace Jewelry.Business
     public interface IOrderBusiness
     {
         Task<IBusinessResult> GetAll();
-        Task<IBusinessResult> GetById(String code);
+        Task<IBusinessResult> GetById(int id);
         Task<IBusinessResult> Save(SiOrder order);
         Task<IBusinessResult> Update(SiOrder order);
-        Task<IBusinessResult> DeleteById(int code);
+        Task<IBusinessResult> DeleteById(int id);
 
     }
     public class OrderBusiness : IOrderBusiness
@@ -24,6 +24,11 @@ namespace Jewelry.Business
         {
             _unitOfWork = unitOfWork;
             _context = context;
+        }
+
+        public OrderBusiness()
+        {
+            _unitOfWork ??= new UnitOfWork();
         }
 
         public async Task<IBusinessResult> GetAll()
@@ -51,14 +56,14 @@ namespace Jewelry.Business
             }
         }
 
-        public async Task<IBusinessResult> GetById(string code)
+        public async Task<IBusinessResult> GetById(int id)
         {
             try
             {
                 #region Business rule
                 #endregion
 
-                var currency = await _unitOfWork.OrderRepository.GetByIdAsync(code);
+                var currency = await _unitOfWork.OrderRepository.GetByIdAsync(id);
 
                 if (currency == null)
                 {
