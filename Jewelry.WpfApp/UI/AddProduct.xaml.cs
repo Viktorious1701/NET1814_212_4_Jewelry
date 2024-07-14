@@ -1,5 +1,6 @@
 ﻿using Jewelry.Business;
 using Jewelry.Data.Models;
+using Jewelry.WpfApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SiProduct = Jewelry.Data.Models.SiProduct;
 
 namespace Jewelry.WpfApp.UI
 {
@@ -31,8 +33,34 @@ namespace Jewelry.WpfApp.UI
         {
             InitializeComponent();
             _business = new ProductBusiness();
+            this.DataContext = this; // Set DataContext to this window
+            LoadProductData(productId);
         }
         // Add event handlers for save and cancel buttons
+
+        private async void LoadProductData(int productId)
+        {
+            var item = await _business.GetById(productId);
+            if (item?.Data is SiProduct product)
+            {
+                // Directly update UI elements
+                ProductId.Text = productId.ToString();
+                Name.Text = product.Name;
+                CategoryId.Text = product.CategoryId.ToString();
+                Description.Text = product.Description;
+                Barcode.Text = product.Barcode;
+                Weight.Text = product.Weight.ToString();
+                CostPrice.Text = product.CostPrice.ToString();
+                GoldPrice.Text = product.GoldPrice.ToString();
+                LaborCost.Text = product.LaborCost.ToString();
+                StoneCost.Text = product.StoneCost.ToString();
+                SellPriceRatio.Text = product.SellPriceRatio.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Product not found.", "Error");
+            }
+        }
         private async void grdProduct_ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             try

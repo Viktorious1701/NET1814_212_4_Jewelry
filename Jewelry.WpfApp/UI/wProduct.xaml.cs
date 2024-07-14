@@ -24,7 +24,12 @@ namespace Jewelry.WpfApp.UI
             LoadColumns();
         }
 
-        private async Task LoadGrdProducts()
+        private async Task RefreshProductData()
+        {
+            await LoadGrdProducts();
+        }
+
+        public async Task LoadGrdProducts()
         {
             var result = await _business.GetAll();
             if (result.Status > 0 && result.Data != null)
@@ -94,8 +99,8 @@ namespace Jewelry.WpfApp.UI
         private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             var addProductWindow = new AddProduct();
+            addProductWindow.Closed += async (s, args) => await RefreshProductData(); // Refresh data when the window is closed
             addProductWindow.ShowDialog();
-            LoadGrdProducts(); // Refresh the product list after adding/updating a product
         }
 
         private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
@@ -104,10 +109,11 @@ namespace Jewelry.WpfApp.UI
             {
                 var productId = (int)button.CommandParameter;
                 var addProductWindow = new AddProduct(productId);
-                addProductWindow.ShowDialog();
-                LoadGrdProducts(); // Refresh the product list after adding/updating a product
+                addProductWindow.Closed += async (s, args) => await RefreshProductData(); // Refresh data when the window is closed
+                addProductWindow.Show();
             }
         }
+
 
         private async void grdProduct_ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -117,7 +123,7 @@ namespace Jewelry.WpfApp.UI
                 var result = await _business.DeleteById(productId);
                 if (result.Status > 0)
                 {
-                    LoadGrdProducts(); // Refresh the product list after deletion
+                    await RefreshProductData(); // Refresh the product list after deletion
                 }
                 else
                 {
@@ -131,9 +137,9 @@ namespace Jewelry.WpfApp.UI
             var selectedProduct = grdProduct.SelectedItem as SiProduct;
             if (selectedProduct != null)
             {
-                var addProduct = new AddProduct();
+                var addProduct = new AddProduct(selectedProduct.ProductId);
+                addProduct.Closed += async (s, args) => await RefreshProductData(); // Refresh data when the window is closed
                 addProduct.ShowDialog();
-                LoadGrdProducts(); // Refresh the product list after adding/updating a product
             }
         }
     }
