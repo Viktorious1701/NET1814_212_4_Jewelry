@@ -98,14 +98,22 @@ namespace Jewelry.WpfApp.UI
             LoadGrdProducts(); // Refresh the product list after adding/updating a product
         }
 
-        private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
+        private async void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
         {
             if (sender is Button button)
             {
                 var productId = (int)button.CommandParameter;
-                var addProductWindow = new AddProduct(productId);
-                addProductWindow.ShowDialog();
-                LoadGrdProducts(); // Refresh the product list after adding/updating a product
+                var selectedProduct = await _business.GetById(productId);
+                if(selectedProduct != null && selectedProduct.Data != null) {
+                    var addProductWindow = new AddProduct(selectedProduct.Data as SiProduct);
+                    addProductWindow.ShowDialog();
+                    LoadGrdProducts(); // Refresh the product list after adding/updating a product
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong with this record");
+                }
+               
             }
         }
 

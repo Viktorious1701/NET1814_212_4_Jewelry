@@ -22,15 +22,19 @@ namespace Jewelry.WpfApp.UI
     public partial class AddProduct : Window
     {
         private readonly IProductBusiness _business;
+        private SiProduct _updateProduct;
         public AddProduct()
         {
             InitializeComponent();
             _business = new ProductBusiness();
         }
-        public AddProduct(int productId)
+        public AddProduct(SiProduct selectedProduct)
         {
             InitializeComponent();
             _business = new ProductBusiness();
+            _updateProduct = selectedProduct;
+            DataContext = _updateProduct; // Set the DataContext to the selected product
+
         }
         // Add event handlers for save and cancel buttons
         private async void grdProduct_ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -102,6 +106,10 @@ namespace Jewelry.WpfApp.UI
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error");
+            }
+            finally
+            {
+                this.Close();
             }
 
         }
