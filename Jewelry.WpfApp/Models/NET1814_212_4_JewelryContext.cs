@@ -8,6 +8,10 @@ namespace Jewelry.WpfApp.Models;
 
 public partial class NET1814_212_4_JewelryContext : DbContext
 {
+    public NET1814_212_4_JewelryContext()
+    {
+    }
+
     public NET1814_212_4_JewelryContext(DbContextOptions<NET1814_212_4_JewelryContext> options)
         : base(options)
     {
@@ -26,6 +30,10 @@ public partial class NET1814_212_4_JewelryContext : DbContext
     public virtual DbSet<SiOrder> SiOrders { get; set; }
 
     public virtual DbSet<SiProduct> SiProducts { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-J355F12L\\SQLEXPRESS;Initial Catalog=NET1814_212_4_Jewelry;User ID=sa;Password=12345;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

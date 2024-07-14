@@ -8,7 +8,7 @@
         Title="Product" Height="950" Width="1500"
         Background="#1e1e1e">
     <Window.Resources>
-        <!-- Define styles for the controls -->
+         Define styles for the controls 
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
@@ -99,7 +99,7 @@
                             <DataTemplate>
                                 <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}" Click="ButtonEdit_Click_1" Height="25" Width="70" Background="#32CD32"/>
                             </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn.CellTemplate>grdCustomer_ButtonSave_Click
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>

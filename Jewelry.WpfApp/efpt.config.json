@@ -3,7 +3,7 @@
    "ContextClassName": "NET1814_212_4_JewelryContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
-   "IncludeConnectionString": false,
+   "IncludeConnectionString": true,
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Models",

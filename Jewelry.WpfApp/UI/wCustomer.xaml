@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
+        xmlns:conv="clr-namespace:Jewelry.WpfApp.Converters"
         mc:Ignorable="d"
         Title="Customer" Height="950" Width="1500"
         Background="Black">
     <Window.Resources>
+        <conv:GenderToStringConverter x:Key="GenderToStringConverter"/>
         <!-- Define styles for the controls -->
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -100,8 +102,8 @@
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="200"/>
+                    <!--<ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>-->
                 </Grid.ColumnDefinitions>
                 <Label Content="ID" Grid.Column="0" HorizontalAlignment="Left" Height="29" Margin="70,0,0,0" Width="25"/>
                 <TextBox Grid.Column="1" x:Name="txtCustomerId" Text="{Binding Path=SiCustomer.CustomerId, Mode=TwoWay}" Margin="5,7,5,7"/>
@@ -112,11 +114,11 @@
                 <Label Content="Phone" Grid.Column="4" HorizontalAlignment="Left" Height="29" Margin="43,0,0,0" Width="52"/>
                 <TextBox Grid.Column="5" x:Name="txtPhone" Text="{Binding Path=SiCustomer.Phone, Mode=TwoWay}" Margin="5,7,5,7"/>
 
-                <Label Content="Address" Grid.Column="6" Margin="32,0,0,0" Grid.Row="1" HorizontalAlignment="Left" Height="30" Width="63"/>
-                <TextBox Grid.Column="7" x:Name="txtAddress" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}" Margin="5,7,5,7"/>
+                <Label Content="Address" Grid.Column="6" Margin="37,0,0,0" HorizontalAlignment="Left" Height="30" Width="63"/>
+                <TextBox Grid.Column="7" x:Name="txtAddress" Text="{Binding Path=SiCustomer.Address, Mode=TwoWay}" Margin="5,9,5,5"/>
 
                 <Label Content="Gender" Grid.Column="0" Grid.Row="1" Margin="37,0,0,0" HorizontalAlignment="Left" Height="28" Width="58"/>
-                <CheckBox Grid.Column="1" Grid.Row="1" x:Name="chkGender" IsChecked="{Binding Path=SiCustomer.Gender, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="5,10,95,45" Grid.RowSpan="2"/>
+                <CheckBox Grid.Column="1" Grid.Row="1" x:Name="chkGender" IsChecked="{Binding Path=SiCustomer.Gender, Mode=TwoWay, Converter={StaticResource GenderToStringConverter}}" Grid.ColumnSpan="2" Margin="5,10,95,45" Grid.RowSpan="2"/>
 
                 <!-- Decorated Birthdate Section -->
                 <Label Content="Birthdate" Grid.Column="2" Margin="0,21,0,39" Grid.Row="1" VerticalAlignment="Stretch" Width="72" Grid.RowSpan="2"/>
@@ -125,23 +127,23 @@
                 </Border>
 
                 <Label Content="Country" Grid.Column="4" Margin="37,21,0,0" Grid.Row="1" HorizontalAlignment="Left" Height="30" Width="63" VerticalAlignment="Top"/>
-                <TextBox Grid.Column="7" x:Name="txtCountry" Text="{Binding Path=SiCustomer.Country, Mode=TwoWay}" Margin="5,20,5,19" Grid.Row="1"/>
+                <TextBox Grid.Column="5" x:Name="txtCountry" Text="{Binding Path=SiCustomer.Country, Mode=TwoWay}" Margin="5,20,5,19" Grid.Row="1"/>
 
-                <Label Content="Job" Grid.Column="6" HorizontalAlignment="Left" Height="29" Margin="62,0,0,0" Width="33"/>
-                <TextBox Grid.Column="5" x:Name="txtJob" Text="{Binding Path=SiCustomer.Job, Mode=TwoWay}" Margin="5,21,0,18" Grid.Row="1"/>
+                <!--<Label Content="Job" Grid.Column="6" HorizontalAlignment="Left" Height="29" Margin="62,0,0,0" Width="33"/>
+                <TextBox Grid.Column="7" x:Name="txtJob" Text="{Binding Path=SiCustomer.Job, Mode=TwoWay}" Margin="5,21,0,18" Grid.Row="1"/>-->
 
-                <Label Content="Email" Grid.Column="0" HorizontalAlignment="Left" Margin="49,27,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="46"/>
-                <TextBox Grid.Column="1" x:Name="txtEmail" Text="{Binding Path=SiCustomer.Email, Mode=TwoWay}"  Margin="5,27,5,3" Grid.Row="2"/>
+                <Label Content="Email" Grid.Column="4" HorizontalAlignment="Left" Margin="44,31,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="46"/>
+                <TextBox Grid.Column="5" x:Name="txtEmail" Text="{Binding Path=SiCustomer.Email, Mode=TwoWay}"  Margin="5,34,5,4" Grid.Row="2"/>
 
-                <Label Content="ZipCode" Grid.Column="2" Margin="0,27,7,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.02,-0.361" Height="28" Width="65"/>
-                <TextBox Grid.Column="3" x:Name="txtZipCode" Text="{Binding Path=SiCustomer.ZipCode, Mode=TwoWay}" Margin="5,30,5,0" Grid.Row="2"/>
+                <Label Content="ZipCode" Grid.Column="0" Margin="0,27,7,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="0.02,-0.361" Height="28" Width="65"/>
+                <TextBox Grid.Column="1" x:Name="txtZipCode" Text="{Binding Path=SiCustomer.ZipCode, Mode=TwoWay}" Margin="5,30,5,0" Grid.Row="2"/>
 
-                <Label Content="Alt.Contact" Grid.Column="4" Margin="0,27,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="84"/>
-                <TextBox Grid.Column="5" x:Name="txtAltContact" Text="{Binding Path=SiCustomer.AlterContact, Mode=TwoWay}" Margin="10,30,0,0" Grid.Row="2"/>
+                <Label Content="Alt.Contact" Grid.Column="2" Margin="0,27,0,0" Grid.Row="2" VerticalAlignment="Top" Height="28" Width="84"/>
+                <TextBox Grid.Column="3" x:Name="txtAltContact" Text="{Binding Path=SiCustomer.AlterContact, Mode=TwoWay}" Margin="10,30,0,0" Grid.Row="2"/>
             </Grid>
         </GroupBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button x:Name="ButtonSave" Content="Save" Command="{Binding SaveCommand}" Click="ButtonSave_Click"/>
+            <Button x:Name="ButtonSave" Content="Add" Command="{Binding SaveCommand}" Click="ButtonAddUpdate_Click"/>
             <Button x:Name="ButtonSearch" Content="Search" Command="{Binding SearchCommand}" Click="ButtonSearch_Click"/>
             <Button x:Name="ButtonUpdate" Content="Update" Command="{Binding UpdateCommand}" Click="ButtonUpdate_Click" Visibility="Collapsed"/>
             <Button x:Name="ButtonCancel" Content="Cancel" Command="{Binding ResetCommand}" Click="ButtonCancel_Click" Background="Gray"/>
@@ -154,9 +156,9 @@
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                     <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*"/>
                     <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
-                    <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="*"/>
+                    <DataGridTextColumn Header="Gender" Binding="{Binding Gender, Converter={StaticResource GenderToStringConverter}}" Width="*"/>
                     <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
-                    <DataGridTextColumn Header="Job" Binding="{Binding job}" Width="*"/>
+                    <!--<DataGridTextColumn Header="Job" Binding="{Binding job}" Width="*"/>-->
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
                     <DataGridTextColumn Header="ZipCode" Binding="{Binding ZipCode}" Width="*"/>
                     <DataGridTextColumn Header="Alternate Contact" Binding="{Binding AlterContact}" Width="*"/>
