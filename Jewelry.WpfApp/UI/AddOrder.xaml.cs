@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media.Media3D;
 using System.Xml.Linq;
 using SiOrder = Jewelry.Data.Models.SiOrder;
+using System.Diagnostics;
 
 namespace Jewelry.WpfApp.UI
 {
@@ -28,33 +29,31 @@ namespace Jewelry.WpfApp.UI
         }
         public AddOrder(int orderId)
         {
-            InitializeComponent(); // This initializes the form's controls.
+            InitializeComponent();
             _order = new OrderBusiness();
-            LoadOrderData(orderId); // Now it's safe to access OrderId.Text
+            this.DataContext = this; // Set DataContext to this window
+            LoadOrderData(orderId);
         }
 
         private async void LoadOrderData(int orderId)
         {
             var item = await _order.GetById(orderId);
-            if (item.Data is SiOrder order)
+            if (item?.Data is SiOrder order)
             {
-                Dispatcher.Invoke(() =>
-                {
-                    // Update UI elements on the UI thread
-                    OrderId.Text = orderId.ToString();
-                    CustomerId.Text = order.CustomerId.ToString();
-                    PromotionId.Text = order.PromotionId?.ToString() ?? string.Empty; // Handle nullable int
-                    OrderDate.Text = order.OrderDate?.ToDateTime(TimeOnly.MinValue).ToString("MM/dd/yyyy"); // Assuming OrderDate is of type DateOnly
-                    TotalAmount.Text = order.TotalAmount.ToString();
-                    Discount.Text = order.Discount.ToString();
-                    PaymentMethod.Text = order.PaymentMethod;
-                    PaymentStatus.Text = order.PaymentStatus;
-                    ShipmentStatus.Text = order.ShipmentStatus;
-                });
+                // Directly update UI elements
+                OrderId.Text = orderId.ToString();
+                CustomerId.Text = order.CustomerId.ToString();
+                PromotionId.Text = order.PromotionId?.ToString() ?? "";
+                OrderDate.Text = order.OrderDate?.ToDateTime(TimeOnly.MinValue).ToString("MM/dd/yyyy") ?? "";
+                TotalAmount.Text = order.TotalAmount.ToString(); // Assuming you want to format the amount
+                Discount.Text = order.Discount.ToString(); // Same assumption as above
+                PaymentMethod.Text = order.PaymentMethod;
+                PaymentStatus.Text = order.PaymentStatus;
+                ShipmentStatus.Text = order.ShipmentStatus;
             }
             else
             {
-                Dispatcher.Invoke(() => MessageBox.Show("Order not found.", "Error"));
+                MessageBox.Show("Order not found.", "Error");
             }
         }
 
@@ -62,56 +61,72 @@ namespace Jewelry.WpfApp.UI
         {
             try
             {
+                // Parse and validate the OrderId
                 if (!int.TryParse(OrderId.Text, out int orderId))
                 {
-                    MessageBox.Show("Order ID must be a valid integer.", "Error");
+                    MessageBox.Show("Invalid Order ID. Please enter a valid number.", "Error");
                     return;
                 }
 
-                var item = await _order.GetById(orderId);
-                DateTime dateTime;
-                if (!DateTime.TryParseExact(OrderDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
+                // Parse and validate the OrderDate
+                if (!DateTime.TryParseExact(OrderDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateTime))
                 {
                     MessageBox.Show("OrderDate must be a valid date in the 'MM/dd/yyyy' format.", "Error");
                     return;
                 }
-
                 DateOnly orderDate = DateOnly.FromDateTime(dateTime);
+
+                // Parse other fields
+                if (!int.TryParse(CustomerId.Text, out int customerId) ||
+                    !int.TryParse(TotalAmount.Text, out int totalAmount) ||
+                    !int.TryParse(Discount.Text, out int discount))
+                {
+                    MessageBox.Show("Invalid input for CustomerId, TotalAmount, or Discount. Please enter valid numbers.", "Error");
+                    return;
+                }
+
                 int? promotionId = int.TryParse(PromotionId.Text, out int tempPromotionId) ? tempPromotionId : (int?)null;
 
-                if (item.Data == null)
+                // Create or update the order
+                SiOrder order;
+                var existingOrder = await _order.GetById(orderId);
+
+                if (existingOrder.Data == null)
                 {
-                    var orders = new SiOrder()
+                    // Create new order
+                    order = new SiOrder
                     {
-                        CustomerId = int.Parse(CustomerId.Text),
+                        OrderId = orderId,
+                        CustomerId = customerId,
                         PromotionId = promotionId,
                         OrderDate = orderDate,
-                        TotalAmount = int.Parse(TotalAmount.Text),
-                        Discount = int.Parse(Discount.Text),
+                        TotalAmount = totalAmount,
+                        Discount = discount,
                         PaymentMethod = PaymentMethod.Text,
                         PaymentStatus = PaymentStatus.Text,
                         ShipmentStatus = ShipmentStatus.Text
                     };
 
-                    var result = await _order.Save(orders);
-                    MessageBox.Show(result.Message, "Save");
+                    var saveResult = await _order.Save(order);
+                    MessageBox.Show(saveResult.Message, "Save");
                 }
                 else
                 {
-                    var order = item.Data as SiOrder;
+                    // Update existing order
+                    order = existingOrder.Data as SiOrder;
                     if (order != null)
                     {
-                        order.CustomerId = int.Parse(CustomerId.Text);
+                        order.CustomerId = customerId;
                         order.PromotionId = promotionId;
                         order.OrderDate = orderDate;
-                        order.TotalAmount = int.Parse(TotalAmount.Text);
-                        order.Discount = int.Parse(Discount.Text);
+                        order.TotalAmount = totalAmount;
+                        order.Discount = discount;
                         order.PaymentMethod = PaymentMethod.Text;
                         order.PaymentStatus = PaymentStatus.Text;
                         order.ShipmentStatus = ShipmentStatus.Text;
 
-                        var result = await _order.Update(order);
-                        MessageBox.Show(result.Message, "Save");
+                        var updateResult = await _order.Update(order);
+                        MessageBox.Show(updateResult.Message, "Update");
                     }
                 }
 
@@ -119,7 +134,7 @@ namespace Jewelry.WpfApp.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Error");
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error");
             }
         }
 

@@ -57,7 +57,6 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
@@ -86,8 +85,6 @@
                     <TextBox Grid.Row="2" Grid.Column="3" x:Name="PaymentStatus" Text="{Binding Path=SiOrder.PaymentStatus, Mode=TwoWay}"/>
                     <Label Content="ShipmentStatus" Grid.Column="4" Grid.Row="2"/>
                     <TextBox Grid.Row="2" Grid.Column="5" x:Name="ShipmentStatus" Text="{Binding Path=SiOrder.ShipmentStatus, Mode=TwoWay}"/>
-                    <Label Content="Search" Grid.Column="0" Grid.Row="3"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="Search" />
 
                 </Grid>
             </Grid>

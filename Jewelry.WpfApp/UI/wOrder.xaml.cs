@@ -32,87 +32,10 @@ namespace Jewelry.WpfApp.UI
             LoadColumns();
         }
 
-        /*private async void ButtonSave_Click(object sender, RoutedEventArgs e)
+        private async Task RefreshOrderData()
         {
-            try
-            {
-                var item = await _order.GetById(OrderId.Text);
-
-                DateTime dateTime;
-                if (!DateTime.TryParseExact(OrderDate.Text, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
-                {
-                    MessageBox.Show("OrderDate must be a valid date in the 'MM/dd/yyyy' format.", "Error");
-                    return;
-                }
-
-                DateOnly orderDate = DateOnly.FromDateTime(dateTime);
-
-                int? promotionId = null;
-                if (int.TryParse(PromotionId.Text, out int tempPromotionId))
-                {
-                    promotionId = tempPromotionId;
-                }
-
-                if (item.Data == null)
-                {
-                    var order = new SiOrder()
-                    {
-                        CustomerId = int.Parse(CustomerId.Text),
-                        PromotionId = promotionId,
-                        OrderDate = orderDate,
-                        TotalAmount = int.Parse(TotalAmount.Text),
-                        Discount = int.Parse(Discount.Text),
-                        PaymentMethod = PaymentMethod.Text,
-                        PaymentStatus = PaymentStatus.Text,
-                        ShipmentStatus = ShipmentStatus.Text
-                    };
-
-                    var result = await _order.Save(order);
-                    MessageBox.Show(result.Message, "Save");
-                    if (result.Status > 0) // Assuming a positive status indicates success
-                    {
-                        LoadOrders(); // Refresh the data grid
-                    }
-                }
-                else
-                {
-                    var siOrder = item.Data as SiOrder;
-                    if (siOrder != null)
-                    {
-                        // Now update the order
-                        siOrder.CustomerId = int.Parse(CustomerId.Text);
-                        siOrder.PromotionId = promotionId;
-                        siOrder.OrderDate = orderDate;
-                        siOrder.TotalAmount = int.Parse(TotalAmount.Text);
-                        siOrder.Discount = int.Parse(Discount.Text);
-                        siOrder.PaymentMethod = PaymentMethod.Text;
-                        siOrder.PaymentStatus = PaymentStatus.Text;
-                        siOrder.ShipmentStatus = ShipmentStatus.Text;
-
-                        var result = await _order.Update(siOrder);
-                        MessageBox.Show(result.Message, "Save");
-                        if (result.Status > 0) // Assuming a positive status indicates success
-                        {
-                            LoadOrders(); // Refresh the data grid
-                        }
-                    }
-                }
-
-                OrderId.Text = string.Empty;
-                CustomerId.Text = string.Empty;
-                PromotionId.Text = string.Empty;
-                OrderDate.Text = string.Empty;
-                TotalAmount.Text = string.Empty;
-                Discount.Text = string.Empty;
-                PaymentMethod.Text = string.Empty;
-                PaymentStatus.Text = string.Empty;
-                ShipmentStatus.Text = string.Empty;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
-        }*/
+            await LoadOrders();
+        }
 
         private void LoadColumns()
         {
@@ -134,14 +57,14 @@ namespace Jewelry.WpfApp.UI
 
         private async Task LoadOrders(string searchInput = null)
         {
-            var result = await _order.GetAll();
+            var result = await _order.GetAll(); // This should fetch fresh data from the database
             if (result.Status > 0 && result.Data != null)
             {
-                grdCurrency.ItemsSource = result.Data as List<SiProduct>;
+                grdCurrency.ItemsSource = result.Data as List<SiOrder>; // Changed SiProduct to SiOrder
             }
             else
             {
-                grdCurrency.ItemsSource = new List<SiProduct>();
+                grdCurrency.ItemsSource = new List<SiOrder>(); // Changed SiProduct to SiOrder
             }
         }
 
@@ -181,16 +104,15 @@ namespace Jewelry.WpfApp.UI
         {
             try
             {
-                var selectedOrder = (SiOrder)grdCurrency.SelectedItem; // Assuming your DataGrid is bound to a collection of Order objects
+                var selectedOrder = (SiOrder)grdCurrency.SelectedItem;
                 if (selectedOrder != null)
                 {
                     var orderIdString = selectedOrder.OrderId.ToString();
-                    MessageBox.Show($"OrderId: {orderIdString}"); // Debug message
                     if (int.TryParse(orderIdString, out int orderId))
                     {
                         var result = await _order.DeleteById(orderId);
                         MessageBox.Show(result.Message, "Delete");
-                        this.LoadOrders();
+                        await RefreshOrderData(); // Refresh data after deletion
                     }
                     else
                     {
@@ -208,24 +130,25 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        private void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
+        private async void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
         {
             if (sender is Button button)
             {
                 var orderId = (int)button.CommandParameter;
                 var addOrderWindow = new AddOrder(orderId);
-                addOrderWindow.Show(); // Changed from ShowDialog() to Show()
+                addOrderWindow.Closed += async (s, args) => await RefreshOrderData(); // Refresh data when the window is closed
+                addOrderWindow.Show();
             }
         }
 
-        private void grdOrder_MouseDouble_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private async void grdOrder_MouseDouble_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var selectedOrder = grdCurrency.SelectedItem as SiOrder;
             if (selectedOrder != null)
             {
-                var addOrder = new AddOrder();
+                var addOrder = new AddOrder(selectedOrder.OrderId);
+                addOrder.Closed += async (s, args) => await RefreshOrderData(); // Refresh data when the window is closed
                 addOrder.ShowDialog();
-                LoadOrders(); // Refresh the order list after adding/updating a order
             }
         }
     }
