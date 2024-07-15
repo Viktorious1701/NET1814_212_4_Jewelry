@@ -155,5 +155,14 @@ namespace Jewelry.WpfApp.UI
             var addOrder = new AddOrder(); 
             addOrder.ShowDialog();
         }
+
+        private void ButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.CommandParameter is int orderId)
+            {
+                ViewOrder viewOrderWindow = new ViewOrder(orderId);
+                viewOrderWindow.ShowDialog();
+            }
+        }
     }
 }

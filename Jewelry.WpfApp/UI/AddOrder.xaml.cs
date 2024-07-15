@@ -47,9 +47,9 @@ namespace Jewelry.WpfApp.UI
                 OrderDate.Text = order.OrderDate?.ToDateTime(TimeOnly.MinValue).ToString("MM/dd/yyyy") ?? "";
                 TotalAmount.Text = order.TotalAmount.ToString(); // Assuming you want to format the amount
                 Discount.Text = order.Discount.ToString(); // Same assumption as above
-                PaymentMethod.Text = order.PaymentMethod;
-                PaymentStatus.Text = order.PaymentStatus;
-                ShipmentStatus.Text = order.ShipmentStatus;
+                PaymentMethod.SelectedItem = PaymentMethod.Items.Cast<ComboBoxItem>().FirstOrDefault(i => i.Content.ToString() == order.PaymentMethod);
+                PaymentStatus.SelectedItem = PaymentStatus.Items.Cast<ComboBoxItem>().FirstOrDefault(i => i.Content.ToString() == order.PaymentStatus);
+                ShipmentStatus.SelectedItem = ShipmentStatus.Items.Cast<ComboBoxItem>().FirstOrDefault(i => i.Content.ToString() == order.ShipmentStatus);
             }
             else
             {
@@ -87,6 +87,10 @@ namespace Jewelry.WpfApp.UI
 
                 int? promotionId = int.TryParse(PromotionId.Text, out int tempPromotionId) ? tempPromotionId : (int?)null;
 
+                string paymentMethod = (PaymentMethod.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "";
+                string paymentStatus = (PaymentStatus.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "";
+                string shipmentStatus = (ShipmentStatus.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "";
+
                 // Create or update the order
                 SiOrder order;
                 var existingOrder = await _order.GetById(orderId);
@@ -102,9 +106,9 @@ namespace Jewelry.WpfApp.UI
                         OrderDate = orderDate,
                         TotalAmount = totalAmount,
                         Discount = discount,
-                        PaymentMethod = PaymentMethod.Text,
-                        PaymentStatus = PaymentStatus.Text,
-                        ShipmentStatus = ShipmentStatus.Text
+                        PaymentMethod = paymentMethod,
+                        PaymentStatus = paymentStatus,
+                        ShipmentStatus = shipmentStatus
                     };
 
                     var saveResult = await _order.Save(order);
@@ -121,9 +125,9 @@ namespace Jewelry.WpfApp.UI
                         order.OrderDate = orderDate;
                         order.TotalAmount = totalAmount;
                         order.Discount = discount;
-                        order.PaymentMethod = PaymentMethod.Text;
-                        order.PaymentStatus = PaymentStatus.Text;
-                        order.ShipmentStatus = ShipmentStatus.Text;
+                        order.PaymentMethod = paymentMethod;
+                        order.PaymentStatus = paymentStatus;
+                        order.ShipmentStatus = shipmentStatus;
 
                         var updateResult = await _order.Update(order);
                         MessageBox.Show(updateResult.Message, "Update");
@@ -146,9 +150,9 @@ namespace Jewelry.WpfApp.UI
             OrderDate.Text = string.Empty;
             TotalAmount.Text = string.Empty;
             Discount.Text = string.Empty;
-            PaymentMethod.Text = string.Empty;
-            PaymentStatus.Text = string.Empty;
-            ShipmentStatus.Text = string.Empty;
+            PaymentMethod.SelectedIndex = -1;
+            PaymentStatus.SelectedIndex = -1;
+            ShipmentStatus.SelectedIndex = -1;
         }
 
         private void grdOrder_ButtonCancel_Click(object sender, RoutedEventArgs e)
