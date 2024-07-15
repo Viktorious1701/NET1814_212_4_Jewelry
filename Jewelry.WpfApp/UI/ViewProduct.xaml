@@ -1,0 +1,80 @@
+﻿<Window x:Class="Jewelry.WpfApp.ViewProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jewelry.WpfApp"
+        mc:Ignorable="d"
+        Title="View Product" Height="600" Width="800" Background="#1e1e1e">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Margin="20">
+            <Label Content="Product Details" FontSize="20" HorizontalAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Product ID:" Grid.Row="0" Grid.Column="0"/>
+                <TextBlock x:Name="TextProductId" Grid.Row="0" Grid.Column="1"/>
+
+                <Label Content="Name:" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock x:Name="TextName" Grid.Row="1" Grid.Column="1"/>
+
+                <Label Content="Category ID:" Grid.Row="2" Grid.Column="0"/>
+                <TextBlock x:Name="TextCategoryId" Grid.Row="2" Grid.Column="1"/>
+
+                <Label Content="Description:" Grid.Row="3" Grid.Column="0"/>
+                <TextBlock x:Name="TextDescription" Grid.Row="3" Grid.Column="1"/>
+
+                <Label Content="Barcode:" Grid.Row="4" Grid.Column="0"/>
+                <TextBlock x:Name="TextBarcode" Grid.Row="4" Grid.Column="1"/>
+
+                <Label Content="Weight:" Grid.Row="5" Grid.Column="0"/>
+                <TextBlock x:Name="TextWeight" Grid.Row="5" Grid.Column="1"/>
+
+                <Label Content="Cost Price:" Grid.Row="6" Grid.Column="0"/>
+                <TextBlock x:Name="TextCostPrice" Grid.Row="6" Grid.Column="1"/>
+
+                <Label Content="Gold Price:" Grid.Row="7" Grid.Column="0"/>
+                <TextBlock x:Name="TextGoldPrice" Grid.Row="7" Grid.Column="1"/>
+
+                <Label Content="Labor Cost:" Grid.Row="8" Grid.Column="0"/>
+                <TextBlock x:Name="TextLaborCost" Grid.Row="8" Grid.Column="1"/>
+
+                <Label Content="Stone Cost:" Grid.Row="9" Grid.Column="0"/>
+                <TextBlock x:Name="TextStoneCost" Grid.Row="9" Grid.Column="1"/>
+
+                <Label Content="Sell Price Ratio:" Grid.Row="10" Grid.Column="0"/>
+                <TextBlock x:Name="TextSellPriceRatio" Grid.Row="10" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
