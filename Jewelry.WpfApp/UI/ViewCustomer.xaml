@@ -1,0 +1,76 @@
+﻿<Window x:Class="Jewelry.WpfApp.UI.ViewCustomer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
+        mc:Ignorable="d"
+        Title="View Customer" Height="600" Width="800"  Background="#1e1e1e">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Background" Value="#2e2e2e"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Margin="20">
+            <Label Content="Order Details" FontSize="20" HorizontalAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Customer ID:" Grid.Row="0" Grid.Column="0"/>
+                <TextBox x:Name="txtCustomerID" Grid.Row="0" Grid.Column="1"/>
+
+                <Label Content="Name:" Grid.Row="1" Grid.Column="0"/>
+                <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1"/>
+
+                <Label Content="Phone:" Grid.Row="2" Grid.Column="0"/>
+                <TextBox x:Name="txtPhone" Grid.Row="2" Grid.Column="1"/>
+
+                <Label Content="Address:" Grid.Row="3" Grid.Column="0"/>
+                <TextBox x:Name="txtAddress" Grid.Row="3" Grid.Column="1"/>
+
+                <Label Content="Gender:" Grid.Row="4" Grid.Column="0"/>
+                <TextBox x:Name="chkGender" Grid.Row="4" Grid.Column="1"/>
+
+                <Label Content="Birthdate:" Grid.Row="5" Grid.Column="0"/>
+                <TextBox x:Name="txtDateOfBirth" Grid.Row="5" Grid.Column="1"/>
+
+                <Label Content="Country:" Grid.Row="6" Grid.Column="0"/>
+                <TextBox x:Name="txtCountry" Grid.Row="6" Grid.Column="1"/>
+
+                <Label Content="Email:" Grid.Row="7" Grid.Column="0"/>
+                <TextBox x:Name="txtEmail" Grid.Row="7" Grid.Column="1"/>
+
+                <Label Content="ZipCode:" Grid.Row="8" Grid.Column="0"/>
+                <TextBox x:Name="txtZipCode" Grid.Row="8" Grid.Column="1"/>
+
+                <Label Content="ALternate Contact:" Grid.Row="9" Grid.Column="0"/>
+                <TextBox x:Name="txtAltContact" Grid.Row="9" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -34,58 +34,58 @@ namespace Jewelry.WpfApp.UI
             _business = new CustomerBusiness();
             LoadCustomers();
         }
-        //private async void ButtonSave_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var item = await _business.GetById(int.Parse(txtCustomerId.Text));
+        private async void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var item = await _business.GetById(int.Parse(txtCustomerId.Text));
 
-        //        if (item.Data == null)
-        //        {
-        //            var customer = new SiCustomer()
-        //            {
-        //                CustomerId = Convert.ToInt32(txtCustomerId.Text),
-        //                Name = txtName.Text,
-        //                Phone = txtPhone.Text,
-        //                Address = txtAddress.Text,
-        //                Gender = chkGender.IsChecked,
-        //                DateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null,
-        //                Email = txtEmail.Text,
-        //                AlterContact = txtAltContact.Text,
-        //                Country = txtCountry.Text,
-        //                ZipCode = txtZipCode.Text,
+                if (item.Data == null)
+                {
+                    var customer = new SiCustomer()
+                    {
+                        CustomerId = Convert.ToInt32(txtCustomerId.Text),
+                        Name = txtName.Text,
+                        Phone = txtPhone.Text,
+                        Address = txtAddress.Text,
+                        Gender = chkGender.IsChecked,
+                        DateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null,
+                        Email = txtEmail.Text,
+                        AlterContact = txtAltContact.Text,
+                        Country = txtCountry.Text,
+                        ZipCode = txtZipCode.Text,
 
-        //            };
+                    };
 
-        //            var result = await _business.Save(customer);
-        //            MessageBox.Show(result.Message, "Save");
-        //        }
-        //        else
-        //        {
-        //            var customer = item.Data as SiCustomer;
-        //            //customer.customerCode = txtcustomerCode.Text;
-        //            customer.Name = txtName.Text;
-        //            customer.Phone = txtPhone.Text;
-        //            customer.Address = txtAddress.Text;
-        //            customer.Gender = chkGender.IsChecked;
-        //            customer.DateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null;
-        //            customer.Email = txtEmail.Text;
-        //            customer.AlterContact = txtAltContact.Text;
-        //            customer.Country = txtCountry.Text;
-        //            customer.ZipCode = txtZipCode.Text;
+                    var result = await _business.Save(customer);
+                    MessageBox.Show(result.Message, "Save");
+                }
+                else
+                {
+                    var customer = item.Data as SiCustomer;
+                    //customer.customerCode = txtcustomerCode.Text;
+                    customer.Name = txtName.Text;
+                    customer.Phone = txtPhone.Text;
+                    customer.Address = txtAddress.Text;
+                    customer.Gender = chkGender.IsChecked;
+                    customer.DateOfBirth = DateTime.TryParse(txtDateOfBirth.Text, out var date) ? date : (DateTime?)null;
+                    customer.Email = txtEmail.Text;
+                    customer.AlterContact = txtAltContact.Text;
+                    customer.Country = txtCountry.Text;
+                    customer.ZipCode = txtZipCode.Text;
 
-        //            var result = await _business.Update(customer);
-        //            MessageBox.Show(result.Message, "Save");
-        //        }
+                    var result = await _business.Update(customer);
+                    MessageBox.Show(result.Message, "Save");
+                }
 
-        //        ClearForm();
-        //        LoadCustomers();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString(), "Error");
-        //    }
-        //}
+                ClearForm();
+                LoadCustomers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+        }
 
         private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
         {
@@ -266,43 +266,49 @@ namespace Jewelry.WpfApp.UI
 
         private async void ButtonView_Click(object sender, RoutedEventArgs e)
         {
-            try
+            //try
+            //{
+            //    var button = sender as Button;
+            //    _selectedCustomer = button?.DataContext as SiCustomer;
+            //    if(_selectedCustomer != null)
+            //    {
+            //        txtCustomerId.Text = _selectedCustomer.CustomerId.ToString();
+            //        txtName.Text = _selectedCustomer.Name;
+            //        txtPhone.Text = _selectedCustomer.Phone;
+            //        txtAddress.Text = _selectedCustomer.Address;
+            //        chkGender.IsChecked = _selectedCustomer.Gender;
+            //        txtDateOfBirth.SelectedDate = _selectedCustomer.DateOfBirth; // Fixed binding
+            //        txtCountry.Text= _selectedCustomer.Country;
+            //        txtAltContact.Text= _selectedCustomer.AlterContact;
+            //        txtEmail.Text= _selectedCustomer.Email;
+            //        txtZipCode.Text= _selectedCustomer.ZipCode;
+
+
+            //        txtCustomerId.IsReadOnly = true;
+            //        txtName.IsReadOnly = true;
+            //        txtPhone.IsReadOnly = true;
+            //        txtAddress.IsReadOnly = true;
+            //        chkGender.IsEnabled = false;
+            //        txtDateOfBirth.IsEnabled  = false;
+            //        txtCountry.IsReadOnly = true;
+            //        txtAltContact.IsReadOnly = true;
+            //        txtEmail.IsReadOnly = true;
+            //        txtZipCode.IsReadOnly = true;
+
+
+            //        ButtonUpdate.Visibility = Visibility.Collapsed;
+            //        ButtonSave.Visibility = Visibility.Collapsed;
+
+            //    }
+            //}catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString(), "Error");
+            //}
+
+            if(sender is Button button && button.CommandParameter is int customerId)
             {
-                var button = sender as Button;
-                _selectedCustomer = button?.DataContext as SiCustomer;
-                if(_selectedCustomer != null)
-                {
-                    txtCustomerId.Text = _selectedCustomer.CustomerId.ToString();
-                    txtName.Text = _selectedCustomer.Name;
-                    txtPhone.Text = _selectedCustomer.Phone;
-                    txtAddress.Text = _selectedCustomer.Address;
-                    chkGender.IsChecked = _selectedCustomer.Gender;
-                    txtDateOfBirth.SelectedDate = _selectedCustomer.DateOfBirth; // Fixed binding
-                    txtCountry.Text= _selectedCustomer.Country;
-                    txtAltContact.Text= _selectedCustomer.AlterContact;
-                    txtEmail.Text= _selectedCustomer.Email;
-                    txtZipCode.Text= _selectedCustomer.ZipCode;
-
-
-                    txtCustomerId.IsReadOnly = true;
-                    txtName.IsReadOnly = true;
-                    txtPhone.IsReadOnly = true;
-                    txtAddress.IsReadOnly = true;
-                    chkGender.IsEnabled = false;
-                    txtDateOfBirth.IsEnabled  = false;
-                    txtCountry.IsReadOnly = true;
-                    txtAltContact.IsReadOnly = true;
-                    txtEmail.IsReadOnly = true;
-                    txtZipCode.IsReadOnly = true;
-
-
-                    ButtonUpdate.Visibility = Visibility.Collapsed;
-                    ButtonSave.Visibility = Visibility.Collapsed;
-
-                }
-            }catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
+                ViewCustomer viewCustomer = new ViewCustomer(customerId);
+                viewCustomer.ShowDialog();
             }
         }
 
@@ -330,7 +336,8 @@ namespace Jewelry.WpfApp.UI
 
                     if (!string.IsNullOrWhiteSpace(txtName.Text))
                     {
-                        isMatch &= customer.Name.Contains(txtName.Text, StringComparison.OrdinalIgnoreCase);
+                        string searchName = txtName.Text.Trim();
+                        isMatch &= customer.Name.Trim().IndexOf(searchName, StringComparison.OrdinalIgnoreCase) >= 0;
                     }
 
                     if (!string.IsNullOrWhiteSpace(txtPhone.Text))
