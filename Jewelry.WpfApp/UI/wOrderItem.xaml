@@ -111,7 +111,7 @@
             </StackPanel>
             <GroupBox Header="Order Item List" BorderBrush="#FFD700" BorderThickness="1">
                 <DataGrid x:Name="grdOrderItem" AutoGenerateColumns="False" ItemsSource="{Binding OrderItems}" CanUserAddRows="False" Height="200" Margin="10"
-          MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+          MouseDoubleClick="grdOrderItem_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Order Item ID" Binding="{Binding Path=OrderItemId}" Width="80"/>

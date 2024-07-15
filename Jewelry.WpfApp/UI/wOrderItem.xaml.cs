@@ -63,11 +63,11 @@ namespace Jewelry.WpfApp.UI
                     MessageBox.Show(result.Message, "Save");
                     ClearForm();
                     await GetOrderItemsAsync();
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\tactical-nuke.wav");
-                    if (player != null)
-                    {
-                        player.Play();
-                    }
+                    //System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\tactical-nuke.wav");
+                    //if (player != null)
+                    //{
+                    //    player.Play();
+                    //}
                 }
                 else
                 {
@@ -86,8 +86,8 @@ namespace Jewelry.WpfApp.UI
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
             ClearForm();
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\finger-snap.wav");
-            player.Play();
+            //System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\finger-snap.wav");
+            //player.Play();
         }
         private void ClearForm()
         {
@@ -131,18 +131,20 @@ namespace Jewelry.WpfApp.UI
                 Status.Text = orderItem.Status;
                 Total.Text = orderItem.Total.ToString();
                 Discount.Text = orderItem.Discount.ToString();
+                ViewOrderItem vieworderItem = new ViewOrderItem(orderItem);
+                vieworderItem.Show();
             }
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\i-am-the-chosen-one.wav");
-            if(player!=null)
-            {
-                player.Play();
-            }
+            //System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\i-am-the-chosen-one.wav");
+            //if(player!=null)
+            //{
+            //    player.Play();
+            //}
             
 
 
 
         }
-        private async void grdProduct_MouseDouble_Click(object sender, RoutedEventArgs e)
+        private async void grdOrderItem_MouseDouble_Click(object sender, RoutedEventArgs e)
         {
             DataGrid grd = sender as DataGrid;
             if (grd != null && grd.SelectedItem != null && grd.SelectedItems.Count == 1)
@@ -168,8 +170,10 @@ namespace Jewelry.WpfApp.UI
                             Total.Text = Convert.ToString(item.Total);
                             Status.Text = item.Status;
                             CustomerID.Text = Convert.ToString(item.CustomerId);
-
+                            ViewOrderItem orderItem = new ViewOrderItem(item);
+                            orderItem.Show();
                         }
+                      
                     }
                 }
             }
@@ -185,18 +189,18 @@ namespace Jewelry.WpfApp.UI
 
             if (!string.IsNullOrEmpty(orderItemId))
             {
-                System.Media.SoundPlayer player1 = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\riel.wav");
-                if (player1 != null)
-                {
-                    player1.Play();
-                }
+                //System.Media.SoundPlayer player1 = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\riel.wav");
+                //if (player1 != null)
+                //{
+                //    player1.Play();
+                //}
                 if (MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\nuke-bomb.wav");
-                    if (player != null)
-                    {
-                        player.Play();
-                    }
+                    //System.Media.SoundPlayer player = new System.Media.SoundPlayer("D:\\Semester5\\PRN212\\NET1814_212_4_Jewelry\\Jewelry.WpfApp\\UI\\Sounds\\nuke-bomb.wav");
+                    //if (player != null)
+                    //{
+                    //    player.Play();
+                    //}
                     var result = await _business.DeleteById(int.Parse(orderItemId));
                     MessageBox.Show($"{result.Message}", "Delete");
                     await this.GetOrderItemsAsync();

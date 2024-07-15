@@ -1,0 +1,28 @@
+﻿<Window x:Class="Jewelry.WpfApp.ViewOrderItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jewelry.WpfApp"
+        mc:Ignorable="d"
+        Title="ViewProduct" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="Order Item Details" FontSize="20" FontWeight="Bold" Margin="10"/>
+            <TextBlock Text="Order Item ID:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextOrderItemId" Margin="5"/>
+            <TextBlock Text="Order ID:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextOrderId" Margin="5"/>
+            <TextBlock Text="Product ID:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextProductId" Margin="5"/>
+            <TextBlock Text="Quantity:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextQuantity" Margin="5"/>
+            <TextBlock Text="Price:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextPrice" Margin="5"/>
+            <TextBlock Text="Status:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextStatus" Margin="5"/>
+            <TextBlock Text="Customer ID:" FontWeight="Bold" Margin="5"/>
+            <TextBlock x:Name="TextCustomerId" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
