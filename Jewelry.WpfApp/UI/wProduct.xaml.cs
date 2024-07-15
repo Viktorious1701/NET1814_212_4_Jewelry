@@ -145,7 +145,7 @@ namespace Jewelry.WpfApp.UI
             var selectedProduct = grdProduct.SelectedItem as SiProduct;
             if (selectedProduct != null)
             {
-                var addProduct = new AddProduct(selectedProduct.ProductId);
+                var addProduct = new AddProduct(selectedProduct);
                 addProduct.Closed += async (s, args) => await RefreshProductData(); // Refresh data when the window is closed
                 addProduct.ShowDialog();
             }

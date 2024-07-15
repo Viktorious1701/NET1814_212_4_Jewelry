@@ -24,12 +24,104 @@
             <Setter Property="Background" Value="#2e2e2e"/>
         </Style>
         <Style TargetType="ComboBox">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="Background" Value="#2e2e2e"/>
+    <Setter Property="Height" Value="25"/>
+    <Setter Property="Margin" Value="5"/>
+    <Setter Property="FontSize" Value="14"/>
+    <Setter Property="Foreground" Value="Gold"/>
+    <Setter Property="Background" Value="#2e2e2e"/>
+    <Setter Property="BorderBrush" Value="Gold"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="ComboBox">
+                <Grid>
+                    <ToggleButton 
+                        Name="ToggleButton" 
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        Foreground="{TemplateBinding Foreground}"
+                        IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="20" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border 
+                                        Grid.ColumnSpan="2"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1" />
+                                    <Border 
+                                        Grid.Column="0"
+                                        Margin="1" 
+                                        Background="{TemplateBinding Background}" />
+                                    <Path 
+                                        Grid.Column="1"     
+                                        Fill="{TemplateBinding Foreground}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="M 0 0 L 4 4 L 8 0 Z"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
+                    <ContentPresenter
+                        Name="ContentSite"
+                        IsHitTestVisible="False" 
+                        Content="{TemplateBinding SelectionBoxItem}"
+                        ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                        Margin="3,3,23,3"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left" />
+                    <Popup 
+                        Name="Popup"
+                        Placement="Bottom"
+                        IsOpen="{TemplateBinding IsDropDownOpen}"
+                        AllowsTransparency="True" 
+                        Focusable="False"
+                        PopupAnimation="Slide">
+                        <Grid 
+                            Name="DropDown"
+                            SnapsToDevicePixels="True"                
+                            MinWidth="{TemplateBinding ActualWidth}"
+                            MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                            <Border 
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="1"
+                                BorderBrush="{TemplateBinding BorderBrush}"/>
+                            <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                            </ScrollViewer>
+                        </Grid>
+                    </Popup>
+                </Grid>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+    <Style.Resources>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border Background="{TemplateBinding Background}" Padding="2">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#3e3e3e"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4e4e4e"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
+    </Style.Resources>
+</Style>
         <Style TargetType="Button">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Width" Value="80"/>
@@ -80,7 +172,7 @@
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="ColumnComboBox" Width="200" Margin="10" Grid.Column="0" />
+                    <ComboBox x:Name="ColumnComboBox" Width="200" Margin="10" Grid.Column="0" Background="Black" />
                     <TextBox x:Name="SearchTextBox" Width="200"   Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,12,0,12" />
                     <Button Content="Search" Click="ButtonSearch_Click" Width="100" Margin="19,10,-19,10" Grid.Column="2" />
                 </Grid>
