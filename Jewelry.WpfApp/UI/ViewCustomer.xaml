@@ -23,7 +23,7 @@
     </Window.Resources>
     <Grid>
         <StackPanel Margin="20">
-            <Label Content="Order Details" FontSize="20" HorizontalAlignment="Center"/>
+            <Label Content="Customer Details" FontSize="20" HorizontalAlignment="Center"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
