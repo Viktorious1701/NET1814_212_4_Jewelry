@@ -22,7 +22,7 @@ namespace Jewelry.WpfApp.UI
     /// Interaction logic for AddProduct.xaml
     /// </summary>
     public partial class AddProduct : Window
-    {
+    {   
         private readonly IProductBusiness _business;
         private SiProduct _updateProduct;
         public AddProduct()

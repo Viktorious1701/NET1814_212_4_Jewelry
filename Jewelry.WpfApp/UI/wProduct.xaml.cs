@@ -102,6 +102,23 @@ namespace Jewelry.WpfApp.UI
             addProductWindow.Closed += async (s, args) => await RefreshProductData(); // Refresh data when the window is closed
             addProductWindow.ShowDialog();
         }
+        private async void ButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button)
+            {
+                var productId = (int)button.CommandParameter;
+                var selectedProduct = await _business.GetById(productId);
+                if (selectedProduct != null && selectedProduct.Data != null)
+                {
+                    var viewProductWindow = new ViewProduct(selectedProduct.Data as SiProduct);
+                    viewProductWindow.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong with this record");
+                }
+            }
+        }
 
         private async void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
         {
