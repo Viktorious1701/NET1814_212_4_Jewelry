@@ -76,8 +76,11 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" Background="#32CD32"/>
+            <Button x:Name="ButtonAdvancedSearch" Content="Advanced Search" Click="ButtonAdvancedSearch_Click" Background="#FFA500" Width="150" Margin="10"/>
+
             <Button x:Name="ButtonAddUpdate" Content="Add/Update" Click="ButtonAddUpdate_Click" Background="#808080"/>
         </StackPanel>
+
 
         <GroupBox Header="Product List" BorderBrush="#D4D4D4" BorderThickness="1">
             <DataGrid x:Name="grdProduct" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="600" Margin="10"

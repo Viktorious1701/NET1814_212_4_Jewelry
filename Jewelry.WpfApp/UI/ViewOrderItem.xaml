@@ -1,0 +1,63 @@
+﻿<Window x:Class="Jewelry.WpfApp.ViewOrderItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Jewelry.WpfApp"
+        mc:Ignorable="d"
+        Title="View Order Item" Height="600" Width="800" Background="#1e1e1e">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Gold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Margin="20">
+            <Label Content="Order Item Details" FontSize="20" HorizontalAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Order Item ID:" Grid.Row="0" Grid.Column="0"/>
+                <TextBlock x:Name="TextOrderItemId" Grid.Row="0" Grid.Column="1"/>
+
+                <Label Content="Order ID:" Grid.Row="1" Grid.Column="0"/>
+                <TextBlock x:Name="TextOrderId" Grid.Row="1" Grid.Column="1"/>
+
+                <Label Content="Product ID:" Grid.Row="2" Grid.Column="0"/>
+                <TextBlock x:Name="TextProductId" Grid.Row="2" Grid.Column="1"/>
+
+                <Label Content="Quantity:" Grid.Row="3" Grid.Column="0"/>
+                <TextBlock x:Name="TextQuantity" Grid.Row="3" Grid.Column="1"/>
+
+                <Label Content="Price:" Grid.Row="4" Grid.Column="0"/>
+                <TextBlock x:Name="TextPrice" Grid.Row="4" Grid.Column="1"/>
+
+                <Label Content="Status:" Grid.Row="5" Grid.Column="0"/>
+                <TextBlock x:Name="TextStatus" Grid.Row="5" Grid.Column="1"/>
+
+                <Label Content="Customer ID:" Grid.Row="6" Grid.Column="0"/>
+                <TextBlock x:Name="TextCustomerId" Grid.Row="6" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

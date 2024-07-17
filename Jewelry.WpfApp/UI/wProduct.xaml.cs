@@ -167,5 +167,23 @@ namespace Jewelry.WpfApp.UI
                 addProduct.ShowDialog();
             }
         }
+        private async void ButtonAdvancedSearch_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await _business.GetAll();
+            if (result.Status > 0 && result.Data != null)
+            {
+                var products = result.Data as List<SiProduct>;
+                var advancedSearchWindow = new wProductAdvancedSearch(products);
+                if (advancedSearchWindow.ShowDialog() == true)
+                {
+                    grdProduct.ItemsSource = advancedSearchWindow.FilteredProducts;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Failed to load products.");
+            }
+        }
+
     }
 }
