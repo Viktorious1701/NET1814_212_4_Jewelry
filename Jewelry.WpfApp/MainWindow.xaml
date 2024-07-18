@@ -3,8 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Jewelry Shop" Height="450" Width="800">
     <Grid>
+        <!-- Define Column Definitions -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <!-- Left Side Navigation -->
-        <Border Background="#1e1e1e" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="200">
+        <Border Background="#1e1e1e" VerticalAlignment="Stretch" Grid.Column="0">
             <StackPanel>
                 <Button Content="Product" Background="#DAA520" Foreground="Black" Click="Open_jProduct_Click" Margin="5"/>
                 <Button Content="Category" Background="#DAA520" Foreground="Black" Click="Open_jCategory_Click" Margin="5"/>
@@ -16,7 +22,7 @@
         </Border>
 
         <!-- Welcome Page Content -->
-        <Border Background="#DAA520" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="600">
+        <Border Background="#DAA520" VerticalAlignment="Stretch" Grid.Column="1" Margin="5">
             <Grid>
                 <TextBlock Text="Welcome to Jewelry Shop!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
             </Grid>
