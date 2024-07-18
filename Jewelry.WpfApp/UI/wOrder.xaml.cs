@@ -29,7 +29,6 @@ namespace Jewelry.WpfApp.UI
         private async void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             await LoadOrders();
-            LoadColumns();
         }
 
         private async Task RefreshOrderData()
@@ -37,23 +36,6 @@ namespace Jewelry.WpfApp.UI
             await LoadOrders();
         }
 
-        private void LoadColumns()
-        {
-            // Adding column names to the ComboBox
-            var columns = new List<string>
-            {
-                "OrderId",
-                "CustomerId",
-                "PromotionId",
-                "OrderDate",
-                "TotalAmount",
-                "Discount",
-                "PaymentMethod",
-                "PaymentStatus",
-                "ShipmentStatus",
-            };
-            ColumnComboBox.ItemsSource = columns;
-        }
 
         private async Task LoadOrders(string searchInput = null)
         {
@@ -70,27 +52,20 @@ namespace Jewelry.WpfApp.UI
 
         private async void ButtonSearch_Click(object sender, RoutedEventArgs e)
         {
-            var selectedColumn = ColumnComboBox.SelectedItem as string;
-            var searchText = SearchTextBox.Text;
-
             var result = await _order.GetAll();
             if (result.Status > 0 && result.Data != null)
             {
                 var filteredData = result.Data as List<SiOrder>;
 
-                if (!string.IsNullOrEmpty(selectedColumn) && !string.IsNullOrEmpty(searchText))
-                {
-                    filteredData = filteredData.Where(p =>
-                    {
-                        var property = p.GetType().GetProperty(selectedColumn);
-                        if (property != null)
-                        {
-                            var value = property.GetValue(p, null)?.ToString();
-                            return value != null && value.Contains(searchText, StringComparison.OrdinalIgnoreCase);
-                        }
-                        return false;
-                    }).ToList();
-                }
+                filteredData = filteredData.Where(order =>
+                    (string.IsNullOrEmpty(OrderIdSearch.Text) || order.OrderId.ToString() == OrderIdSearch.Text) &&
+                    (string.IsNullOrEmpty(CustomerIdSearch.Text) || order.CustomerId.ToString() == CustomerIdSearch.Text) &&
+                    (string.IsNullOrEmpty(OrderDateSearch.Text) || order.OrderDate.ToString().Contains(OrderDateSearch.Text)) &&
+                    (string.IsNullOrEmpty(TotalAmountSearch.Text) || order.TotalAmount.ToString() == TotalAmountSearch.Text) &&
+                    (string.IsNullOrEmpty(PaymentMethodSearch.Text) || string.Equals(order.PaymentMethod, PaymentMethodSearch.Text, StringComparison.OrdinalIgnoreCase)) &&
+                    (string.IsNullOrEmpty(PaymentStatusSearch.Text) || string.Equals(order.PaymentStatus, PaymentStatusSearch.Text, StringComparison.OrdinalIgnoreCase)) &&
+                    (string.IsNullOrEmpty(ShipmentStatusSearch.Text) || string.Equals(order.ShipmentStatus, ShipmentStatusSearch.Text, StringComparison.OrdinalIgnoreCase))
+                ).ToList();
 
                 grdCurrency.ItemsSource = filteredData;
             }
