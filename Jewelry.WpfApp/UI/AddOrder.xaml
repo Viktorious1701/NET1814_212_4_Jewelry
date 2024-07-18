@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Add Order" Height="550" Width="1140" Background="Black">
+        Title="Add Order" Height="320" Width="1140" Background="Black">
     <Window.Resources>
         <!-- Define styles for the controls -->
         <Style TargetType="Label">
