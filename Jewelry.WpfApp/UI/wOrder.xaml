@@ -169,11 +169,11 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="1000"/>
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
                     <ComboBox x:Name="ColumnComboBox" Width="200" Margin="10" Grid.Column="0" Background="Black" />
-                    <TextBox x:Name="SearchTextBox" Width="200"   Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,12,0,12" />
+                    <TextBox x:Name="SearchTextBox" Width="1000"   Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,12,0,12" />
                     <Button Content="Search" Click="ButtonSearch_Click" Width="100" Margin="19,10,-19,10" Grid.Column="2" />
                 </Grid>
             </GroupBox>
