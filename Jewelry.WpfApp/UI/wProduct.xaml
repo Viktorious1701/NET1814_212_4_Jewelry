@@ -5,58 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Product" Height="1250" Width="2000"
+        Title="Product" Height="1250" Width="1000"
         Background="#1e1e1e">
-    <Window.Resources>
-        <!-- Define styles for the controls -->
-        <Style TargetType="Label">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Foreground" Value="Gold"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="Background" Value="#2e2e2e"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Background" Value="#2e2e2e"/>
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Width" Value="80"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#005A9E"/>
-        </Style>
-        <Style TargetType="GroupBox">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="Background" Value="#1e1e1e"/>
-        </Style>
-        <Style TargetType="DataGrid">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="BorderBrush" Value="#D4D4D4"/>
-            <Setter Property="Foreground" Value="Gold"/>
-            <Setter Property="Background" Value="#1e1e1e"/>
-            <Setter Property="AutoGenerateColumns" Value="False"/>
-            <Setter Property="RowBackground" Value="#2e2e2e"/>
-            <Setter Property="AlternatingRowBackground" Value="#3e3e3e"/>
-        </Style>
-    </Window.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -156,7 +107,7 @@
                     <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId}" Width="100"/>
                     <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId}" Width="100"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="200"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="300"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="100"/>
                     <DataGridTextColumn Header="Barcode" Binding="{Binding Path=Barcode}" Width="100"/>
                     <DataGridTextColumn Header="Weight" Binding="{Binding Path=Weight}" Width="100"/>
                     <DataGridTextColumn Header="Cost Price" Binding="{Binding Path=CostPrice}" Width="100"/>
@@ -164,7 +115,7 @@
                     <DataGridTextColumn Header="Labor Cost" Binding="{Binding Path=LaborCost}" Width="100"/>
                     <DataGridTextColumn Header="Stone Cost" Binding="{Binding Path=StoneCost}" Width="100"/>
                     <DataGridTextColumn Header="Sell Price Ratio" Binding="{Binding Path=SellPriceRatio}" Width="100"/>
-                    <DataGridTemplateColumn Header="Action" Width="80">
+                    <DataGridTemplateColumn Header="Delete" Width="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Delete" 
@@ -174,8 +125,20 @@
                             Foreground="White"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
+                        
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="View" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="View" 
+        Click="ButtonView_Click"
+        CommandParameter="{Binding ProductId}"
+        Background="Gold"
+        Foreground="White"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
 
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>

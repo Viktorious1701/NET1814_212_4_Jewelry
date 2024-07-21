@@ -2,6 +2,68 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Jewelry Shop" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Define styles for buttons and text -->
+        <Style x:Key="NavigationButton" TargetType="Button">
+            <Setter Property="Padding" Value="8,16"/>
+            <Setter Property="Background" Value="#262626"/>
+            <Setter Property="Foreground" Value="#DAA520"/>
+            <Setter Property="BorderBrush" Value="#DAA520"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontFamily" Value="Quicksand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1e1e1e"/>
+                                <Setter Property="BorderBrush" Value="#DAA520"/>
+                                <Setter Property="Foreground" Value="#DAA520"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#DAA520" BlurRadius="10" ShadowDepth="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#DAA520"/>
+                                <Setter Property="Foreground" Value="#262626"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WelcomeText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Quicksand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Foreground" Value="#DAA520"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="MaxWidth" Value="250"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#DAA520" BlurRadius="4"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <!-- Define Column Definitions -->
         <Grid.ColumnDefinitions>
@@ -10,21 +72,21 @@
         </Grid.ColumnDefinitions>
 
         <!-- Left Side Navigation -->
-        <Border Background="#1e1e1e" VerticalAlignment="Stretch" Grid.Column="0">
+        <Border Background="#1e1e1e" VerticalAlignment="Stretch" Grid.Column="0" CornerRadius="8" BorderThickness="1" BorderBrush="#DAA520">
             <StackPanel>
-                <Button Content="Product" Background="#DAA520" Foreground="Black" Click="Open_jProduct_Click" Margin="5"/>
-                <Button Content="Category" Background="#DAA520" Foreground="Black" Click="Open_jCategory_Click" Margin="5"/>
-                <Button Content="Order Item" Background="#DAA520" Foreground="Black" Click="Open_wOrderItem_Click" Margin="5"/>
-                <Button Content="Order" Background="#DAA520" Foreground="Black" Click="Open_wOrder_Click" Margin="5"/>
-                <Button Content="Customer" Background="#DAA520" Foreground="Black" Click="Open_wCustomer_Click" Margin="5"/>
-                <Button Content="Company" Background="#DAA520" Foreground="Black" Click="Open_wCompany_Click" Margin="5"/>
+                <Button Content="Product" Style="{StaticResource NavigationButton}" Click="Open_jProduct_Click"/>
+                <Button Content="Category" Style="{StaticResource NavigationButton}" Click="Open_jCategory_Click"/>
+                <Button Content="Order Item" Style="{StaticResource NavigationButton}" Click="Open_wOrderItem_Click"/>
+                <Button Content="Order" Style="{StaticResource NavigationButton}" Click="Open_wOrder_Click"/>
+                <Button Content="Customer" Style="{StaticResource NavigationButton}" Click="Open_wCustomer_Click"/>
+                <Button Content="Company" Style="{StaticResource NavigationButton}" Click="Open_wCompany_Click"/>
             </StackPanel>
         </Border>
 
         <!-- Welcome Page Content -->
-        <Border Background="#DAA520" VerticalAlignment="Stretch" Grid.Column="1" Margin="5">
+        <Border Background="#262626" VerticalAlignment="Stretch" Grid.Column="1" Margin="5" CornerRadius="8" BorderThickness="1" BorderBrush="#DAA520">
             <Grid>
-                <TextBlock Text="Welcome to Jewelry Shop!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                <TextBlock Text="Welcome to Jewelry Shop!" Style="{StaticResource WelcomeText}"/>
             </Grid>
         </Border>
     </Grid>
