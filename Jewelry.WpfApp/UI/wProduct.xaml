@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jewelry.WpfApp.UI"
         mc:Ignorable="d"
-        Title="Product" Height="950" Width="1500"
+        Title="Product" Height="1250" Width="2000"
         Background="#1e1e1e">
     <Window.Resources>
-         <!--Define styles for the controls--> 
+        <!-- Define styles for the controls -->
         <Style TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
@@ -57,8 +57,17 @@
             <Setter Property="AlternatingRowBackground" Value="#3e3e3e"/>
         </Style>
     </Window.Resources>
-    <StackPanel Orientation="Vertical" Background="#1e1e1e">
-        <GroupBox Header="Product Search and Add/Update" BorderBrush="#D4D4D4" BorderThickness="1">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Basic Search and Buttons -->
+        <GroupBox Header="Product Search and Add/Update" BorderBrush="#D4D4D4" BorderThickness="1" Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -69,27 +78,85 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <ComboBox x:Name="ColumnComboBox" Width="200" Margin="10" Grid.Column="0" Background="Black"/>
-                <TextBox x:Name="SearchTextBox" Width="200"   Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,12,0,12" />
-                <Button Content="Search" Click="ButtonSearch_Click" Width="100" Margin="19,10,-19,10" Grid.Column="2" />
+                <TextBox x:Name="SearchTextBox" Width="200" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5,12,0,12"/>
+                <Button Content="Search" Click="ButtonSearch_Click" Width="100" Margin="19,10,-19,10" Grid.Column="2"/>
             </Grid>
         </GroupBox>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" Background="#32CD32"/>
-            <Button x:Name="ButtonAdvancedSearch" Content="Advanced Search" Click="ButtonAdvancedSearch_Click" Background="#FFA500" Width="150" Margin="10"/>
+        <!-- Advanced Search Section -->
+        <GroupBox Header="Advanced Search Form" BorderBrush="#D4D4D4" BorderThickness="1" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="160"/>
+                </Grid.ColumnDefinitions>
 
-            <Button x:Name="ButtonAddUpdate" Content="Add/Update" Click="ButtonAddUpdate_Click" Background="#808080"/>
+                <Label Content="Product Id:" Grid.Column="0" Grid.Row="0"/>
+                <TextBox Grid.Column="1" Grid.Row="0" x:Name="ProductIdTextBox" Text="{Binding Path=SearchCriteria.ProductId, Mode=TwoWay}"/>
+
+                <Label Content="Name:" Grid.Column="2" Grid.Row="0"/>
+                <TextBox Grid.Column="3" Grid.Row="0" x:Name="NameTextBox" Text="{Binding Path=SearchCriteria.Name, Mode=TwoWay}"/>
+
+                <Label Content="Category Id:" Grid.Column="0" Grid.Row="1"/>
+                <TextBox Grid.Column="1" Grid.Row="1" x:Name="CategoryIdTextBox" Text="{Binding Path=SearchCriteria.CategoryId, Mode=TwoWay}"/>
+
+                <Label Content="Description:" Grid.Column="2" Grid.Row="1"/>
+                <TextBox Grid.Column="3" Grid.Row="1" x:Name="DescriptionTextBox" Text="{Binding Path=SearchCriteria.Description, Mode=TwoWay}"/>
+
+                <Label Content="Barcode:" Grid.Column="0" Grid.Row="2"/>
+                <TextBox Grid.Column="1" Grid.Row="2" x:Name="BarcodeTextBox" Text="{Binding Path=SearchCriteria.Barcode, Mode=TwoWay}"/>
+
+                <Label Content="Weight:" Grid.Column="2" Grid.Row="2"/>
+                <TextBox Grid.Column="3" Grid.Row="2" x:Name="WeightTextBox" Text="{Binding Path=SearchCriteria.Weight, Mode=TwoWay}"/>
+
+                <Label Content="Cost Price:" Grid.Column="0" Grid.Row="3"/>
+                <TextBox Grid.Column="1" Grid.Row="3" x:Name="CostPriceTextBox" Text="{Binding Path=SearchCriteria.CostPrice, Mode=TwoWay}"/>
+
+                <Label Content="Gold Price:" Grid.Column="2" Grid.Row="3"/>
+                <TextBox Grid.Column="3" Grid.Row="3" x:Name="GoldPriceTextBox" Text="{Binding Path=SearchCriteria.GoldPrice, Mode=TwoWay}"/>
+
+                <Label Content="Labor Cost:" Grid.Column="0" Grid.Row="4"/>
+                <TextBox Grid.Column="1" Grid.Row="4" x:Name="LaborCostTextBox" Text="{Binding Path=SearchCriteria.LaborCost, Mode=TwoWay}"/>
+
+                <Label Content="Stone Cost:" Grid.Column="2" Grid.Row="4"/>
+                <TextBox Grid.Column="3" Grid.Row="4" x:Name="StoneCostTextBox" Text="{Binding Path=SearchCriteria.StoneCost, Mode=TwoWay}"/>
+
+                <Label Content="Sell Price Ratio:" Grid.Column="0" Grid.Row="5"/>
+                <TextBox Grid.Column="1" Grid.Row="5" x:Name="SellPriceRatioTextBox" Text="{Binding Path=SearchCriteria.SellPriceRatio, Mode=TwoWay}"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Grid.Row="2">
+            <Button x:Name="ButtonSearch" Content="Search" Click="ButtonSearch_Click" Background="#32CD32" Margin="10"/>
+            <Button x:Name="ButtonAdvancedSearch" Content="Advanced Search" Click="ButtonAdvancedSearch_Click" Background="#FFA500" Width="150" Margin="10"/>
+            <Button x:Name="ButtonAddUpdate" Content="Add/Update" Click="ButtonAddUpdate_Click" Background="#808080" Margin="10"/>
         </StackPanel>
 
-
-        <GroupBox Header="Product List" BorderBrush="#D4D4D4" BorderThickness="1">
+        <!-- Product List -->
+        <GroupBox Header="Product List" BorderBrush="#D4D4D4" BorderThickness="1" Grid.Row="3">
             <DataGrid x:Name="grdProduct" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="600" Margin="10"
                       MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId}" Width="100"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="150"/>
                     <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId}" Width="100"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="200"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="200"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="300"/>
                     <DataGridTextColumn Header="Barcode" Binding="{Binding Path=Barcode}" Width="100"/>
                     <DataGridTextColumn Header="Weight" Binding="{Binding Path=Weight}" Width="100"/>
                     <DataGridTextColumn Header="Cost Price" Binding="{Binding Path=CostPrice}" Width="100"/>
@@ -97,29 +164,20 @@
                     <DataGridTextColumn Header="Labor Cost" Binding="{Binding Path=LaborCost}" Width="100"/>
                     <DataGridTextColumn Header="Stone Cost" Binding="{Binding Path=StoneCost}" Width="100"/>
                     <DataGridTextColumn Header="Sell Price Ratio" Binding="{Binding Path=SellPriceRatio}" Width="100"/>
-                    <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn Header="Action" Width="80">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="Edit" x:Name="ButtonEdit" CommandParameter="{Binding ProductId}" Click="ButtonEdit_Click_1" Height="25" Width="70" Background="#32CD32"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate><!--grdCustomer_ButtonSave_Click-->
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Delete" x:Name="ButtonDelete" CommandParameter="{Binding ProductId}" Click="grdProduct_ButtonDelete_Click" Height="25" Width="70" Background="#FF6347"/>
+                                <Button Content="Delete" 
+                            Click="grdProduct_ButtonDelete_Click"
+                            CommandParameter="{Binding ProductId}"
+                            Background="Red"
+                            Foreground="White"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="View" x:Name="ButtonView" CommandParameter="{Binding ProductId}" Click="ButtonView_Click" Height="25" Width="70" Background="#32CD32"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-    </StackPanel>
+    </Grid>
 </Window>

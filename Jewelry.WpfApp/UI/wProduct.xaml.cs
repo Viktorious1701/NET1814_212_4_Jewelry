@@ -120,24 +120,6 @@ namespace Jewelry.WpfApp.UI
             }
         }
 
-        private async void ButtonEdit_Click_1(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                var productId = (int)button.CommandParameter;
-                var selectedProduct = await _business.GetById(productId);
-                if(selectedProduct != null && selectedProduct.Data != null) {
-                    var addProductWindow = new AddProduct(selectedProduct.Data as SiProduct);
-                    addProductWindow.ShowDialog();
-                    LoadGrdProducts(); // Refresh the product list after adding/updating a product
-                }
-                else
-                {
-                    MessageBox.Show("Something went wrong with this record");
-                }
-               
-            }
-        }
 
 
         private async void grdProduct_ButtonDelete_Click(object sender, RoutedEventArgs e)
@@ -145,14 +127,19 @@ namespace Jewelry.WpfApp.UI
             if (sender is Button button)
             {
                 var productId = (int)button.CommandParameter;
-                var result = await _business.DeleteById(productId);
-                if (result.Status > 0)
+                var result = MessageBox.Show("Are you sure you want to delete this product?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    await RefreshProductData(); // Refresh the product list after deletion
-                }
-                else
-                {
-                    MessageBox.Show("Failed to delete the product.");
+                    var deleteResult = await _business.DeleteById(productId);
+                    if (deleteResult.Status > 0)
+                    {
+                        await RefreshProductData(); // Refresh the product list after deletion
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to delete the product.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }
@@ -173,17 +160,77 @@ namespace Jewelry.WpfApp.UI
             if (result.Status > 0 && result.Data != null)
             {
                 var products = result.Data as List<SiProduct>;
-                var advancedSearchWindow = new wProductAdvancedSearch(products);
-                if (advancedSearchWindow.ShowDialog() == true)
+                var filteredProducts = products;
+                if(filteredProducts == null)
                 {
-                    grdProduct.ItemsSource = advancedSearchWindow.FilteredProducts;
+                    MessageBox.Show("No product list");
+                    return;
                 }
+                // Apply filters
+                if (!string.IsNullOrEmpty(ProductIdTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.ProductId.ToString().Contains(ProductIdTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(NameTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.Name.Contains(NameTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(CategoryIdTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.CategoryId.ToString().Contains(CategoryIdTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(DescriptionTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.Description.Contains(DescriptionTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(BarcodeTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.Barcode.Contains(BarcodeTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(WeightTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.Weight.ToString().Contains(WeightTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(CostPriceTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.CostPrice.ToString().Contains(CostPriceTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(GoldPriceTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.GoldPrice.ToString().Contains(GoldPriceTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(LaborCostTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.LaborCost.ToString().Contains(LaborCostTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(StoneCostTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.StoneCost.ToString().Contains(StoneCostTextBox.Text)).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(SellPriceRatioTextBox.Text))
+                {
+                    filteredProducts = filteredProducts.Where(p => p.SellPriceRatio.ToString().Contains(SellPriceRatioTextBox.Text)).ToList();
+                }
+
+                // Update the DataGrid with filtered products
+                grdProduct.ItemsSource = filteredProducts;
             }
             else
             {
                 MessageBox.Show("Failed to load products.");
             }
         }
+
 
     }
 }
