@@ -2,6 +2,8 @@
 using Jewelry.Data;
 using Jewelry.Data.Models;
 using Jewelry.Common;
+using System.Collections;
+using Microsoft.EntityFrameworkCore;
 namespace Jewelry.Business
 {
     public interface ICategoryBusiness
@@ -11,6 +13,7 @@ namespace Jewelry.Business
         Task<IBusinessResult> Save(Category product);
         Task<IBusinessResult> Update(Category product);
         Task<IBusinessResult> DeleteById(int id);
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
     }
     public class CategoryBusiness : ICategoryBusiness
     {
@@ -74,6 +77,20 @@ namespace Jewelry.Business
             catch (Exception ex)
             {
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        {
+            try
+            {
+                var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+                return categories ?? new List<Category>();
+            }
+            catch
+            {
+                // Optionally log the exception
+                return new List<Category>();
             }
         }
 
