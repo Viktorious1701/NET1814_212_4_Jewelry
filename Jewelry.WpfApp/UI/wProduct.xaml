@@ -8,7 +8,6 @@
         Title="Product" Height="1250" Width="1000"
         Background="#1e1e1e">
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -101,46 +100,46 @@
 
         <!-- Product List -->
         <GroupBox Header="Product List" BorderBrush="#D4D4D4" BorderThickness="1" Grid.Row="3">
-            <DataGrid x:Name="grdProduct" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="600" Margin="10"
-                      MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId}" Width="100"/>
-                    <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId}" Width="100"/>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="200"/>
-                    <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="100"/>
-                    <DataGridTextColumn Header="Barcode" Binding="{Binding Path=Barcode}" Width="100"/>
-                    <DataGridTextColumn Header="Weight" Binding="{Binding Path=Weight}" Width="100"/>
-                    <DataGridTextColumn Header="Cost Price" Binding="{Binding Path=CostPrice}" Width="100"/>
-                    <DataGridTextColumn Header="Gold Price" Binding="{Binding Path=GoldPrice}" Width="100"/>
-                    <DataGridTextColumn Header="Labor Cost" Binding="{Binding Path=LaborCost}" Width="100"/>
-                    <DataGridTextColumn Header="Stone Cost" Binding="{Binding Path=StoneCost}" Width="100"/>
-                    <DataGridTextColumn Header="Sell Price Ratio" Binding="{Binding Path=SellPriceRatio}" Width="100"/>
-                    <DataGridTemplateColumn Header="Delete" Width="80">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Delete" 
-                            Click="grdProduct_ButtonDelete_Click"
-                            CommandParameter="{Binding ProductId}"
-                            Background="Red"
-                            Foreground="White"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="View" Width="80">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="View" 
-        Click="ButtonView_Click"
-        CommandParameter="{Binding ProductId}"
-        Background="Gold"
-        Foreground="White"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <DataGrid x:Name="grdProduct" ItemsSource="{Binding ProductList}" CanUserAddRows="False" Height="600" Margin="10"
+                          MouseDoubleClick="grdProduct_MouseDouble_Click" SelectionMode="Single" SelectionUnit="FullRow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Id" Binding="{Binding Path=ProductId}" Width="100"/>
+                        <DataGridTextColumn Header="Category Id" Binding="{Binding Path=CategoryId}" Width="100"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="200"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" Width="100"/>
+                        <DataGridTextColumn Header="Barcode" Binding="{Binding Path=Barcode}" Width="100"/>
+                        <DataGridTextColumn Header="Weight" Binding="{Binding Path=Weight}" Width="100"/>
+                        <DataGridTextColumn Header="Cost Price" Binding="{Binding Path=CostPrice}" Width="100"/>
+                        <DataGridTextColumn Header="Gold Price" Binding="{Binding Path=GoldPrice}" Width="100"/>
+                        <DataGridTextColumn Header="Labor Cost" Binding="{Binding Path=LaborCost}" Width="100"/>
+                        <DataGridTextColumn Header="Stone Cost" Binding="{Binding Path=StoneCost}" Width="100"/>
+                        <DataGridTextColumn Header="Sell Price Ratio" Binding="{Binding Path=SellPriceRatio}" Width="100"/>
+                        <DataGridTemplateColumn Header="Delete" Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" 
+                                            Click="grdProduct_ButtonDelete_Click"
+                                            CommandParameter="{Binding ProductId}"
+                                            Background="Red"
+                                            Foreground="White"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="View" Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="View" 
+                                            Click="ButtonView_Click"
+                                            CommandParameter="{Binding ProductId}"
+                                            Background="Gold"
+                                            Foreground="White"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
         </GroupBox>
     </Grid>
 </Window>
